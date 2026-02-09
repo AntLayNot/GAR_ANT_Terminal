@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a47aeaf778f4f643a473f34a65dbd29, type: 3}
+  m_Name: Preset_Shooter
+  m_EditorClassIdentifier: 
+  type: 1
+  patrol: 1
+  moveSpeed: 2.5
+  chaseSpeed: 3.2
+  stopDistance: 1.1
+  detectRange: 12
+  loseRange: 12
+  requireLineOfSight: 1
+  attackRange: 1.2
+  attackCooldown: 0.9
+  damage: 1
+  attackBoxSize: {x: 1.2, y: 1}
+  attackBoxOffset: {x: 0.7, y: 0}
+  projectilePrefab: {fileID: 3515107753380077507, guid: 3f0dc2a8612197e4d9898c63c2cbdeb9, type: 3}
+  shootCooldown: 0.8
+  projectileSpeed: 12
+  shootRange: 10
+  preferredDistance: 4
+  minDistance: 2
