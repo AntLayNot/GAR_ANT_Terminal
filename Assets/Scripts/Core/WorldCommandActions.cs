@@ -122,9 +122,6 @@ public class WorldCommandActions : MonoBehaviour
         if (s.lifetime > 0f)
             StartCoroutine(DestroyAfter(go, s.lifetime));
 
-        //5) Si tu as un cache de targets local, rebuild ici (voir plus bas)
-        // BuildCaches(); // optionnel si tu veux le refresh immédiat
-
         return true;
     }
 

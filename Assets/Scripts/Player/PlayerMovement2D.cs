@@ -8,8 +8,11 @@ public class PlayerPlatformerController2D : MonoBehaviour
     public Transform groundCheck;
     public LayerMask groundLayer;
 
+    [Header("Ground Check")]
+    public Vector2 groundCheckSize = new Vector2(0.6f, 0.12f);
+
     [Header("Terminal (optional)")]
-    public TerminalController terminal; // si tu veux bloquer input quand terminal focus
+    public TerminalController terminal;
 
     [Header("Move")]
     public float moveSpeed = 8f;
@@ -19,13 +22,10 @@ public class PlayerPlatformerController2D : MonoBehaviour
 
     [Header("Jump")]
     public float jumpForce = 14f;
-    public float coyoteTime = 0.12f;      // tol�rance apr�s avoir quitt� le sol
-    public float jumpBuffer = 0.12f;      // tol�rance si tu appuies un peu avant de toucher le sol
+    public float coyoteTime = 0.12f;      // tolérance apr�s avoir quitté le sol
+    public float jumpBuffer = 0.12f;      // tolérance si tu appuies un peu avant de toucher le sol
     public float fallMultiplier = 2.0f;   // chute plus rapide
-    public float lowJumpMultiplier = 2.0f; // petit saut si tu rel�ches t�t
-
-    [Header("Ground Check")]
-    public Vector2 groundCheckSize = new Vector2(0.6f, 0.12f);
+    public float lowJumpMultiplier = 2.0f; // petit saut si tu relaches tot
 
     private float moveInput;
     private bool jumpPressed;
@@ -78,10 +78,10 @@ public class PlayerPlatformerController2D : MonoBehaviour
             return;
         }
 
-        // A/D ou Q/D (Unity g�re ZQSD via Horizontal)
+        // A/D ou Q/D (Unity gère ZQSD via Horizontal)
         moveInput = Input.GetAxisRaw("Horizontal");
 
-        if (Input.GetButtonDown("Jump")) // Space par d�faut
+        if (Input.GetButtonDown("Jump")) // Space par défaut
         {
             jumpPressed = true;
             jumpBufferTimer = jumpBuffer;
@@ -114,7 +114,7 @@ public class PlayerPlatformerController2D : MonoBehaviour
 
         float accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? acceleration : deceleration;
 
-        // moins de contr�le en l�air
+        // moins de controle en l'air
         float control = grounded ? 1f : airControl;
 
         float movement = speedDif * accelRate * control;

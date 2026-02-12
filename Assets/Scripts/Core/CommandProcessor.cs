@@ -83,7 +83,7 @@ public class CommandProcessor : MonoBehaviour
 
 
     // ------------------------------------------------------------
-    // Option B : exécute une ligne et RENVOIE une réponse texte
+    //  Exécute une ligne et RENVOIE une réponse texte
     // ------------------------------------------------------------
     public string ExecuteLine(string line)
     {
@@ -133,7 +133,7 @@ public class CommandProcessor : MonoBehaviour
             for (int i = 2; i < matches.Count; i++)
                 tokens.Add(GetToken(i));
 
-            // ⚠️ Si le dernier token ressemble à un float, on refuse (cooldown interdit)
+            // Si le dernier token ressemble à un float, on refuse (cooldown interdit)
             if (tokens.Count >= 2 && SkillBindingManager.TryParseFloat(tokens[^1], out _))
                 return "Le cooldown n'est pas configurable. Usage: bind <slot> \"<commande>\"";
 
@@ -274,7 +274,6 @@ public class CommandProcessor : MonoBehaviour
                 return false;
             }
 
-            // si tu veux interdire certaines commandes sur self, tu gères ça ailleurs (IsSelf + blocage)
             return true;
         }
 
@@ -329,8 +328,7 @@ public class CommandProcessor : MonoBehaviour
                 return false;
             }
 
-            // VisibleTargets est censé être déjà filtré (camera + portée),
-            // on prend la plus proche du joueur (origin) si dispo, sinon centre caméra.
+            // La plus proche du joueur (origin) si dispo, sinon centre caméra.
             Vector3 refPos = targeting.origin != null
                 ? targeting.origin.position
                 : (targeting.cam != null
@@ -485,8 +483,7 @@ public class CommandProcessor : MonoBehaviour
 
     bool RequiresTarget(string line)
     {
-        // actions qui ont BESOIN d'une target dans ton jeu
-        // adapte selon tes keywords (toggle, enable, disable, open, close, etc.)
+        // actions qui ont BESOIN d'une target
         var parts = line.Split(' ', System.StringSplitOptions.RemoveEmptyEntries);
         if (parts.Length == 0) return false;
 
@@ -499,7 +496,6 @@ public class CommandProcessor : MonoBehaviour
         if (action == "help" || action == "clear" || action == "bind" || action == "unbind" || action == "bindlist")
             return false;
 
-        // par défaut: tes actions d'environnement demandent une target
         return true;
     }
 
@@ -577,11 +573,13 @@ public class CommandProcessor : MonoBehaviour
             $"Commandes: {cmdLine}\n" +
             $"Targets: {tgLine}\n" +
             $"Selectors: selected | nearest | view\n" +
+            $"\n" +
             $"Ex: toggle selected | destroy nearest | ping view\n" +
             $"Ex: spawn wall player | spawn projectile selected | spawn turret nearest\n" +
             $"Ex: toggle lamp | destroy \"big lamp\" | help | clear" +
             $"\n" +
             $"Skills: bind | unbind | bindlist\n" +
+            $"\n" +
             $"Ex: bind 1 \"toggle nearest\" 1.0\n" +
             $"Ex: bind q \"spawn projectile view\" 0.2\n" +
             $"Ex: unbind 1 | bindlist\n";

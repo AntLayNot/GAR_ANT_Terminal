@@ -19,7 +19,7 @@ public class TerminalController : MonoBehaviour
 
     private readonly List<string> lines = new();
 
-    // --- Autocomplete state
+    // Autocomplete state
     private List<string> suggestions = new();
     private int suggestionIndex = -1;
 
@@ -33,7 +33,7 @@ public class TerminalController : MonoBehaviour
     private string draftBuffer = "";
 
     [Header("Open/Close")]
-    public GameObject terminalRoot;          // ton Panel/Canvas du terminal
+    public GameObject terminalRoot;          // Panel/Canvas du terminal
     public KeyCode toggleKey = KeyCode.F1;   // touche d'ouverture/fermeture
     public bool startOpen = false;
 
@@ -140,7 +140,7 @@ public class TerminalController : MonoBehaviour
         else
         {
             StopTypingSlowMo();
-            ResetAutocomplete(); // si tu as cette fonction
+            ResetAutocomplete();
         }
     }
 
