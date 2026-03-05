@@ -104,7 +104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 685bf1afcff389f48aba36ea9515f6e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  preset: {fileID: 11400000, guid: 79e6584d5003f6a449a69a6f3fb68a69, type: 2}
+  preset: {fileID: 11400000, guid: 5f3d85ade134c87468577b12ba878194, type: 2}
   target: {fileID: 0}
   targetTag: Player
   moveSpeed: 2.5
@@ -143,13 +143,13 @@ MonoBehaviour:
   damageMask:
     serializedVersion: 2
     m_Bits: 8
-  projectilePrefab: {fileID: 0}
+  projectilePrefab: {fileID: 3515107753380077507, guid: 3f0dc2a8612197e4d9898c63c2cbdeb9, type: 3}
   shootCooldown: 0.8
   projectileSpeed: 12
   shootRange: 7
   preferredDistance: 4
   minDistance: 2
-  shootMuzzle: {fileID: 0}
+  shootMuzzle: {fileID: 2913528609058154933}
 --- !u!114 &126226454153752522
 MonoBehaviour:
   m_ObjectHideFlags: 0

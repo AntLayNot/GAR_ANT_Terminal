@@ -3,6 +3,9 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 public class TargetOutline2D : MonoBehaviour
 {
+
+    public Material OutLineShader;
+    public bool isGlow;
     [Header("Outline")]
     public Color outlineColor = new Color(1f, 0.5f, 0f, 1f); // orange
     [Range(1.01f, 1.2f)]
@@ -33,6 +36,7 @@ public class TargetOutline2D : MonoBehaviour
 
     public void SetOutlined(bool value)
     {
+        OutLineShader.SetFloat("_isGlow", isGlow ? 0f : 1f);
         if (outline != null)
             outline.enabled = value;
     }

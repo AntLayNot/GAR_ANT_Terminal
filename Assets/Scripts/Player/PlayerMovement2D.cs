@@ -22,10 +22,10 @@ public class PlayerPlatformerController2D : MonoBehaviour
 
     [Header("Jump")]
     public float jumpForce = 14f;
-    public float coyoteTime = 0.12f;      // tolérance apr�s avoir quitté le sol
-    public float jumpBuffer = 0.12f;      // tolérance si tu appuies un peu avant de toucher le sol
+    public float coyoteTime = 0.12f;      // tolérance après avoir quitté le sol
+    public float jumpBuffer = 0.12f;      // tolérance si appuyé un peu avant de toucher le sol
     public float fallMultiplier = 2.0f;   // chute plus rapide
-    public float lowJumpMultiplier = 2.0f; // petit saut si tu relaches tot
+    public float lowJumpMultiplier = 2.0f; // petit saut si relaché trop tot
 
     private float moveInput;
     private bool jumpPressed;
