@@ -65,6 +65,12 @@ public class PlayerPlatformerController2D : MonoBehaviour
 
     void Update()
     {
+        if (DialogueManager.Instance != null && DialogueManager.Instance.IsDialoguePlaying)
+        {
+            StopMovementCompletely();
+            return;
+        }
+
         bool blocked = terminal != null &&
                        terminal.isActiveAndEnabled &&
                        terminal.input != null &&
@@ -72,9 +78,7 @@ public class PlayerPlatformerController2D : MonoBehaviour
 
         if (blocked)
         {
-            moveInput = 0f;
-            jumpPressed = false;
-            jumpHeld = false;
+            StopMovementCompletely();
             return;
         }
 
@@ -99,7 +103,14 @@ public class PlayerPlatformerController2D : MonoBehaviour
 
     void FixedUpdate()
     {
-        // --- Horizontal movement (accel/decel)
+        if ((DialogueManager.Instance != null && DialogueManager.Instance.IsDialoguePlaying) ||
+        (terminal != null && terminal.isActiveAndEnabled && terminal.input != null && terminal.input.isFocused))
+        {
+            StopMovementCompletely();
+            return;
+        }
+
+        // Horizontal movement (accel/decel)
         float targetSpeed = moveInput * moveSpeed;
         float speedDif = targetSpeed - rb.linearVelocity.x;
 
@@ -120,7 +131,7 @@ public class PlayerPlatformerController2D : MonoBehaviour
         float movement = speedDif * accelRate * control;
         rb.AddForce(new Vector2(movement, 0f), ForceMode2D.Force);
 
-        // --- Jump (buffer + coyote)
+        // Jump (buffer + coyote)
         if (jumpBufferTimer > 0f && coyoteTimer > 0f)
         {
             // consomme le jump
@@ -144,6 +155,21 @@ public class PlayerPlatformerController2D : MonoBehaviour
 
         // reset one-frame input
         jumpPressed = false;
+    }
+
+    private void StopMovementCompletely()
+    {
+        moveInput = 0f;
+        jumpPressed = false;
+        jumpHeld = false;
+        jumpBufferTimer = 0f;
+        coyoteTimer = 0f;
+
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector2.zero;
+            rb.angularVelocity = 0f;
+        }
     }
 
     void OnDrawGizmosSelected()
