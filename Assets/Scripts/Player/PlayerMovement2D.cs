@@ -1,10 +1,12 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Animator))]
 public class PlayerPlatformerController2D : MonoBehaviour
 {
     [Header("Refs")]
     public Rigidbody2D rb;
+    public Animator animator;
     public Transform groundCheck;
     public LayerMask groundLayer;
 
@@ -27,6 +29,9 @@ public class PlayerPlatformerController2D : MonoBehaviour
     public float fallMultiplier = 2.0f;   // chute plus rapide
     public float lowJumpMultiplier = 2.0f; // petit saut si relaché trop tot
 
+    [Header("Animation")]
+    public bool flipSprite = true;
+
     private float moveInput;
     private bool jumpPressed;
     private bool jumpHeld;
@@ -39,6 +44,10 @@ public class PlayerPlatformerController2D : MonoBehaviour
     public Vector2 wallCheckSize = new Vector2(0.1f, 0.8f);
     public LayerMask wallLayer;
 
+    private static readonly int SpeedHash = Animator.StringToHash("Speed");
+    private static readonly int IsGroundedHash = Animator.StringToHash("IsGrounded");
+    private static readonly int IsFallingHash = Animator.StringToHash("IsFalling");
+    private static readonly int VerticalSpeedHash = Animator.StringToHash("VerticalSpeed");
 
     private bool IsGrounded()
     {
@@ -52,15 +61,16 @@ public class PlayerPlatformerController2D : MonoBehaviour
         return Physics2D.OverlapBox(wallCheck.position, wallCheckSize, 0f, wallLayer);
     }
 
-
     void Reset()
     {
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
 
     void Awake()
     {
         if (rb == null) rb = GetComponent<Rigidbody2D>();
+        if (animator == null) animator = GetComponent<Animator>();
     }
 
     void Update()
@@ -68,6 +78,7 @@ public class PlayerPlatformerController2D : MonoBehaviour
         if (DialogueManager.Instance != null && DialogueManager.Instance.IsDialoguePlaying)
         {
             StopMovementCompletely();
+            UpdateAnimatorValues();
             return;
         }
 
@@ -79,6 +90,7 @@ public class PlayerPlatformerController2D : MonoBehaviour
         if (blocked)
         {
             StopMovementCompletely();
+            UpdateAnimatorValues();
             return;
         }
 
@@ -99,6 +111,17 @@ public class PlayerPlatformerController2D : MonoBehaviour
 
         if (IsGrounded())
             coyoteTimer = coyoteTime;
+
+        // Flip du sprite selon la direction
+        if (flipSprite)
+        {
+            if (moveInput > 0.01f)
+                transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+            else if (moveInput < -0.01f)
+                transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+        }
+
+        UpdateAnimatorValues();
     }
 
     void FixedUpdate()
@@ -157,6 +180,21 @@ public class PlayerPlatformerController2D : MonoBehaviour
         jumpPressed = false;
     }
 
+    private void UpdateAnimatorValues()
+    {
+        if (animator == null) return;
+
+        bool grounded = IsGrounded();
+        float verticalSpeed = rb.linearVelocity.y;
+
+        animator.SetFloat(SpeedHash, Mathf.Abs(moveInput));
+        animator.SetBool(IsGroundedHash, grounded);
+
+        animator.SetBool(IsFallingHash, !grounded && verticalSpeed < -0.1f);
+
+        animator.SetFloat(VerticalSpeedHash, verticalSpeed);
+    }
+
     private void StopMovementCompletely()
     {
         moveInput = 0f;
@@ -177,5 +215,11 @@ public class PlayerPlatformerController2D : MonoBehaviour
         if (groundCheck == null) return;
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireCube(groundCheck.position, groundCheckSize);
+
+        if (wallCheck != null)
+        {
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawWireCube(wallCheck.position, wallCheckSize);
+        }
     }
 }

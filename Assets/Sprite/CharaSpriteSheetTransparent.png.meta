@@ -1,0 +1,700 @@
+fileFormatVersion: 2
+guid: 0a58383889c7a234380fc070b6ee278c
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -1080222886550686947
+    second: CharaSpriteSheetTransparent 1_0
+  - first:
+      213: 8761539463152528520
+    second: CharaSpriteSheetTransparent 1_1
+  - first:
+      213: -156552090575789208
+    second: CharaSpriteSheetTransparent 1_2
+  - first:
+      213: -1148423741580012228
+    second: CharaSpriteSheetTransparent 1_3
+  - first:
+      213: 4989673060664538558
+    second: CharaSpriteSheetTransparent 1_4
+  - first:
+      213: -5017990091749899909
+    second: CharaSpriteSheetTransparent 1_5
+  - first:
+      213: 6267960302568617187
+    second: CharaSpriteSheetTransparent 1_6
+  - first:
+      213: 8296817952263201093
+    second: CharaSpriteSheetTransparent 1_7
+  - first:
+      213: 9020130890608450396
+    second: CharaSpriteSheetTransparent 1_8
+  - first:
+      213: -164671334942179460
+    second: CharaSpriteSheetTransparent 1_9
+  - first:
+      213: -9070073925197993428
+    second: CharaSpriteSheetTransparent 1_10
+  - first:
+      213: -4545724975001882087
+    second: CharaSpriteSheetTransparent 1_11
+  - first:
+      213: 2177593452477317278
+    second: CharaSpriteSheetTransparent 1_12
+  - first:
+      213: -1103775444009214955
+    second: CharaSpriteSheetTransparent 1_13
+  - first:
+      213: -2854154721760439103
+    second: CharaSpriteSheetTransparent 1_14
+  - first:
+      213: 8005860972313241738
+    second: CharaSpriteSheetTransparent 1_15
+  - first:
+      213: 6284851348850834690
+    second: CharaSpriteSheetTransparent 1_16
+  - first:
+      213: 821891660435277323
+    second: CharaSpriteSheetTransparent 1_17
+  - first:
+      213: 5965061065909571261
+    second: CharaSpriteSheetTransparent 1_18
+  - first:
+      213: -6805565752739882239
+    second: CharaSpriteSheetTransparent 1_19
+  - first:
+      213: 6785316717477216691
+    second: CharaSpriteSheetTransparent 1_20
+  - first:
+      213: 6028015701626719659
+    second: CharaSpriteSheetTransparent 1_21
+  - first:
+      213: 7719419784602493124
+    second: CharaSpriteSheetTransparent 1_22
+  - first:
+      213: -3256963377909766429
+    second: CharaSpriteSheetTransparent 1_23
+  - first:
+      213: 8305462015792929432
+    second: CharaSpriteSheetTransparent 1_24
+  - first:
+      213: -2465091690882185768
+    second: CharaSpriteSheetTransparent 1_25
+  - first:
+      213: -3618936857910380827
+    second: CharaSpriteSheetTransparent 1_26
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 128
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: CharaSpriteSheetTransparent 1_0
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 1212
+        width: 118
+        height: 261
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d1336e802074201f0800000000000000
+      internalID: -1080222886550686947
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharaSpriteSheetTransparent 1_2
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 1212
+        width: 115
+        height: 261
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 863a26cf3b0d3ddf0800000000000000
+      internalID: -156552090575789208
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharaSpriteSheetTransparent 1_3
+      rect:
+        serializedVersion: 2
+        x: 357
+        y: 1212
+        width: 127
+        height: 261
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c359f7f01baff00f0800000000000000
+      internalID: -1148423741580012228
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharaSpriteSheetTransparent 1_4
+      rect:
+        serializedVersion: 2
+        x: 508
+        y: 1212
+        width: 121
+        height: 261
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb5fe365631ee3540800000000000000
+      internalID: 4989673060664538558
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharaSpriteSheetTransparent 1_6
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 901
+        width: 177
+        height: 240
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3e43ad4afa44cf650800000000000000
+      internalID: 6267960302568617187
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharaSpriteSheetTransparent 1_7
+      rect:
+        serializedVersion: 2
+        x: 220
+        y: 900
+        width: 159
+        height: 239
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5416bba18f7342370800000000000000
+      internalID: 8296817952263201093
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharaSpriteSheetTransparent 1_8
+      rect:
+        serializedVersion: 2
+        x: 396
+        y: 900
+        width: 124
+        height: 241
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c5b9e3a1141fd2d70800000000000000
+      internalID: 9020130890608450396
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharaSpriteSheetTransparent 1_9
+      rect:
+        serializedVersion: 2
+        x: 527
+        y: 900
+        width: 132
+        height: 241
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c7ff4181b48f6bdf0800000000000000
+      internalID: -164671334942179460
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharaSpriteSheetTransparent 1_10
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 525
+        width: 118
+        height: 210
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c2a6a0202df902280800000000000000
+      internalID: -9070073925197993428
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharaSpriteSheetTransparent 1_12
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 523
+        width: 103
+        height: 264
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e90802825bd583e10800000000000000
+      internalID: 2177593452477317278
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharaSpriteSheetTransparent 1_14
+      rect:
+        serializedVersion: 2
+        x: 289
+        y: 602
+        width: 117
+        height: 206
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1c4177b07610468d0800000000000000
+      internalID: -2854154721760439103
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharaSpriteSheetTransparent 1_15
+      rect:
+        serializedVersion: 2
+        x: 435
+        y: 525
+        width: 114
+        height: 237
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a88e4ef23288a1f60800000000000000
+      internalID: 8005860972313241738
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharaSpriteSheetTransparent 1_16
+      rect:
+        serializedVersion: 2
+        x: 563
+        y: 525
+        width: 113
+        height: 215
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 20d7362d007483750800000000000000
+      internalID: 6284851348850834690
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharaSpriteSheetTransparent 1_19
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 234
+        width: 102
+        height: 228
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 10b106c5106cd81a0800000000000000
+      internalID: -6805565752739882239
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharaSpriteSheetTransparent 1_20
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 234
+        width: 143
+        height: 227
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b1cfb9ba994a2e50800000000000000
+      internalID: 6785316717477216691
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharaSpriteSheetTransparent 1_21
+      rect:
+        serializedVersion: 2
+        x: 357
+        y: 234
+        width: 143
+        height: 227
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bad00f3c750d7a350800000000000000
+      internalID: 6028015701626719659
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharaSpriteSheetTransparent 1_22
+      rect:
+        serializedVersion: 2
+        x: 527
+        y: 234
+        width: 133
+        height: 227
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4c0aa551563e02b60800000000000000
+      internalID: 7719419784602493124
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharaSpriteSheetTransparent 1_23
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 11
+        width: 141
+        height: 209
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3e66b3d5011fcc2d0800000000000000
+      internalID: -3256963377909766429
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharaSpriteSheetTransparent 1_24
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 11
+        width: 131
+        height: 210
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 89a56daf2bde24370800000000000000
+      internalID: 8305462015792929432
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharaSpriteSheetTransparent 1_25
+      rect:
+        serializedVersion: 2
+        x: 369
+        y: 11
+        width: 140
+        height: 211
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8d54332fa2c3acdd0800000000000000
+      internalID: -2465091690882185768
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharaSpriteSheetTransparent 1_26
+      rect:
+        serializedVersion: 2
+        x: 532
+        y: 11
+        width: 148
+        height: 204
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e6fea70a14f6cdc0800000000000000
+      internalID: -3618936857910380827
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: ea84b6acd8f2bee4f883aaa1ee141787
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      CharaSpriteSheetTransparent 1_0: -1080222886550686947
+      CharaSpriteSheetTransparent 1_1: 8761539463152528520
+      CharaSpriteSheetTransparent 1_10: -9070073925197993428
+      CharaSpriteSheetTransparent 1_11: -4545724975001882087
+      CharaSpriteSheetTransparent 1_12: 2177593452477317278
+      CharaSpriteSheetTransparent 1_13: -1103775444009214955
+      CharaSpriteSheetTransparent 1_14: -2854154721760439103
+      CharaSpriteSheetTransparent 1_15: 8005860972313241738
+      CharaSpriteSheetTransparent 1_16: 6284851348850834690
+      CharaSpriteSheetTransparent 1_17: 821891660435277323
+      CharaSpriteSheetTransparent 1_18: 5965061065909571261
+      CharaSpriteSheetTransparent 1_19: -6805565752739882239
+      CharaSpriteSheetTransparent 1_2: -156552090575789208
+      CharaSpriteSheetTransparent 1_20: 6785316717477216691
+      CharaSpriteSheetTransparent 1_21: 6028015701626719659
+      CharaSpriteSheetTransparent 1_22: 7719419784602493124
+      CharaSpriteSheetTransparent 1_23: -3256963377909766429
+      CharaSpriteSheetTransparent 1_24: 8305462015792929432
+      CharaSpriteSheetTransparent 1_25: -2465091690882185768
+      CharaSpriteSheetTransparent 1_26: -3618936857910380827
+      CharaSpriteSheetTransparent 1_3: -1148423741580012228
+      CharaSpriteSheetTransparent 1_4: 4989673060664538558
+      CharaSpriteSheetTransparent 1_5: -5017990091749899909
+      CharaSpriteSheetTransparent 1_6: 6267960302568617187
+      CharaSpriteSheetTransparent 1_7: 8296817952263201093
+      CharaSpriteSheetTransparent 1_8: 9020130890608450396
+      CharaSpriteSheetTransparent 1_9: -164671334942179460
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
