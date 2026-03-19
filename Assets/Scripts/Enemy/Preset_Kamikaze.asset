@@ -10,22 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1a47aeaf778f4f643a473f34a65dbd29, type: 3}
-  m_Name: Preset_Fast
+  m_Name: Preset_Kamikaze
   m_EditorClassIdentifier: 
   type: 2
   patrol: 1
   moveSpeed: 3.2
-  chaseSpeed: 3.8
-  stopDistance: 1.1
+  chaseSpeed: 4.2
+  stopDistance: 0
   detectRange: 5
   loseRange: 5
   requireLineOfSight: 1
-  attackRange: 1.2
+  attackRange: 0.8
   attackCooldown: 0.9
   damage: 60
-  attackBoxSize: {x: 1.2, y: 1}
-  attackBoxOffset: {x: 0.7, y: 0}
+  attackBoxSize: {x: 1.2, y: 1.2}
+  attackBoxOffset: {x: 0.6, y: 0}
   projectilePrefab: {fileID: 0}
   shootCooldown: 0.8
   projectileSpeed: 12
   shootRange: 7
+  preferredDistance: 4
+  minDistance: 2

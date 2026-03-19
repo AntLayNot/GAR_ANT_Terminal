@@ -19,7 +19,7 @@ public class EnemyBrain2D : MonoBehaviour
     public bool faceTarget = true;
 
     [Header("Detection")]
-    public float detectRange = 8f;           // 🟡 cercle jaune
+    public float detectRange = 8f;           // cercle jaune
     public float loseRange = 10f;
     public LayerMask obstacleMask;           // obstacles pour LineOfSight (optionnel)
     public bool requireLineOfSight = false;
@@ -49,10 +49,10 @@ public class EnemyBrain2D : MonoBehaviour
     public Vector2 ledgeCheckOffset = new Vector2(0.4f, -0.2f);
 
     [Header("Attack (Melee)")]
-    public float attackRange = 1.2f;         // 🔴 cercle rouge
+    public float attackRange = 1.2f;         // cercle rouge
     public float attackCooldown = 0.9f;
     public int damage = 1;
-    public Vector2 attackBoxSize = new Vector2(1.2f, 1.0f);     // 🟥 carré rouge
+    public Vector2 attackBoxSize = new Vector2(1.2f, 1.0f);     // carré rouge
     public Vector2 attackBoxOffset = new Vector2(0.7f, 0f);
     public LayerMask damageMask;             // layer du Player
 
@@ -122,6 +122,24 @@ public class EnemyBrain2D : MonoBehaviour
             case State.Chase:
                 if (lostTarget) { state = patrol ? State.Patrol : State.Idle; break; }
 
+                // Kamikaze : on utilise la vraie hitbox pour savoir quand exploser
+                if (preset != null && preset.type == EnemyPreset2D.EnemyType.Kamikaze)
+                {
+                    float facing = GetFacingSign();
+                    Vector2 center = (Vector2)transform.position + new Vector2(attackBoxOffset.x * facing, attackBoxOffset.y);
+
+                    Collider2D hit = Physics2D.OverlapBox(center, attackBoxSize, 0f, damageMask);
+
+                    if (hit != null)
+                    {
+                        state = State.Attack;
+                        break;
+                    }
+
+                    ChaseUpdate();
+                    break;
+                }
+
                 // Si on est à portée d'engagement -> Attack
                 if (dist <= engageRange) { state = State.Attack; break; }
 
@@ -130,6 +148,13 @@ public class EnemyBrain2D : MonoBehaviour
 
             case State.Attack:
                 if (lostTarget) { state = patrol ? State.Patrol : State.Idle; break; }
+
+                // Kamikaze: on le laisse gérer lui-même son contact / explosion
+                if (preset != null && preset.type == EnemyPreset2D.EnemyType.Kamikaze)
+                {
+                    AttackUpdate(dist);
+                    break;
+                }
 
                 // Si on n'est plus à portée -> re-chase
                 if (dist > engageRange + 0.35f) { state = State.Chase; break; }
@@ -141,8 +166,14 @@ public class EnemyBrain2D : MonoBehaviour
 
     float GetEngageRange()
     {
-        if (preset != null && preset.type == EnemyPreset2D.EnemyType.Shooter)
-            return shootRange;
+        if (preset != null)
+        {
+            if (preset.type == EnemyPreset2D.EnemyType.Shooter)
+                return shootRange;
+
+            if (preset.type == EnemyPreset2D.EnemyType.Kamikaze)
+                return attackRange;
+        }
 
         return attackRange;
     }
@@ -254,6 +285,19 @@ public class EnemyBrain2D : MonoBehaviour
             return;
         }
 
+        // Kamikaze: il continue à foncer, il ne s'arrête pas à stopDistance
+        if (preset != null && preset.type == EnemyPreset2D.EnemyType.Kamikaze)
+        {
+            float dirK = Mathf.Sign(dx);
+
+            if (dirK == 0f)
+                dirK = GetFacingSign();
+
+            MoveX(dirK, chaseSpeed);
+            if (faceTarget) FaceDir(dirK);
+            return;
+        }
+
         // Melee classique
         if (Mathf.Abs(dx) <= stopDistance)
         {
@@ -308,10 +352,19 @@ public class EnemyBrain2D : MonoBehaviour
     // ---------------------------
     void AttackUpdate(float dist)
     {
-        if (preset != null && preset.type == EnemyPreset2D.EnemyType.Shooter)
+        if (preset != null)
         {
-            ShooterAttackUpdate();
-            return;
+            if (preset.type == EnemyPreset2D.EnemyType.Shooter)
+            {
+                ShooterAttackUpdate();
+                return;
+            }
+
+            if (preset.type == EnemyPreset2D.EnemyType.Kamikaze)
+            {
+                KamikazeAttackUpdate();
+                return;
+            }
         }
 
         MeleeAttackUpdate();
@@ -334,6 +387,44 @@ public class EnemyBrain2D : MonoBehaviour
             if (dmg != null)
                 dmg.TakeDamage(damage);
         }
+    }
+
+    void KamikazeAttackUpdate()
+    {
+        rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
+
+        float facing = GetFacingSign();
+        Vector2 center = (Vector2)transform.position + new Vector2(attackBoxOffset.x * facing, attackBoxOffset.y);
+
+        Collider2D[] hits = Physics2D.OverlapBoxAll(center, attackBoxSize, 0f, damageMask);
+
+        Debug.Log("Kamikaze ATTACK");
+        Debug.Log("Hits trouvés : " + hits.Length);
+
+        bool hasHitTarget = false;
+
+        foreach (Collider2D hit in hits)
+        {
+            if (hit == null) continue;
+
+            var dmg = hit.GetComponentInParent<IDamageable>();
+            if (dmg != null)
+            {
+                Debug.Log("Kamikaze a touché : " + hit.name);
+                dmg.TakeDamage(damage);
+                hasHitTarget = true;
+            }
+        }
+
+        if (hasHitTarget)
+        {
+            Debug.Log("Kamikaze exploded");
+            Destroy(gameObject);
+            return;
+        }
+
+        // sécurité
+        state = State.Chase;
     }
 
     void ShooterAttackUpdate()
