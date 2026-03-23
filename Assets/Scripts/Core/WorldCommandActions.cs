@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -21,6 +21,8 @@ public class WorldCommandActions : MonoBehaviour
 
     private Dictionary<string, Spawnable> spawnById;
     public TargetObject LastSpawned { get; private set; }
+
+    public GameObject pingTextPrefab;
 
 
     void Awake()
@@ -58,7 +60,57 @@ public class WorldCommandActions : MonoBehaviour
     // -----------------------------
     public void Ping(TargetObject t)
     {
+        if (t == null) return;
+
         Debug.Log($"PING -> {t.Name}");
+
+        // ðŸ”¶ OUTLINE
+        var outline = t.GetComponent<TargetOutline2D>();
+        if (outline != null)
+        {
+            outline.isGlow = true;
+            StartCoroutine(DisableOutline(outline, 2f));
+        }
+
+        // ðŸ”· TEXTE
+        if (pingTextPrefab != null)
+        {
+            Vector3 offset = Vector3.up * 1.5f;
+            GameObject go = Instantiate(pingTextPrefab, t.transform.position + offset, Quaternion.identity);
+
+            var txt = go.GetComponent<TMPro.TextMeshPro>();
+            if (txt != null)
+                txt.text = t.Name;
+
+            StartCoroutine(PingTextRoutine(go, t));
+        }
+    }
+
+    IEnumerator PingTextRoutine(GameObject go, TargetObject target)
+    {
+        float duration = 2f;
+        float t = 0f;
+
+        while (t < duration && go != null && target != null)
+        {
+            go.transform.position = target.transform.position + Vector3.up * 1.5f;
+
+            // Optionnel : toujours face camÃ©ra
+            if (Camera.main != null)
+                go.transform.forward = Camera.main.transform.forward;
+
+            t += Time.deltaTime;
+            yield return null;
+        }
+
+        if (go != null)
+            Destroy(go);
+    }
+
+    IEnumerator DisableOutline(TargetOutline2D outline, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        if (outline != null) outline.isGlow = false;
     }
 
     public void ToggleActive(TargetObject t)
@@ -89,7 +141,7 @@ public class WorldCommandActions : MonoBehaviour
         // direction "devant" en sidescroller (droite/gauche)
         Vector3 dir = Vector3.right;
 
-        // priorité: SpriteRenderer.flipX si dispo (child compris), sinon scale.x
+        // prioritÃ©: SpriteRenderer.flipX si dispo (child compris), sinon scale.x
         var sr = origin.GetComponentInChildren<SpriteRenderer>();
         if (sr != null && sr.flipX) dir = Vector3.left;
         else if (origin.transform.lossyScale.x < 0f) dir = Vector3.left;
@@ -101,17 +153,17 @@ public class WorldCommandActions : MonoBehaviour
 
         GameObject go = Instantiate(s.prefab, pos, Quaternion.identity);
 
-        //1) Garantir un TargetObject sur l'objet spawné
+        //1) Garantir un TargetObject sur l'objet spawnÃ©
         var t = go.GetComponent<TargetObject>();
         if (t == null) t = go.AddComponent<TargetObject>();
 
         //2) Donne un nom ciblable
         t.SetName(id); // ex: "wall", "projectile"
 
-        //3) Mémoriser le dernier spawné (pour un selector "last" plus tard)
+        //3) MÃ©moriser le dernier spawnÃ© (pour un selector "last" plus tard)
         LastSpawned = t;
 
-        //4) Initialiser projectile si présent
+        //4) Initialiser projectile si prÃ©sent
         var proj = go.GetComponent<Projectile2D>();
         if (proj != null)
         {
