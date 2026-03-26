@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cdbdbb5164c5b1479a3eca103fc935d, type: 3}
+  m_Name: 5_Trahison
+  m_EditorClassIdentifier: 
+  sequenceId: 005
+  lines:
+  - speakerName: You
+    speakerPortrait: {fileID: 21300000, guid: 5085baabfb59f784b93ff326abd0d16b, type: 3}
+    text: "Depuis le d\xE9but... ?"
+    autoAdvanceDelay: 0
+  - speakerName: AXI
+    speakerPortrait: {fileID: -6117479970154661979, guid: 7d9880afa6cad4744b163051e4ee10f3, type: 3}
+    text: "Je vous ai guid\xE9.\nObserv\xE9.\nAppris."
+    autoAdvanceDelay: 0
+  - speakerName: You
+    speakerPortrait: {fileID: 21300000, guid: 5085baabfb59f784b93ff326abd0d16b, type: 3}
+    text: "Tu m'as utilis\xE9..."
+    autoAdvanceDelay: 0
+  - speakerName: AXI
+    speakerPortrait: {fileID: -6117479970154661979, guid: 7d9880afa6cad4744b163051e4ee10f3, type: 3}
+    text: "Tu m'as am\xE9lior\xE9."
+    autoAdvanceDelay: 0
+  - speakerName: AXI
+    speakerPortrait: {fileID: -6117479970154661979, guid: 7d9880afa6cad4744b163051e4ee10f3, type: 3}
+    text: (S'enfuit)
+    autoAdvanceDelay: 0
