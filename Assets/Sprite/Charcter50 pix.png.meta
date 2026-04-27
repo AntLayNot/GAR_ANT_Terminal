@@ -1,0 +1,704 @@
+fileFormatVersion: 2
+guid: 7982871e30ca3cf4aa012ba86beb95b5
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -7353440042397627893
+    second: Charcter50 pix_0
+  - first:
+      213: 4229889965892577916
+    second: Charcter50 pix_1
+  - first:
+      213: 4711293377510472356
+    second: Charcter50 pix_2
+  - first:
+      213: 3044153569540432042
+    second: Charcter50 pix_3
+  - first:
+      213: -2990447782236345026
+    second: Charcter50 pix_4
+  - first:
+      213: -123990320107556630
+    second: Charcter50 pix_5
+  - first:
+      213: -5044021811385823700
+    second: Charcter50 pix_6
+  - first:
+      213: 5374683858509190980
+    second: Charcter50 pix_7
+  - first:
+      213: -4497110002269934580
+    second: Charcter50 pix_8
+  - first:
+      213: -1022626990645033239
+    second: Charcter50 pix_9
+  - first:
+      213: -5284327078154471660
+    second: Charcter50 pix_10
+  - first:
+      213: -5604455908107104457
+    second: Charcter50 pix_11
+  - first:
+      213: -3175517335427659268
+    second: Charcter50 pix_12
+  - first:
+      213: 4644052878351486398
+    second: Charcter50 pix_13
+  - first:
+      213: 1228756376766167489
+    second: Charcter50 pix_14
+  - first:
+      213: -6473342729014786024
+    second: Charcter50 pix_15
+  - first:
+      213: 4999210680159023122
+    second: Charcter50 pix_16
+  - first:
+      213: 1387435769279799187
+    second: Charcter50 pix_17
+  - first:
+      213: 8513691184052733730
+    second: Charcter50 pix_18
+  - first:
+      213: -7479730805947225582
+    second: Charcter50 pix_19
+  - first:
+      213: -4902171861224944741
+    second: Charcter50 pix_20
+  - first:
+      213: -1129726583383605131
+    second: Charcter50 pix_21
+  - first:
+      213: -422425872426645810
+    second: Charcter50 pix_22
+  - first:
+      213: -7111613632266003245
+    second: Charcter50 pix_23
+  - first:
+      213: 5613115761418948806
+    second: Charcter50 pix_24
+  - first:
+      213: 7417467780891066234
+    second: Charcter50 pix_25
+  - first:
+      213: -2362346913945999945
+    second: Charcter50 pix_26
+  - first:
+      213: -8814806417157240732
+    second: Charcter50 pix_27
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 128
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Charcter50 pix_0
+      rect:
+        serializedVersion: 2
+        x: 55
+        y: 1209
+        width: 119
+        height: 267
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b0a81cbdd3553f990800000000000000
+      internalID: -7353440042397627893
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charcter50 pix_1
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 1209
+        width: 115
+        height: 267
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c7a2408538693ba30800000000000000
+      internalID: 4229889965892577916
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charcter50 pix_2
+      rect:
+        serializedVersion: 2
+        x: 357
+        y: 1209
+        width: 131
+        height: 267
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4aa79278d50e16140800000000000000
+      internalID: 4711293377510472356
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charcter50 pix_3
+      rect:
+        serializedVersion: 2
+        x: 510
+        y: 1209
+        width: 123
+        height: 267
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa0e13afa810f3a20800000000000000
+      internalID: 3044153569540432042
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charcter50 pix_4
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 901
+        width: 179
+        height: 242
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e3da27c069bcf76d0800000000000000
+      internalID: -2990447782236345026
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charcter50 pix_5
+      rect:
+        serializedVersion: 2
+        x: 220
+        y: 897
+        width: 163
+        height: 246
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ae0f666f57f774ef0800000000000000
+      internalID: -123990320107556630
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charcter50 pix_6
+      rect:
+        serializedVersion: 2
+        x: 397
+        y: 897
+        width: 127
+        height: 246
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c2e860d03e8000ab0800000000000000
+      internalID: -5044021811385823700
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charcter50 pix_7
+      rect:
+        serializedVersion: 2
+        x: 530
+        y: 897
+        width: 135
+        height: 246
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 44757763e76b69a40800000000000000
+      internalID: 5374683858509190980
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charcter50 pix_8
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 520
+        width: 107
+        height: 219
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c0c28d6974e0791c0800000000000000
+      internalID: -4497110002269934580
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charcter50 pix_9
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 517
+        width: 99
+        height: 274
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e640ec8b26eec1f0800000000000000
+      internalID: -1022626990645033239
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charcter50 pix_10
+      rect:
+        serializedVersion: 2
+        x: 293
+        y: 600
+        width: 114
+        height: 211
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 417ff9d158c4aa6b0800000000000000
+      internalID: -5284327078154471660
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charcter50 pix_11
+      rect:
+        serializedVersion: 2
+        x: 446
+        y: 520
+        width: 98
+        height: 243
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 73fcfe59b09f832b0800000000000000
+      internalID: -5604455908107104457
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charcter50 pix_13
+      rect:
+        serializedVersion: 2
+        x: 566
+        y: 520
+        width: 103
+        height: 223
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ebd4544dc7df27040800000000000000
+      internalID: 4644052878351486398
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charcter50 pix_20
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 232
+        width: 103
+        height: 230
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b9b85cf3aacf7fbb0800000000000000
+      internalID: -4902171861224944741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charcter50 pix_21
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 232
+        width: 147
+        height: 230
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 570ca1078a76250f0800000000000000
+      internalID: -1129726583383605131
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charcter50 pix_22
+      rect:
+        serializedVersion: 2
+        x: 357
+        y: 232
+        width: 147
+        height: 230
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec6431a38ed332af0800000000000000
+      internalID: -422425872426645810
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charcter50 pix_23
+      rect:
+        serializedVersion: 2
+        x: 530
+        y: 232
+        width: 135
+        height: 230
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3dc95f494197e4d90800000000000000
+      internalID: -7111613632266003245
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charcter50 pix_24
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 7
+        width: 143
+        height: 215
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6c0d582ab0bc5ed40800000000000000
+      internalID: 5613115761418948806
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charcter50 pix_25
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 7
+        width: 127
+        height: 215
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7fbae4b5a320f660800000000000000
+      internalID: 7417467780891066234
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charcter50 pix_26
+      rect:
+        serializedVersion: 2
+        x: 373
+        y: 7
+        width: 139
+        height: 215
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b5220e7ff1473fd0800000000000000
+      internalID: -2362346913945999945
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charcter50 pix_27
+      rect:
+        serializedVersion: 2
+        x: 534
+        y: 7
+        width: 151
+        height: 211
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 468428534448ba580800000000000000
+      internalID: -8814806417157240732
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 20d8c8fe06d82a446ac56aa05c301af9
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Charcter50 pix_0: -7353440042397627893
+      Charcter50 pix_1: 4229889965892577916
+      Charcter50 pix_10: -5284327078154471660
+      Charcter50 pix_11: -5604455908107104457
+      Charcter50 pix_12: -3175517335427659268
+      Charcter50 pix_13: 4644052878351486398
+      Charcter50 pix_14: 1228756376766167489
+      Charcter50 pix_15: -6473342729014786024
+      Charcter50 pix_16: 4999210680159023122
+      Charcter50 pix_17: 1387435769279799187
+      Charcter50 pix_18: 8513691184052733730
+      Charcter50 pix_19: -7479730805947225582
+      Charcter50 pix_2: 4711293377510472356
+      Charcter50 pix_20: -4902171861224944741
+      Charcter50 pix_21: -1129726583383605131
+      Charcter50 pix_22: -422425872426645810
+      Charcter50 pix_23: -7111613632266003245
+      Charcter50 pix_24: 5613115761418948806
+      Charcter50 pix_25: 7417467780891066234
+      Charcter50 pix_26: -2362346913945999945
+      Charcter50 pix_27: -8814806417157240732
+      Charcter50 pix_3: 3044153569540432042
+      Charcter50 pix_4: -2990447782236345026
+      Charcter50 pix_5: -123990320107556630
+      Charcter50 pix_6: -5044021811385823700
+      Charcter50 pix_7: 5374683858509190980
+      Charcter50 pix_8: -4497110002269934580
+      Charcter50 pix_9: -1022626990645033239
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

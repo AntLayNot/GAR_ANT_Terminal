@@ -143,10 +143,10 @@ TextureImporter:
       name: FioleVie_0
       rect:
         serializedVersion: 2
-        x: 50
-        y: 504
-        width: 135
-        height: 467
+        x: 12
+        y: 488
+        width: 121
+        height: 454
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -165,10 +165,10 @@ TextureImporter:
       name: FioleVie_1
       rect:
         serializedVersion: 2
-        x: 270
-        y: 504
-        width: 135
-        height: 467
+        x: 231
+        y: 488
+        width: 128
+        height: 454
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -187,10 +187,10 @@ TextureImporter:
       name: FioleVie_2
       rect:
         serializedVersion: 2
-        x: 490
-        y: 504
-        width: 136
-        height: 467
+        x: 451
+        y: 488
+        width: 127
+        height: 454
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -209,10 +209,10 @@ TextureImporter:
       name: FioleVie_3
       rect:
         serializedVersion: 2
-        x: 706
-        y: 504
-        width: 135
-        height: 467
+        x: 670
+        y: 488
+        width: 128
+        height: 454
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -231,10 +231,10 @@ TextureImporter:
       name: FioleVie_4
       rect:
         serializedVersion: 2
-        x: 927
-        y: 504
-        width: 135
-        height: 467
+        x: 890
+        y: 488
+        width: 127
+        height: 454
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -253,10 +253,10 @@ TextureImporter:
       name: FioleVie_5
       rect:
         serializedVersion: 2
-        x: 36
-        y: 10
-        width: 157
-        height: 460
+        x: 0
+        y: 0
+        width: 145
+        height: 440
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -275,10 +275,10 @@ TextureImporter:
       name: FioleVie_6
       rect:
         serializedVersion: 2
-        x: 256
-        y: 10
-        width: 158
-        height: 460
+        x: 219
+        y: 0
+        width: 146
+        height: 440
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -297,10 +297,10 @@ TextureImporter:
       name: FioleVie_7
       rect:
         serializedVersion: 2
-        x: 477
-        y: 10
-        width: 157
-        height: 460
+        x: 438
+        y: 0
+        width: 147
+        height: 440
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -319,10 +319,10 @@ TextureImporter:
       name: FioleVie_8
       rect:
         serializedVersion: 2
-        x: 705
-        y: 10
-        width: 151
-        height: 460
+        x: 664
+        y: 0
+        width: 146
+        height: 440
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -341,10 +341,10 @@ TextureImporter:
       name: FioleVie_9
       rect:
         serializedVersion: 2
-        x: 919
-        y: 10
-        width: 157
-        height: 460
+        x: 884
+        y: 0
+        width: 138
+        height: 440
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
