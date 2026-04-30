@@ -55,7 +55,7 @@ ScriptedImporter:
     flipbookColumns: 0
     ignorePngGamma: 0
     cookieMode: 0
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 0
@@ -88,7 +88,7 @@ ScriptedImporter:
       y: 0
       width: 0
       height: 0
-    spriteID: 2a54ec9bad3f90c4eac274b1ceff35b6
+    spriteID: f6cc64314b153a2428d96811c6048f1a
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -100,7 +100,7 @@ ScriptedImporter:
     spritePosition: {x: 0, y: 0}
   multiSpriteImportData: []
   layeredSpriteImportData:
-  - name: BeamBullet
+  - name: 1
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -108,11 +108,11 @@ ScriptedImporter:
     customData: 
     rect:
       serializedVersion: 2
-      x: 321
-      y: 559
-      width: 52
-      height: 48
-    spriteID: 93b05222d195bdc47af625c699e9b567
+      x: 921
+      y: 443
+      width: 57
+      height: 57
+    spriteID: 2ca84513082753d40a0c206afefbd022
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -120,9 +120,9 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 321, y: 559}
-    spritePosition: {x: 53, y: 790}
-  - name: BeamBulletAFT
+    uvTransform: {x: 921, y: 443}
+    spritePosition: {x: 122, y: 808}
+  - name: 2
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -130,11 +130,11 @@ ScriptedImporter:
     customData: 
     rect:
       serializedVersion: 2
-      x: 222
-      y: 559
-      width: 91
-      height: 62
-    spriteID: aa25a64435b626647b13a9fe35283b38
+      x: 348
+      y: 584
+      width: 101
+      height: 63
+    spriteID: 60885b3e857cade409e2dc80a2237fde
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -142,9 +142,9 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 222, y: 559}
-    spritePosition: {x: 171, y: 783}
-  - name: BeamShot
+    uvTransform: {x: 348, y: 584}
+    spritePosition: {x: 299, y: 802}
+  - name: 3
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -152,11 +152,11 @@ ScriptedImporter:
     customData: 
     rect:
       serializedVersion: 2
-      x: 412
-      y: 422
-      width: 245
-      height: 106
-    spriteID: 3b2aecea396a2a94eaecca961e2990d5
+      x: 413
+      y: 443
+      width: 258
+      height: 113
+    spriteID: 1d1b4d6cd4ae7e147ae0a7ff253c72db
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -164,9 +164,9 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 412, y: 422}
-    spritePosition: {x: 337, y: 762}
-  - name: BeamShot2
+    uvTransform: {x: 413, y: 443}
+    spritePosition: {x: 507, y: 777}
+  - name: 4
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -175,10 +175,10 @@ ScriptedImporter:
     rect:
       serializedVersion: 2
       x: 4
-      y: 422
-      width: 400
-      height: 129
-    spriteID: 93fc90abbd028bd4e95c34c32c62819a
+      y: 443
+      width: 401
+      height: 133
+    spriteID: b9ffac6435423f44ca8b5a1f8617b64f
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -186,9 +186,9 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 422}
-    spritePosition: {x: 657, y: 751}
-  - name: LaserBeam1
+    uvTransform: {x: 4, y: 443}
+    spritePosition: {x: 102, y: 644}
+  - name: 5
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -198,9 +198,9 @@ ScriptedImporter:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 994
-      height: 134
-    spriteID: e859dc10b631a1543b24ae902ff9a22d
+      width: 1003
+      height: 145
+    spriteID: 196cc87f9464e6e4a913df6d05672f96
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -209,8 +209,8 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     uvTransform: {x: 4, y: 4}
-    spritePosition: {x: 46, y: 562}
-  - name: LaserBeam2
+    spritePosition: {x: 59, y: 506}
+  - name: 6
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -219,10 +219,10 @@ ScriptedImporter:
     rect:
       serializedVersion: 2
       x: 4
-      y: 146
-      width: 994
-      height: 130
-    spriteID: ca6e69c97871ad54d80d02af79b9c3e3
+      y: 157
+      width: 997
+      height: 138
+    spriteID: b030f00c4163fbb48a2513113d88b296
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -230,9 +230,9 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 146}
-    spritePosition: {x: 63, y: 392}
-  - name: LaserBeam3
+    uvTransform: {x: 4, y: 157}
+    spritePosition: {x: 58, y: 337}
+  - name: 7
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -241,10 +241,10 @@ ScriptedImporter:
     rect:
       serializedVersion: 2
       x: 4
-      y: 284
-      width: 994
-      height: 130
-    spriteID: 3b7410bf3fb157b46a0125e7642268e4
+      y: 303
+      width: 1004
+      height: 132
+    spriteID: bdc1e1fe46036b84bb54b40a28b46021
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -252,9 +252,9 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 284}
-    spritePosition: {x: 53, y: 224}
-  - name: BeamImpact1
+    uvTransform: {x: 4, y: 303}
+    spritePosition: {x: 59, y: 205}
+  - name: 8
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -262,77 +262,11 @@ ScriptedImporter:
     customData: 
     rect:
       serializedVersion: 2
-      x: 893
-      y: 422
-      width: 101
-      height: 110
-    spriteID: 1acb10f8730cce44a8de24f0cef0d4d8
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 893, y: 422}
-    spritePosition: {x: 177, y: 60}
-  - name: BeamImpact2
-    originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
-    border: {x: 0, y: 0, z: 0, w: 0}
-    customData: 
-    rect:
-      serializedVersion: 2
-      x: 4
-      y: 559
-      width: 101
-      height: 110
-    spriteID: 52b21a5f9a6283c4097f109538bae563
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 4, y: 559}
-    spritePosition: {x: 346, y: 60}
-  - name: BeamImpact3
-    originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
-    border: {x: 0, y: 0, z: 0, w: 0}
-    customData: 
-    rect:
-      serializedVersion: 2
-      x: 113
-      y: 559
-      width: 101
-      height: 110
-    spriteID: a2bb85cb1e1fddf4b80bbd8774212d5e
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 113, y: 559}
-    spritePosition: {x: 514, y: 60}
-  - name: BeamImpact4
-    originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
-    border: {x: 0, y: 0, z: 0, w: 0}
-    customData: 
-    rect:
-      serializedVersion: 2
-      x: 665
-      y: 422
+      x: 234
+      y: 584
       width: 106
-      height: 110
-    spriteID: f48f1ba4fd45e7a45a91ab342041b4bc
+      height: 120
+    spriteID: 5c8a8d09c34b8de4a802241056d2cf7f
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -340,9 +274,9 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 665, y: 422}
-    spritePosition: {x: 676, y: 60}
-  - name: BeamImpact5
+    uvTransform: {x: 234, y: 584}
+    spritePosition: {x: 102, y: 38}
+  - name: 9
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -350,11 +284,11 @@ ScriptedImporter:
     customData: 
     rect:
       serializedVersion: 2
-      x: 779
-      y: 422
-      width: 106
-      height: 110
-    spriteID: cb1b767821400514a84a8314e987b98d
+      x: 4
+      y: 584
+      width: 107
+      height: 120
+    spriteID: ede27efde1b0d854187ca001555834b0
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -362,8 +296,74 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 779, y: 422}
-    spritePosition: {x: 837, y: 60}
+    uvTransform: {x: 4, y: 584}
+    spritePosition: {x: 270, y: 38}
+  - name: 10
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 119
+      y: 584
+      width: 107
+      height: 120
+    spriteID: ab97e0d5ec669574eb69b237d2b96aa5
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 119, y: 584}
+    spritePosition: {x: 439, y: 36}
+  - name: 11
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 679
+      y: 443
+      width: 113
+      height: 120
+    spriteID: 80fc77142c79f9f4481c675115e17b2a
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 679, y: 443}
+    spritePosition: {x: 608, y: 38}
+  - name: 12
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 800
+      y: 443
+      width: 113
+      height: 120
+    spriteID: 4eab8bd9bea4e97469a9047aaea14c91
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 800, y: 443}
+    spritePosition: {x: 783, y: 38}
   spriteImportData: []
   rigSpriteImportData: []
   sharedRigSpriteImportData: []
@@ -382,7 +382,43 @@ ScriptedImporter:
     characterGroups: []
     pivot: {x: 0, y: 0}
     boneReadOnly: 0
-  platformSettings: []
+  platformSettings:
+  - name: DefaultTexturePlatform
+    overridden: 0
+    ignorePlatformSupport: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
+  - name: Standalone
+    overridden: 0
+    ignorePlatformSupport: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
+  - name: Android
+    overridden: 0
+    ignorePlatformSupport: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
   mosaicLayers: 1
   characterMode: 1
   documentPivot: {x: 0, y: 0}
@@ -403,123 +439,123 @@ ScriptedImporter:
   resliceFromLayer: 0
   pSDLayerImportSetting: []
   psdLayers:
-  - name: BeamBullet
-    spriteName: BeamBullet
+  - name: 1
+    spriteName: 1
     isGroup: 0
     parentIndex: -1
-    spriteID: 93b05222d195bdc47af625c699e9b567
-    layerID: 16
-    mosaicPosition: {x: 321, y: 559}
+    spriteID: 2ca84513082753d40a0c206afefbd022
+    layerID: 4
+    mosaicPosition: {x: 921, y: 443}
     flatten: 0
     isImported: 1
     isVisible: 1
-  - name: BeamBulletAFT
-    spriteName: BeamBulletAFT
+  - name: 2
+    spriteName: 2
     isGroup: 0
     parentIndex: -1
-    spriteID: aa25a64435b626647b13a9fe35283b38
-    layerID: 17
-    mosaicPosition: {x: 222, y: 559}
+    spriteID: 60885b3e857cade409e2dc80a2237fde
+    layerID: 5
+    mosaicPosition: {x: 348, y: 584}
     flatten: 0
     isImported: 1
     isVisible: 1
-  - name: BeamShot
-    spriteName: BeamShot
+  - name: 3
+    spriteName: 3
     isGroup: 0
     parentIndex: -1
-    spriteID: 3b2aecea396a2a94eaecca961e2990d5
-    layerID: 18
-    mosaicPosition: {x: 412, y: 422}
+    spriteID: 1d1b4d6cd4ae7e147ae0a7ff253c72db
+    layerID: 6
+    mosaicPosition: {x: 413, y: 443}
     flatten: 0
     isImported: 1
     isVisible: 1
-  - name: BeamShot2
-    spriteName: BeamShot2
+  - name: 4
+    spriteName: 4
     isGroup: 0
     parentIndex: -1
-    spriteID: 93fc90abbd028bd4e95c34c32c62819a
-    layerID: 19
-    mosaicPosition: {x: 4, y: 422}
+    spriteID: b9ffac6435423f44ca8b5a1f8617b64f
+    layerID: 7
+    mosaicPosition: {x: 4, y: 443}
     flatten: 0
     isImported: 1
     isVisible: 1
-  - name: LaserBeam1
-    spriteName: LaserBeam1
+  - name: 5
+    spriteName: 5
     isGroup: 0
     parentIndex: -1
-    spriteID: e859dc10b631a1543b24ae902ff9a22d
-    layerID: 20
+    spriteID: 196cc87f9464e6e4a913df6d05672f96
+    layerID: 8
     mosaicPosition: {x: 4, y: 4}
     flatten: 0
     isImported: 1
     isVisible: 1
-  - name: LaserBeam2
-    spriteName: LaserBeam2
+  - name: 6
+    spriteName: 6
     isGroup: 0
     parentIndex: -1
-    spriteID: ca6e69c97871ad54d80d02af79b9c3e3
-    layerID: 21
-    mosaicPosition: {x: 4, y: 146}
+    spriteID: b030f00c4163fbb48a2513113d88b296
+    layerID: 9
+    mosaicPosition: {x: 4, y: 157}
     flatten: 0
     isImported: 1
     isVisible: 1
-  - name: LaserBeam3
-    spriteName: LaserBeam3
+  - name: 7
+    spriteName: 7
     isGroup: 0
     parentIndex: -1
-    spriteID: 3b7410bf3fb157b46a0125e7642268e4
-    layerID: 22
-    mosaicPosition: {x: 4, y: 284}
+    spriteID: bdc1e1fe46036b84bb54b40a28b46021
+    layerID: 10
+    mosaicPosition: {x: 4, y: 303}
     flatten: 0
     isImported: 1
     isVisible: 1
-  - name: BeamImpact1
-    spriteName: BeamImpact1
+  - name: 8
+    spriteName: 8
     isGroup: 0
     parentIndex: -1
-    spriteID: 1acb10f8730cce44a8de24f0cef0d4d8
-    layerID: 23
-    mosaicPosition: {x: 893, y: 422}
+    spriteID: 5c8a8d09c34b8de4a802241056d2cf7f
+    layerID: 11
+    mosaicPosition: {x: 234, y: 584}
     flatten: 0
     isImported: 1
     isVisible: 1
-  - name: BeamImpact2
-    spriteName: BeamImpact2
+  - name: 9
+    spriteName: 9
     isGroup: 0
     parentIndex: -1
-    spriteID: 52b21a5f9a6283c4097f109538bae563
-    layerID: 24
-    mosaicPosition: {x: 4, y: 559}
+    spriteID: ede27efde1b0d854187ca001555834b0
+    layerID: 12
+    mosaicPosition: {x: 4, y: 584}
     flatten: 0
     isImported: 1
     isVisible: 1
-  - name: BeamImpact3
-    spriteName: BeamImpact3
+  - name: 10
+    spriteName: 10
     isGroup: 0
     parentIndex: -1
-    spriteID: a2bb85cb1e1fddf4b80bbd8774212d5e
-    layerID: 27
-    mosaicPosition: {x: 113, y: 559}
+    spriteID: ab97e0d5ec669574eb69b237d2b96aa5
+    layerID: 13
+    mosaicPosition: {x: 119, y: 584}
     flatten: 0
     isImported: 1
     isVisible: 1
-  - name: BeamImpact4
-    spriteName: BeamImpact4
+  - name: 11
+    spriteName: 11
     isGroup: 0
     parentIndex: -1
-    spriteID: f48f1ba4fd45e7a45a91ab342041b4bc
-    layerID: 28
-    mosaicPosition: {x: 665, y: 422}
+    spriteID: 80fc77142c79f9f4481c675115e17b2a
+    layerID: 14
+    mosaicPosition: {x: 679, y: 443}
     flatten: 0
     isImported: 1
     isVisible: 1
-  - name: BeamImpact5
-    spriteName: BeamImpact5
+  - name: 12
+    spriteName: 12
     isGroup: 0
     parentIndex: -1
-    spriteID: cb1b767821400514a84a8314e987b98d
-    layerID: 29
-    mosaicPosition: {x: 779, y: 422}
+    spriteID: 4eab8bd9bea4e97469a9047aaea14c91
+    layerID: 2
+    mosaicPosition: {x: 800, y: 443}
     flatten: 0
     isImported: 1
     isVisible: 1
