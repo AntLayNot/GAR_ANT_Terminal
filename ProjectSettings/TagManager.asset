@@ -14,9 +14,9 @@ TagManager:
   - Enemy
   - Projectile
   - EnemyProjectile
-  - 
-  - 
-  - 
+  - Pillar
+  - Boss
+  - BossProjectile
   - 
   - 
   - 

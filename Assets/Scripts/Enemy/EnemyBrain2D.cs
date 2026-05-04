@@ -8,6 +8,12 @@ public class EnemyBrain2D : MonoBehaviour
     [Header("Preset (optional)")]
     public EnemyPreset2D preset;
 
+    [Header("Facing")]
+    public Transform visualRoot;
+    public bool useVisualRootRotationInsteadOfFlip = true;
+
+    private float facingSign = 1f;
+
     [Header("Target")]
     public Transform target;                 // assigne le Player (ou auto-find tag)
     public string targetTag = "Player";
@@ -78,6 +84,9 @@ public class EnemyBrain2D : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponentInChildren<SpriteRenderer>();
+
+        if (visualRoot == null)
+            visualRoot = sr != null ? sr.transform.root != transform ? sr.transform.root : sr.transform : null;
     }
 
     void Start()
@@ -91,6 +100,7 @@ public class EnemyBrain2D : MonoBehaviour
         }
 
         state = patrol ? State.Patrol : State.Idle;
+        FaceDir(1f);
     }
 
     void Update()
@@ -445,18 +455,27 @@ public class EnemyBrain2D : MonoBehaviour
 
         GameObject go = Instantiate(projectilePrefab, spawnPos, Quaternion.identity);
 
-        
-        var proj = go.GetComponent<Projectile2D>();
-        if (proj != null)
+
+        Vector2 dir = facing < 0 ? Vector2.left : Vector2.right;
+
+        var laser = go.GetComponent<LaserProjectile2D>();
+        if (laser != null)
         {
-            Vector2 dir = facing < 0 ? Vector2.left : Vector2.right;
-            proj.Init(dir);
+            laser.SetDirection(dir);
         }
         else
         {
-            var prb = go.GetComponent<Rigidbody2D>();
-            if (prb != null)
-                prb.linearVelocity = new Vector2(projectileSpeed * facing, 0f);
+            var proj = go.GetComponent<Projectile2D>();
+            if (proj != null)
+            {
+                proj.Init(dir);
+            }
+            else
+            {
+                var prb = go.GetComponent<Rigidbody2D>();
+                if (prb != null)
+                    prb.linearVelocity = new Vector2(projectileSpeed * facing, 0f);
+            }
         }
     }
 
@@ -504,15 +523,29 @@ public class EnemyBrain2D : MonoBehaviour
 
     void FaceDir(float dir)
     {
-        if (sr == null) return;
         if (dir == 0f) return;
-        sr.flipX = dir < 0f;
+
+        facingSign = dir < 0f ? -1f : 1f;
+
+        if (useVisualRootRotationInsteadOfFlip)
+        {
+            if (visualRoot != null)
+            {
+                visualRoot.localRotation = facingSign < 0f
+                    ? Quaternion.Euler(0f, 180f, 0f)
+                    : Quaternion.Euler(0f, 0f, 0f);
+            }
+        }
+        else
+        {
+            if (sr != null)
+                sr.flipX = facingSign < 0f;
+        }
     }
 
     float GetFacingSign()
     {
-        if (sr != null) return sr.flipX ? -1f : 1f;
-        return transform.localScale.x < 0f ? -1f : 1f;
+        return facingSign;
     }
 
     // ---------------------------
@@ -526,9 +559,7 @@ public class EnemyBrain2D : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, GetEngageRange());
 
-        float facing = 1f;
-        var srLocal = GetComponentInChildren<SpriteRenderer>();
-        if (srLocal != null && srLocal.flipX) facing = -1f;
+        float facing = Application.isPlaying ? facingSign : 1f;
 
         // melee hitbox preview
         Vector2 center = (Vector2)transform.position + new Vector2(attackBoxOffset.x * facing, attackBoxOffset.y);

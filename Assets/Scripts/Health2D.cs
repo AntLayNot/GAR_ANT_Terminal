@@ -3,12 +3,20 @@ using UnityEngine.Events;
 
 public class Health2D : MonoBehaviour, IDamageable
 {
+    [Header("Health")]
     public int maxHP = 5;
     public int currentHP;
+
+    [Header("Options")]
+    [SerializeField] private bool destroyOnDeath = false;
 
     [Header("Events")]
     public UnityEvent<int, int> onHPChanged; // current, max
     public UnityEvent onDeath;
+
+    private bool isDead = false;
+
+    public bool IsDead => isDead;
 
     void Awake()
     {
@@ -19,7 +27,7 @@ public class Health2D : MonoBehaviour, IDamageable
     public void TakeDamage(int amount)
     {
         if (amount <= 0) return;
-        if (currentHP <= 0) return;
+        if (isDead) return;
 
         currentHP = Mathf.Max(0, currentHP - amount);
         onHPChanged?.Invoke(currentHP, maxHP);
@@ -31,17 +39,46 @@ public class Health2D : MonoBehaviour, IDamageable
     public void Heal(int amount)
     {
         if (amount <= 0) return;
-        if (currentHP <= 0) return;
+        if (isDead) return;
 
         currentHP = Mathf.Min(maxHP, currentHP + amount);
         onHPChanged?.Invoke(currentHP, maxHP);
     }
 
+    public void FullHeal()
+    {
+        if (isDead) return;
+
+        currentHP = maxHP;
+        onHPChanged?.Invoke(currentHP, maxHP);
+    }
+
+    public void SetHealth(int value)
+    {
+        currentHP = Mathf.Clamp(value, 0, maxHP);
+        isDead = currentHP <= 0;
+        onHPChanged?.Invoke(currentHP, maxHP);
+
+        if (isDead)
+            onDeath?.Invoke();
+    }
+
+    public void Revive(int healthAmount)
+    {
+        isDead = false;
+        currentHP = Mathf.Clamp(healthAmount, 1, maxHP);
+        onHPChanged?.Invoke(currentHP, maxHP);
+    }
+
     void Die()
     {
+        if (isDead) return;
+
+        isDead = true;
         onDeath?.Invoke();
-        // simple: destroy
-        Destroy(gameObject);
+
+        if (destroyOnDeath)
+            Destroy(gameObject);
     }
 }
 

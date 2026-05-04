@@ -9,6 +9,7 @@ public class PlayerPlatformerController2D : MonoBehaviour
     public Animator animator;
     public Transform groundCheck;
     public LayerMask groundLayer;
+    public PlayerKnockback2D knockback;
 
     [Header("Ground Check")]
     public Vector2 groundCheckSize = new Vector2(0.6f, 0.12f);
@@ -65,12 +66,14 @@ public class PlayerPlatformerController2D : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        knockback = GetComponent<PlayerKnockback2D>();
     }
 
     void Awake()
     {
         if (rb == null) rb = GetComponent<Rigidbody2D>();
         if (animator == null) animator = GetComponent<Animator>();
+        if (knockback == null) knockback = GetComponent<PlayerKnockback2D>();
     }
 
     void Update()
@@ -94,7 +97,16 @@ public class PlayerPlatformerController2D : MonoBehaviour
             return;
         }
 
-        // A/D ou Q/D (Unity gère ZQSD via Horizontal)
+        if (knockback != null && knockback.IsKnockedBack)
+        {
+            moveInput = 0f;
+            jumpPressed = false;
+            jumpHeld = false;
+            UpdateAnimatorValues();
+            return;
+        }
+
+
         moveInput = Input.GetAxisRaw("Horizontal");
 
         if (Input.GetButtonDown("Jump")) // Space par défaut
@@ -133,6 +145,11 @@ public class PlayerPlatformerController2D : MonoBehaviour
             return;
         }
 
+        if (knockback != null && knockback.IsKnockedBack)
+        {
+            return;
+        }
+
         // Horizontal movement (accel/decel)
         float targetSpeed = moveInput * moveSpeed;
         float speedDif = targetSpeed - rb.linearVelocity.x;
@@ -166,7 +183,7 @@ public class PlayerPlatformerController2D : MonoBehaviour
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
 
-        // --- Better jump feel
+        // Better jump feel
         if (rb.linearVelocity.y < 0f)
         {
             rb.linearVelocity += Vector2.up * Physics2D.gravity.y * (fallMultiplier - 1f) * Time.fixedDeltaTime;
@@ -176,7 +193,7 @@ public class PlayerPlatformerController2D : MonoBehaviour
             rb.linearVelocity += Vector2.up * Physics2D.gravity.y * (lowJumpMultiplier - 1f) * Time.fixedDeltaTime;
         }
 
-        // reset one-frame input
+        // reset one frame input
         jumpPressed = false;
     }
 

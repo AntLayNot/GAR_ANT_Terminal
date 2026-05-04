@@ -63,6 +63,19 @@ public class Projectile2D : MonoBehaviour
             Destroy(gameObject);
     }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        IDamageable damageable = other.GetComponent<IDamageable>();
+        if (damageable == null)
+            damageable = other.GetComponentInParent<IDamageable>();
+
+        if (damageable != null)
+        {
+            damageable.TakeDamage(damage);
+            Destroy(gameObject);
+        }
+    }
+
     static bool IsInLayerMask(int layer, LayerMask mask)
     {
         return (mask.value & (1 << layer)) != 0;

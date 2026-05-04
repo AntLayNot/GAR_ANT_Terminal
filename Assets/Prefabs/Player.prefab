@@ -42,12 +42,15 @@ GameObject:
   - component: {fileID: 7823146020990217640}
   - component: {fileID: 7136439136112977748}
   - component: {fileID: 1363934916099262668}
+  - component: {fileID: 3409406840422885504}
   - component: {fileID: 4914149656837329350}
   - component: {fileID: 7145867653638558532}
   - component: {fileID: 1404604372547399732}
   - component: {fileID: 1869567332991051612}
   - component: {fileID: 3220739369510668374}
+  - component: {fileID: 2544557157075747404}
   - component: {fileID: 5116944810078236771}
+  - component: {fileID: 1764534129814203542}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -123,7 +126,7 @@ SpriteRenderer:
   m_Size: {x: 0.921875, y: 1.640625}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &1363934916099262668
@@ -144,6 +147,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 65
+  knockback: {fileID: 3409406840422885504}
   groundCheckSize: {x: 0.6, y: 0.12}
   terminal: {fileID: 0}
   moveSpeed: 6
@@ -161,6 +165,21 @@ MonoBehaviour:
   wallLayer:
     serializedVersion: 2
     m_Bits: 1
+--- !u!114 &3409406840422885504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6397819290475493528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15fc1f43251cca64facfbdb3c99ba517, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 1404604372547399732}
+  knockbackForce: 14
+  knockbackDuration: 0.18
 --- !u!114 &4914149656837329350
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -175,6 +194,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHP: 100
   currentHP: 100
+  destroyOnDeath: 0
   onHPChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -277,6 +297,27 @@ MonoBehaviour:
   key2: 50
   key3: 51
   key4: 52
+--- !u!114 &2544557157075747404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6397819290475493528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd5ba3670bc3ca942b97463f677dedb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: {fileID: 4914149656837329350}
+  rb: {fileID: 1404604372547399732}
+  collidersToDisableOnDeath: []
+  behavioursToDisableOnDeath: []
+  renderersToHideOnDeath: []
+  respawnDelay: 1
+  healthOnRespawn: 5
+  fullHealOnRespawn: 1
+  initialSpawnPoint: {fileID: 0}
 --- !u!95 &5116944810078236771
 Animator:
   serializedVersion: 7
@@ -299,3 +340,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1764534129814203542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6397819290475493528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 527ae57eebb3f0141b5bdcbe16078b6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingCharges: 0
+  maxCharges: 4
+  onChargesChanged:
+    m_PersistentCalls:
+      m_Calls: []

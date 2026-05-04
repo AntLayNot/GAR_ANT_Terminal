@@ -490,6 +490,19 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -497,9 +510,9 @@ TextureImporter:
       name: PingSpriteSheet_20
       rect:
         serializedVersion: 2
-        x: 27
+        x: 1
         y: 545
-        width: 276
+        width: 302
         height: 155
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -519,9 +532,9 @@ TextureImporter:
       name: PingSpriteSheet_22
       rect:
         serializedVersion: 2
-        x: 340
+        x: 306
         y: 545
-        width: 273
+        width: 307
         height: 154
       alignment: 0
       pivot: {x: 0.5, y: 0.5}

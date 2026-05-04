@@ -169,6 +169,6 @@ MonoBehaviour:
   lifetime: 3
   hitLayers:
     serializedVersion: 2
-    m_Bits: 65
+    m_Bits: 3649
   destroyOnHit: 1
   damage: 5
