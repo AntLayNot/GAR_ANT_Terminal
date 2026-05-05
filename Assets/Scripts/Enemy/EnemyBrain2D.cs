@@ -85,8 +85,6 @@ public class EnemyBrain2D : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponentInChildren<SpriteRenderer>();
 
-        if (visualRoot == null)
-            visualRoot = sr != null ? sr.transform.root != transform ? sr.transform.root : sr.transform : null;
     }
 
     void Start()

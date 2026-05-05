@@ -105,6 +105,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   preset: {fileID: 11400000, guid: 5f3d85ade134c87468577b12ba878194, type: 2}
+  visualRoot: {fileID: 0}
+  useVisualRootRotationInsteadOfFlip: 1
   target: {fileID: 0}
   targetTag: Player
   moveSpeed: 2.5
@@ -144,7 +146,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   projectilePrefab: {fileID: 3515107753380077507, guid: 3f0dc2a8612197e4d9898c63c2cbdeb9, type: 3}
-  shootCooldown: 0.8
+  shootCooldown: 1.6
   projectileSpeed: 12
   shootRange: 7
   preferredDistance: 4
@@ -162,8 +164,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a448a2a17138cd45a9919bbac70b49c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 50
-  currentHP: 50
+  maxHP: 25
+  currentHP: 25
+  destroyOnDeath: 1
   onHPChanged:
     m_PersistentCalls:
       m_Calls: []
