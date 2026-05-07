@@ -1,19 +1,10 @@
 fileFormatVersion: 2
-guid: d96e8019148d09643adf4307d846d778
+guid: 1c02ea0ddd06bc74397ae8f0d4f21a12
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2775707426493587585
-    second: Game Palette_0
-  - first:
-      213: -5340800454858207553
-    second: Game Palette_1
-  - first:
-      213: 6255781465708773692
-    second: Game Palette_2
-  - first:
-      213: 3731242802167647632
-    second: Game Palette_3
+      213: -1955448553306655712
+    second: Background_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -109,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Game Palette_0
+      name: Background_0
       rect:
         serializedVersion: 2
-        x: 255
-        y: 951
-        width: 66
-        height: 29
+        x: 0
+        y: 0
+        width: 256
+        height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -124,74 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1806094b23b458620800000000000000
-      internalID: 2775707426493587585
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Game Palette_1
-      rect:
-        serializedVersion: 2
-        x: 479
-        y: 911
-        width: 98
-        height: 115
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: fbe8ee7784aa1e5b0800000000000000
-      internalID: -5340800454858207553
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Game Palette_2
-      rect:
-        serializedVersion: 2
-        x: 191
-        y: 855
-        width: 130
-        height: 66
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: c314b08391001d650800000000000000
-      internalID: 6255781465708773692
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Game Palette_3
-      rect:
-        serializedVersion: 2
-        x: 319
-        y: 855
-        width: 130
-        height: 34
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 09d8fe14f8908c330800000000000000
-      internalID: 3731242802167647632
+      spriteID: 024fa93b6e9dcd4e0800000000000000
+      internalID: -1955448553306655712
       vertices: []
       indices: 
       edges: []
@@ -210,10 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Game Palette_0: 2775707426493587585
-      Game Palette_1: -5340800454858207553
-      Game Palette_2: 6255781465708773692
-      Game Palette_3: 3731242802167647632
+      Background_0: -1955448553306655712
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
