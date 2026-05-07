@@ -1,28 +1,25 @@
 fileFormatVersion: 2
-guid: 97f034bd093005f418a6e52f3a424b76
+guid: cb99528536a01ad4eaefe6ec7eb8aa05
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1011850186457292857
-    second: SaveDisk3_0
+      213: 7932717361392296169
+    second: MountainsClouds_0
   - first:
-      213: -5957838014399736165
-    second: SaveDisk3_1
+      213: -5585705512316834327
+    second: MountainsClouds_1
   - first:
-      213: 5513785515970888595
-    second: SaveDisk3_2
+      213: 8210676804751887989
+    second: MountainsClouds_2
   - first:
-      213: -6165408448961788964
-    second: SaveDisk3_3
+      213: -3915902908966283633
+    second: MountainsClouds_3
   - first:
-      213: 5616221833959462800
-    second: SaveDisk3_4
+      213: 1511458529953674273
+    second: MountainsClouds_4
   - first:
-      213: -2233032106156680086
-    second: SaveDisk3_5
-  - first:
-      213: 7545815258588467853
-    second: SaveDisk3_6
+      213: 8782133071602667068
+    second: MountainsClouds_5
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -64,12 +61,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -90,10 +87,10 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 512
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 2
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -114,172 +111,115 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SaveDisk3_0
+      name: MountainsClouds_0
       rect:
         serializedVersion: 2
-        x: 202
-        y: 295
-        width: 8
-        height: 9
+        x: 62
+        y: 338
+        width: 227
+        height: 138
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7cfdc4ecd9f25f1f0800000000000000
-      internalID: -1011850186457292857
+      spriteID: 9e0ac5d296ca61e60800000000000000
+      internalID: 7932717361392296169
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SaveDisk3_1
+      name: MountainsClouds_1
       rect:
         serializedVersion: 2
-        x: 216
-        y: 281
-        width: 16
-        height: 18
+        x: 331
+        y: 384
+        width: 117
+        height: 77
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b96926254e1815da0800000000000000
-      internalID: -5957838014399736165
+      spriteID: 9ede96e4e669b72b0800000000000000
+      internalID: -5585705512316834327
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SaveDisk3_2
+      name: MountainsClouds_3
       rect:
         serializedVersion: 2
-        x: 19
-        y: 28
-        width: 200
-        height: 266
+        x: 305
+        y: 331
+        width: 169
+        height: 42
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3938327a6b6e48c40800000000000000
-      internalID: 5513785515970888595
+      spriteID: f8655283d0be7a9c0800000000000000
+      internalID: -3915902908966283633
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SaveDisk3_3
+      name: MountainsClouds_4
       rect:
         serializedVersion: 2
-        x: 221
-        y: 258
-        width: 12
-        height: 12
+        x: 81
+        y: 83
+        width: 187
+        height: 115
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: cd3c0707ea1107aa0800000000000000
-      internalID: -6165408448961788964
+      spriteID: 1247f926687c9f410800000000000000
+      internalID: 1511458529953674273
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SaveDisk3_4
+      name: MountainsClouds_5
       rect:
         serializedVersion: 2
-        x: 5
-        y: 29
-        width: 10
-        height: 10
+        x: 230
+        y: 194
+        width: 265
+        height: 88
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 09752f08004d0fd40800000000000000
-      internalID: 5616221833959462800
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SaveDisk3_5
-      rect:
-        serializedVersion: 2
-        x: 7
-        y: 7
-        width: 18
-        height: 14
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: a6c1d7c612da201e0800000000000000
-      internalID: -2233032106156680086
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SaveDisk3_6
-      rect:
-        serializedVersion: 2
-        x: 33
-        y: 8
-        width: 13
-        height: 13
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: d8253ec8ffe18b860800000000000000
-      internalID: 7545815258588467853
+      spriteID: c3e4617bf7760e970800000000000000
+      internalID: 8782133071602667068
       vertices: []
       indices: 
       edges: []
@@ -288,7 +228,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: e6909d2187d85cc44924691d657e4fa6
     internalID: 0
     vertices: []
     indices: 
@@ -298,13 +238,12 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      SaveDisk3_0: -1011850186457292857
-      SaveDisk3_1: -5957838014399736165
-      SaveDisk3_2: 5513785515970888595
-      SaveDisk3_3: -6165408448961788964
-      SaveDisk3_4: 5616221833959462800
-      SaveDisk3_5: -2233032106156680086
-      SaveDisk3_6: 7545815258588467853
+      MountainsClouds_0: 7932717361392296169
+      MountainsClouds_1: -5585705512316834327
+      MountainsClouds_2: 8210676804751887989
+      MountainsClouds_3: -3915902908966283633
+      MountainsClouds_4: 1511458529953674273
+      MountainsClouds_5: 8782133071602667068
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
