@@ -128,24 +128,43 @@ public class CommandProcessor : MonoBehaviour
 
             string slot = GetToken(1);
 
-            // On récupère tous les tokens après le slot
-            var tokens = new List<string>();
-            for (int i = 2; i < matches.Count; i++)
-                tokens.Add(GetToken(i));
+            // On récupère la commande brute après "bind <slot>"
+            int firstSpace = line.IndexOf(' ');
+            if (firstSpace < 0)
+                return "Usage: bind <slot> \"<commande>\"";
 
-            // Si le dernier token ressemble à un float, on refuse (cooldown interdit)
-            if (tokens.Count >= 2 && SkillBindingManager.TryParseFloat(tokens[^1], out _))
-                return "Le cooldown n'est pas configurable. Usage: bind <slot> \"<commande>\"";
+            int secondSpace = line.IndexOf(' ', firstSpace + 1);
+            if (secondSpace < 0 || secondSpace + 1 >= line.Length)
+                return "Usage: bind <slot> \"<commande>\"";
 
-            string cmd = string.Join(" ", tokens).Trim();
+            string rawCmd = line[(secondSpace + 1)..].Trim();
+            if (string.IsNullOrWhiteSpace(rawCmd))
+                return "bind: commande invalide.";
+
+            // Si toute la commande est entourée de guillemets, on les enlève
+            string cmd = rawCmd;
+            if (cmd.Length >= 2 && cmd[0] == '"' && cmd[^1] == '"')
+                cmd = cmd[1..^1];
+
             if (string.IsNullOrWhiteSpace(cmd))
                 return "bind: commande invalide.";
 
-            // Validation: on refuse les commandes qui nécessitent une target mais n'en ont pas
+            // Vérif cooldown interdit uniquement sur les anciens formats style: bind 1 toggle self 2
+            var cmdMatches = Regex.Matches(cmd, "\"([^\"]*)\"|(\\S+)");
+            if (cmdMatches.Count >= 2)
+            {
+                string lastToken = cmdMatches[^1].Groups[1].Success
+                    ? cmdMatches[^1].Groups[1].Value
+                    : cmdMatches[^1].Groups[2].Value;
+
+                if (SkillBindingManager.TryParseFloat(lastToken, out _))
+                    return "Le cooldown n'est pas configurable. Usage: bind <slot> \"<commande>\"";
+            }
+
+            // Validation simple
             if (RequiresTarget(cmd) && !HasTargetToken(cmd))
                 return "Bind refusé: cette commande nécessite une target (ex: self/selected/nearest/view ou un nom).";
 
-            // cooldown géré côté SkillBindingManager (fixe par slot)
             return skillBindings.Bind(slot, cmd);
         }
 
@@ -483,16 +502,14 @@ public class CommandProcessor : MonoBehaviour
 
     bool RequiresTarget(string line)
     {
-        // actions qui ont BESOIN d'une target
-        var parts = line.Split(' ', System.StringSplitOptions.RemoveEmptyEntries);
-        if (parts.Length == 0) return false;
+        var matches = Regex.Matches(line, "\"([^\"]*)\"|(\\S+)");
+        if (matches.Count == 0) return false;
 
-        string action = parts[0].ToLowerInvariant();
+        var m = matches[0];
+        string action = (m.Groups[1].Success ? m.Groups[1].Value : m.Groups[2].Value).ToLowerInvariant();
 
-        // spawn: on veut au moins spawn <id> <target>
         if (action == "spawn") return true;
 
-        // commandes "globales" qui n'ont pas de target
         if (action == "help" || action == "clear" || action == "bind" || action == "unbind" || action == "bindlist")
             return false;
 
@@ -501,17 +518,21 @@ public class CommandProcessor : MonoBehaviour
 
     bool HasTargetToken(string line)
     {
-        var parts = line.Split(' ', System.StringSplitOptions.RemoveEmptyEntries);
-        if (parts.Length == 0) return false;
+        var matches = Regex.Matches(line, "\"([^\"]*)\"|(\\S+)");
+        if (matches.Count == 0) return false;
 
-        string action = parts[0].ToLowerInvariant();
+        string GetTok(int i)
+        {
+            var m = matches[i];
+            return m.Groups[1].Success ? m.Groups[1].Value : m.Groups[2].Value;
+        }
 
-        // spawn <id> <target>
+        string action = GetTok(0).ToLowerInvariant();
+
         if (action == "spawn")
-            return parts.Length >= 3;
+            return matches.Count >= 3;
 
-        // action <target>
-        return parts.Length >= 2;
+        return matches.Count >= 2;
     }
 
 
@@ -580,8 +601,8 @@ public class CommandProcessor : MonoBehaviour
             $"\n" +
             $"Skills: bind | unbind | bindlist\n" +
             $"\n" +
-            $"Ex: bind 1 \"toggle nearest\" 1.0\n" +
-            $"Ex: bind q \"spawn projectile view\" 0.2\n" +
+            $"Ex: bind 1 \"toggle nearest\"" +
+            $"Ex: bind q \"spawn projectile view\"" +
             $"Ex: unbind 1 | bindlist\n";
 
     }

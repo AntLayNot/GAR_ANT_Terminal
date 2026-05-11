@@ -222,25 +222,34 @@ public class TerminalController : MonoBehaviour
         if (cmdProcessor == null || input == null) return;
 
         string raw = input.text ?? "";
+        bool endsWithSpace = raw.Length > 0 && char.IsWhiteSpace(raw[^1]);
 
-        // tokens, en gardant la possibilité d'ajouter un token vide si espace final
-        var parts = raw.Split(' ', System.StringSplitOptions.RemoveEmptyEntries).ToList();
+        // Parse propre : mots OU "texte entre guillemets"
+        var matches = System.Text.RegularExpressions.Regex.Matches(raw, "\"([^\"]*)\"|(\\S+)");
+        var parts = new List<string>();
+
+        foreach (System.Text.RegularExpressions.Match m in matches)
+            parts.Add(m.Groups[1].Success ? m.Groups[1].Value : m.Groups[2].Value);
 
         // tokenIndex = token à compléter
-        int tokenIndex = (parts.Count == 0) ? 0 : parts.Count - 1;
-
-        // si l'utilisateur a un espace à la fin, on complète le token suivant (vide)
-        if (raw.EndsWith(" "))
+        int tokenIndex;
+        if (parts.Count == 0)
+        {
+            tokenIndex = 0;
+            parts.Add("");
+        }
+        else if (endsWithSpace)
         {
             tokenIndex = parts.Count;
             parts.Add("");
         }
+        else
+        {
+            tokenIndex = parts.Count - 1;
+        }
 
-        // token courant dans l'input (peut être une suggestion déjà remplie)
         string currentToken = (tokenIndex >= 0 && tokenIndex < parts.Count) ? parts[tokenIndex] : "";
 
-        // Détecter si on est en train de cycler : si le token courant est déjà une suggestion,
-        // on garde le prefix "anchor" (lastPrefix) pour ne pas reconstruire la liste et bloquer le cycle.
         bool cycling = (tokenIndex == lastTokenIndex &&
                         suggestionIndex != -1 &&
                         suggestions.Count > 0 &&
@@ -248,25 +257,102 @@ public class TerminalController : MonoBehaviour
 
         string prefix = cycling ? lastPrefix : currentToken;
 
-        bool isSpawn = parts.Count > 0 && string.Equals(parts[0], "spawn", System.StringComparison.OrdinalIgnoreCase);
+        string rootCmd = parts.Count > 0 ? parts[0].ToLowerInvariant() : "";
 
-        // Pool selon contexte + token
-        IEnumerable<string> pool;
-        if (!isSpawn)
+        IEnumerable<string> pool = System.Array.Empty<string>();
+        bool isTargetPool = false;
+        bool addTrailingSpace = false;
+
+        // -------------------------------------------------
+        // CAS SPÉCIAL : bind <slot> <commande...>
+        // -------------------------------------------------
+        if (rootCmd == "bind")
         {
-            // <action> <target>
-            pool = (tokenIndex == 0) ? cmdProcessor.GetCommandKeywords()
-                                    : cmdProcessor.GetTargetNames();
+            // bind |
+            if (tokenIndex == 0)
+            {
+                pool = cmdProcessor.GetCommandKeywords();
+            }
+            // bind <slot>
+            else if (tokenIndex == 1)
+            {
+                pool = new[] { "1", "2", "3", "4", "q", "e", "r", "f" };
+                addTrailingSpace = true;
+            }
+            else
+            {
+                // sous-commande après bind <slot>
+                string innerCmd = parts.Count > 2 ? parts[2].ToLowerInvariant() : "";
+
+                // bind 1 |
+                // bind 1 tog|
+                if (tokenIndex == 2)
+                {
+                    pool = cmdProcessor.GetCommandKeywords();
+                    addTrailingSpace = true;
+                }
+                else if (innerCmd == "spawn")
+                {
+                    // bind 1 spawn |
+                    // bind 1 spawn wal|
+                    if (tokenIndex == 3)
+                    {
+                        pool = cmdProcessor.GetSpawnIds();
+                        addTrailingSpace = true;
+                    }
+                    // bind 1 spawn wall |
+                    // bind 1 spawn wall self|
+                    else
+                    {
+                        pool = cmdProcessor.GetTargetNames();
+                        isTargetPool = true;
+                    }
+                }
+                else
+                {
+                    // bind 1 toggle |
+                    // bind 1 destroy self|
+                    pool = cmdProcessor.GetTargetNames();
+                    isTargetPool = true;
+                }
+            }
+        }
+        // -------------------------------------------------
+        // CAS NORMAL
+        // -------------------------------------------------
+        else if (rootCmd == "spawn")
+        {
+            if (tokenIndex == 0)
+            {
+                pool = cmdProcessor.GetCommandKeywords();
+                addTrailingSpace = true;
+            }
+            else if (tokenIndex == 1)
+            {
+                pool = cmdProcessor.GetSpawnIds();
+                addTrailingSpace = true;
+            }
+            else
+            {
+                pool = cmdProcessor.GetTargetNames();
+                isTargetPool = true;
+            }
         }
         else
         {
-            // spawn <id> <target>
-            if (tokenIndex == 0) pool = cmdProcessor.GetCommandKeywords();
-            else if (tokenIndex == 1) pool = cmdProcessor.GetSpawnIds();
-            else pool = cmdProcessor.GetTargetNames();
+            if (tokenIndex == 0)
+            {
+                pool = cmdProcessor.GetCommandKeywords();
+                addTrailingSpace = true;
+            }
+            else
+            {
+                pool = cmdProcessor.GetTargetNames();
+                isTargetPool = true;
+            }
         }
 
-        // Rebuild suggestions si contexte changé (sauf si on cycle)
+        // Rebuild suggestions si contexte changé
         if (!cycling &&
             (tokenIndex != lastTokenIndex ||
              !string.Equals(prefix, lastPrefix, System.StringComparison.OrdinalIgnoreCase) ||
@@ -275,16 +361,12 @@ public class TerminalController : MonoBehaviour
             lastTokenIndex = tokenIndex;
             lastPrefix = prefix;
 
-            bool isTargetPool = (!isSpawn && tokenIndex >= 1) || (isSpawn && tokenIndex >= 2);
-
-
             suggestions = pool
                 .Where(s => !string.IsNullOrWhiteSpace(s) &&
                             s.StartsWith(prefix, System.StringComparison.OrdinalIgnoreCase))
                 .OrderBy(s => isTargetPool ? TargetPriority(s) : 0)
-                .ThenBy(s => s)
+                .ThenBy(s => s, System.StringComparer.OrdinalIgnoreCase)
                 .ToList();
-
 
             suggestionIndex = -1;
         }
@@ -296,17 +378,18 @@ public class TerminalController : MonoBehaviour
         suggestionIndex = (suggestionIndex + 1) % suggestions.Count;
         string chosen = suggestions[suggestionIndex];
 
+        // Si la suggestion contient des espaces, on garde juste la valeur logique ici. Le rebuild se chargera de remettre des guillemets.
         while (parts.Count <= tokenIndex) parts.Add("");
         parts[tokenIndex] = chosen;
 
-        string rebuilt = string.Join(" ", parts);
+        // Rebuild avec guillemets si nécessaire
+        string rebuilt = string.Join(" ", parts.Select(p =>
+            string.IsNullOrWhiteSpace(p)
+                ? p
+                : (p.Contains(' ') ? $"\"{p}\"" : p)));
 
-        // Confort: après compléter action ou spawn id, ajouter espace
-        if (!rebuilt.EndsWith(" "))
-        {
-            if (tokenIndex == 0 || (isSpawn && tokenIndex == 1))
-                rebuilt += " ";
-        }
+        if (addTrailingSpace && !rebuilt.EndsWith(" "))
+            rebuilt += " ";
 
         input.text = rebuilt;
         input.caretPosition = input.text.Length;

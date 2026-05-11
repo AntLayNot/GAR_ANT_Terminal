@@ -22,7 +22,6 @@ public class SkillInput : MonoBehaviour
         bool terminalOpen = terminalRoot != null && terminalRoot.activeSelf;
         bool typing = terminalInput != null && terminalInput.isFocused;
 
-        // ✅ pas de skill quand tu tapes
         if (terminalOpen && typing)
             return;
 

@@ -60,17 +60,15 @@ public class SkillBindingManager : MonoBehaviour
             .Select(b =>
             {
                 b.slot = b.slot.Trim();
-                b.cooldown = GetFixedCooldown(b.slot); // ✅ impose cooldown fixe
+                b.cooldown = GetFixedCooldown(b.slot); // impose cooldown fixe
                 return b;
             })
             .ToList();
 
         // 2) Supprime doublons : garde le dernier binding par slot
-        // (utile si tu as eu des copies dans l'inspector)
         var unique = new List<Binding>();
         foreach (var b in cleaned)
         {
-            // si déjà présent, remplace l'ancien
             int idx = unique.FindIndex(x => string.Equals(x.slot, b.slot, StringComparison.OrdinalIgnoreCase));
             if (idx >= 0) unique[idx] = b;
             else unique.Add(b);
@@ -102,7 +100,7 @@ public class SkillBindingManager : MonoBehaviour
         return Mathf.Max(0f, b.cooldown);
     }
 
-    // ✅ cooldown non configurable
+    // cooldown non configurable
     public string Bind(string slot, string command)
     {
         if (string.IsNullOrWhiteSpace(slot)) return "bind: slot invalide.";
@@ -123,7 +121,7 @@ public class SkillBindingManager : MonoBehaviour
         }
 
         b.command = command;
-        b.cooldown = GetFixedCooldown(slot);   // ✅ impose cooldown fixe
+        b.cooldown = GetFixedCooldown(slot);   // impose cooldown fixe
         b.nextReadyTimeUnscaled = 0f;
 
         onBindingsChanged?.Invoke();
@@ -176,7 +174,7 @@ public class SkillBindingManager : MonoBehaviour
         if (!bySlot.TryGetValue(slot, out var b) || b == null || string.IsNullOrWhiteSpace(b.command))
             return false;
 
-        // ✅ cooldown basé sur Time.unscaledTime (pas affecté par timeScale)
+        // cooldown basé sur Time.unscaledTime (pas affecté par timeScale)
         if (b.cooldown > 0f && Time.unscaledTime < b.nextReadyTimeUnscaled)
         {
             float remain = b.nextReadyTimeUnscaled - Time.unscaledTime;

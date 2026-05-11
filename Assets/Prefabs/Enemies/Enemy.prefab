@@ -138,7 +138,7 @@ MonoBehaviour:
   ledgeCheckDistance: 2
   ledgeCheckOffset: {x: 0.5, y: -0.55}
   attackRange: 1.2
-  attackCooldown: 0.9
+  attackCooldown: 1.6
   damage: 1
   attackBoxSize: {x: 2, y: 1}
   attackBoxOffset: {x: 0, y: 0}

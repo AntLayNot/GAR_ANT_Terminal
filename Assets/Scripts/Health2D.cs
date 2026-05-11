@@ -32,7 +32,7 @@ public class Health2D : MonoBehaviour, IDamageable
         currentHP = Mathf.Max(0, currentHP - amount);
         onHPChanged?.Invoke(currentHP, maxHP);
 
-        if (currentHP == 0)
+        if (currentHP <= 0)
             Die();
     }
 
