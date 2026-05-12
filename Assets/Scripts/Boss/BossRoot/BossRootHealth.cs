@@ -1,13 +1,14 @@
 using UnityEngine;
 
-public class BossRootHealth : MonoBehaviour
+public class BossRootHealth : MonoBehaviour, IDamageable
 {
     [SerializeField] private int maxHealth = 100;
     [SerializeField] private BossRoot bossRoot;
 
-    private int currentHealth;
+    [SerializeField] private int currentHealth;
 
     public int CurrentHealth => currentHealth;
+    public int MaxHealth => maxHealth;
     public float CurrentHealthNormalized => maxHealth <= 0 ? 0f : (float)currentHealth / maxHealth;
 
     private void Awake()
@@ -24,6 +25,11 @@ public class BossRootHealth : MonoBehaviour
 
         currentHealth -= amount;
         if (currentHealth < 0) currentHealth = 0;
+
+        Debug.Log($"ROOT prend {amount} dégâts. HP = {currentHealth}/{maxHealth}");
+
+        if (bossRoot != null)
+            bossRoot.OnDamaged();
 
         if (currentHealth <= 0)
         {
