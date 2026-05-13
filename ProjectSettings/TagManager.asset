@@ -47,8 +47,17 @@ TagManager:
   - name: Decors
     uniqueID: 3197817115
     locked: 0
+  - name: BlackRoom
+    uniqueID: 4287745093
+    locked: 0
+  - name: DecorsOverBlackRoom
+    uniqueID: 2127198679
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Player
+    uniqueID: 716056215
     locked: 0
   m_RenderingLayers:
   - Default

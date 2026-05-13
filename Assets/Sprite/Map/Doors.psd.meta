@@ -5,6 +5,9 @@ TextureImporter:
   - first:
       213: -2869115396899081085
     second: Doors_0
+  - first:
+      213: -4950680412457382125
+    second: Doors_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -121,6 +124,28 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Doors_1
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 63
+        width: 28
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 31f4efa0566ab4bb0800000000000000
+      internalID: -4950680412457382125
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -136,6 +161,7 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       Doors_0: -2869115396899081085
+      Doors_1: -4950680412457382125
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
