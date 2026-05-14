@@ -33,6 +33,8 @@ public class PlayerPlatformerController2D : MonoBehaviour
     [Header("Animation")]
     public bool flipSprite = true;
 
+    private float facingSign = 1f;
+private Vector3 baseScale;
     private float moveInput;
     private bool jumpPressed;
     private bool jumpHeld;
@@ -74,6 +76,9 @@ public class PlayerPlatformerController2D : MonoBehaviour
         if (rb == null) rb = GetComponent<Rigidbody2D>();
         if (animator == null) animator = GetComponent<Animator>();
         if (knockback == null) knockback = GetComponent<PlayerKnockback2D>();
+
+        // Initialise le sens du joueur selon son scale actuel.
+        facingSign = transform.lossyScale.x < 0f ? -1f : 1f;
     }
 
     void Update()
@@ -128,9 +133,23 @@ public class PlayerPlatformerController2D : MonoBehaviour
         if (flipSprite)
         {
             if (moveInput > 0.01f)
-                transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+            {
+                facingSign = 1f;
+                transform.localScale = new Vector3(
+                    Mathf.Abs(transform.localScale.x),
+                    transform.localScale.y,
+                    transform.localScale.z
+                );
+            }
             else if (moveInput < -0.01f)
-                transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+            {
+                facingSign = -1f;
+                transform.localScale = new Vector3(
+                    -Mathf.Abs(transform.localScale.x),
+                    transform.localScale.y,
+                    transform.localScale.z
+                );
+            }
         }
 
         UpdateAnimatorValues();
@@ -195,6 +214,16 @@ public class PlayerPlatformerController2D : MonoBehaviour
 
         // reset one frame input
         jumpPressed = false;
+    }
+
+    public float GetFacingSign()
+    {
+        if (transform.lossyScale.x < 0f)
+            facingSign = -1f;
+        else if (transform.lossyScale.x > 0f)
+            facingSign = 1f;
+
+        return facingSign;
     }
 
     private void UpdateAnimatorValues()

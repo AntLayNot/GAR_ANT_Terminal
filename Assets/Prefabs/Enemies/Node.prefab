@@ -1865,6 +1865,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2000832896477699994}
   - component: {fileID: 94446040870248953}
+  - component: {fileID: 5503163519856676878}
   - component: {fileID: 4965367814149756016}
   - component: {fileID: 6372070138472372826}
   m_Layer: 0
@@ -1902,54 +1903,80 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 685bf1afcff389f48aba36ea9515f6e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  preset: {fileID: 11400000, guid: 5f3d85ade134c87468577b12ba878194, type: 2}
+  preset: {fileID: 11400000, guid: 2640bad1559f63b47947f3895d1826de, type: 2}
   visualRoot: {fileID: 6724646127847749692}
   useVisualRootRotationInsteadOfFlip: 1
+  animator: {fileID: 7103021976701863788}
+  isMovingParam: IsMoving
+  attackTriggerParam: Attack
+  attackAnimLockTime: 0.25
   target: {fileID: 0}
   targetTag: Player
   moveSpeed: 2.5
   chaseSpeed: 3.2
   stopDistance: 1.1
   faceTarget: 1
-  detectRange: 8
+  detectRange: 12
   loseRange: 10
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 0
-  requireLineOfSight: 0
+    m_Bits: 1
+  requireLineOfSight: 1
   sightOriginOffset: {x: 0, y: 0.6}
   sightTargetOffset: {x: 0, y: 0.6}
   avoidOtherEnemies: 1
   enemyMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   enemyCheckDistance: 0.35
-  enemyCheckOffset: {x: 0.4, y: 0}
+  enemyCheckOffset: {x: 3.83, y: -2.24}
   patrol: 1
   useRaycastPatrol: 1
   groundMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1
   patrolWait: 0.25
   wallCheckDistance: 0.35
-  wallCheckOffset: {x: 0.4, y: 0}
-  ledgeCheckDistance: 0.7
-  ledgeCheckOffset: {x: 0.4, y: -0.2}
-  attackRange: 1.2
+  wallCheckOffset: {x: 3.56, y: -1.37}
+  ledgeCheckDistance: 5
+  ledgeCheckOffset: {x: 0.4, y: -3.07}
+  attackRange: 1.09
   attackCooldown: 0.9
-  damage: 1
-  attackBoxSize: {x: 1.2, y: 1}
-  attackBoxOffset: {x: 0.7, y: 0}
+  damage: 10
+  attackBoxSize: {x: 1.2, y: 4.77}
+  attackBoxOffset: {x: 4.19, y: -0.87}
   damageMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   projectilePrefab: {fileID: 5490501823123734849, guid: f4e85635b07588e47beaa41d9ece200a, type: 3}
   shootCooldown: 0.8
   projectileSpeed: 12
-  shootRange: 7
-  preferredDistance: 4
+  shootRange: 10
+  preferredDistance: 6
   minDistance: 2
   shootMuzzle: {fileID: 7419019256926379392}
+--- !u!114 &5503163519856676878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4567774410213194294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4a3b8ec37183084e9f2dab32658c7e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allyLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  detectionRadius: 20
+  includeSelf: 0
+  maxAlliesCounted: 5
+  powerPerAlly: 0.15
+  maxPowerMultiplier: 2
+  debugLogs: 0
+  drawGizmos: 1
 --- !u!50 &4965367814149756016
 Rigidbody2D:
   serializedVersion: 5

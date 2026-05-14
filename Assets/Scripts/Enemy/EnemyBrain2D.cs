@@ -8,26 +8,36 @@ public class EnemyBrain2D : MonoBehaviour
     [Header("Preset (optional)")]
     public EnemyPreset2D preset;
 
+    private NodeAllyPowerDrain2D allyPowerDrain;
+
     [Header("Facing")]
     public Transform visualRoot;
     public bool useVisualRootRotationInsteadOfFlip = true;
 
     private float facingSign = 1f;
 
+    [Header("Animation")]
+    [SerializeField] private Animator animator;
+    [SerializeField] private string isMovingParam = "IsMoving";
+    [SerializeField] private string attackTriggerParam = "Attack";
+    [SerializeField] private float attackAnimLockTime = 0.25f;
+
+    private float attackAnimTimer;
+
     [Header("Target")]
-    public Transform target;                 // assigne le Player (ou auto-find tag)
+    public Transform target;
     public string targetTag = "Player";
 
     [Header("Movement")]
     public float moveSpeed = 2.5f;
     public float chaseSpeed = 3.2f;
-    public float stopDistance = 1.1f;        // stop avant d'attaquer
+    public float stopDistance = 1.1f;
     public bool faceTarget = true;
 
     [Header("Detection")]
-    public float detectRange = 8f;           // cercle jaune
+    public float detectRange = 8f;
     public float loseRange = 10f;
-    public LayerMask obstacleMask;           // obstacles pour LineOfSight (optionnel)
+    public LayerMask obstacleMask;
     public bool requireLineOfSight = false;
 
     [Header("Line Of Sight")]
@@ -36,14 +46,14 @@ public class EnemyBrain2D : MonoBehaviour
 
     [Header("Enemy Avoidance")]
     public bool avoidOtherEnemies = true;
-    public LayerMask enemyMask;              // layer Enemy
+    public LayerMask enemyMask;
     public float enemyCheckDistance = 0.35f;
     public Vector2 enemyCheckOffset = new Vector2(0.4f, 0.0f);
 
     [Header("Patrol (No Points)")]
     public bool patrol = true;
     public bool useRaycastPatrol = true;
-    public LayerMask groundMask;             // sol + murs (pour les raycasts)
+    public LayerMask groundMask;
     public float patrolWait = 0.25f;
 
     [Tooltip("Raycast horizontal: mur devant")]
@@ -55,12 +65,12 @@ public class EnemyBrain2D : MonoBehaviour
     public Vector2 ledgeCheckOffset = new Vector2(0.4f, -0.2f);
 
     [Header("Attack (Melee)")]
-    public float attackRange = 1.2f;         // cercle rouge
+    public float attackRange = 1.2f;
     public float attackCooldown = 0.9f;
     public int damage = 1;
-    public Vector2 attackBoxSize = new Vector2(1.2f, 1.0f);     // carré rouge
+    public Vector2 attackBoxSize = new Vector2(1.2f, 1.0f);
     public Vector2 attackBoxOffset = new Vector2(0.7f, 0f);
-    public LayerMask damageMask;             // layer du Player
+    public LayerMask damageMask;
 
     [Header("Attack (Shooter)")]
     public GameObject projectilePrefab;
@@ -78,13 +88,16 @@ public class EnemyBrain2D : MonoBehaviour
 
     float waitTimer;
     float attackTimer;
-    int patrolDir = 1; // 1 right, -1 left
+    int patrolDir = 1;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponentInChildren<SpriteRenderer>();
 
+        if (animator == null)
+            animator = GetComponentInChildren<Animator>();
+        allyPowerDrain = GetComponent<NodeAllyPowerDrain2D>();
     }
 
     void Start()
@@ -103,16 +116,20 @@ public class EnemyBrain2D : MonoBehaviour
 
     void Update()
     {
-        if (target == null) return;
-
         attackTimer -= Time.deltaTime;
+        attackAnimTimer -= Time.deltaTime;
+
+        if (target == null)
+        {
+            UpdateAnimator();
+            return;
+        }
 
         float dist = Vector2.Distance(transform.position, target.position);
 
         bool seesTarget = dist <= detectRange && (!requireLineOfSight || HasLineOfSight());
         bool lostTarget = dist >= loseRange;
 
-        // Selon le type: la "portée d'attaque" n'est pas la même
         float engageRange = GetEngageRange();
 
         switch (state)
@@ -123,14 +140,22 @@ public class EnemyBrain2D : MonoBehaviour
                 break;
 
             case State.Patrol:
-                if (seesTarget) { state = State.Chase; break; }
+                if (seesTarget)
+                {
+                    state = State.Chase;
+                    break;
+                }
+
                 PatrolUpdate();
                 break;
 
             case State.Chase:
-                if (lostTarget) { state = patrol ? State.Patrol : State.Idle; break; }
+                if (lostTarget)
+                {
+                    state = patrol ? State.Patrol : State.Idle;
+                    break;
+                }
 
-                // Kamikaze : on utilise la vraie hitbox pour savoir quand exploser
                 if (preset != null && preset.type == EnemyPreset2D.EnemyType.Kamikaze)
                 {
                     float facing = GetFacingSign();
@@ -148,28 +173,39 @@ public class EnemyBrain2D : MonoBehaviour
                     break;
                 }
 
-                // Si on est à portée d'engagement -> Attack
-                if (dist <= engageRange) { state = State.Attack; break; }
+                if (dist <= engageRange)
+                {
+                    state = State.Attack;
+                    break;
+                }
 
                 ChaseUpdate();
                 break;
 
             case State.Attack:
-                if (lostTarget) { state = patrol ? State.Patrol : State.Idle; break; }
+                if (lostTarget)
+                {
+                    state = patrol ? State.Patrol : State.Idle;
+                    break;
+                }
 
-                // Kamikaze: on le laisse gérer lui-même son contact / explosion
                 if (preset != null && preset.type == EnemyPreset2D.EnemyType.Kamikaze)
                 {
                     AttackUpdate(dist);
                     break;
                 }
 
-                // Si on n'est plus à portée -> re-chase
-                if (dist > engageRange + 0.35f) { state = State.Chase; break; }
+                if (dist > engageRange + 0.35f)
+                {
+                    state = State.Chase;
+                    break;
+                }
 
                 AttackUpdate(dist);
                 break;
         }
+
+        UpdateAnimator();
     }
 
     float GetEngageRange()
@@ -199,14 +235,12 @@ public class EnemyBrain2D : MonoBehaviour
         loseRange = preset.loseRange;
         requireLineOfSight = preset.requireLineOfSight;
 
-        // melee
         attackRange = preset.attackRange;
         attackCooldown = preset.attackCooldown;
         damage = preset.damage;
         attackBoxSize = preset.attackBoxSize;
         attackBoxOffset = preset.attackBoxOffset;
 
-        // shooter
         projectilePrefab = preset.projectilePrefab;
         shootCooldown = preset.shootCooldown;
         projectileSpeed = preset.projectileSpeed;
@@ -216,7 +250,32 @@ public class EnemyBrain2D : MonoBehaviour
     }
 
     // ---------------------------
-    // PATROL (no points)
+    // ANIMATION
+    // ---------------------------
+    void UpdateAnimator()
+    {
+        if (animator == null) return;
+
+        bool isMoving = Mathf.Abs(rb.linearVelocity.x) > 0.05f;
+
+        // Pendant une attaque, on évite que Move reprenne trop vite.
+        if (attackAnimTimer > 0f)
+            isMoving = false;
+
+        animator.SetBool(isMovingParam, isMoving);
+    }
+
+    void PlayAttackAnimation()
+    {
+        if (animator == null) return;
+
+        attackAnimTimer = attackAnimLockTime;
+        animator.ResetTrigger(attackTriggerParam);
+        animator.SetTrigger(attackTriggerParam);
+    }
+
+    // ---------------------------
+    // PATROL
     // ---------------------------
     void PatrolUpdate()
     {
@@ -236,48 +295,41 @@ public class EnemyBrain2D : MonoBehaviour
 
         float dir = patrolDir;
 
-        // Mur devant ?
         Vector2 wallOrigin = (Vector2)transform.position + new Vector2(wallCheckOffset.x * dir, wallCheckOffset.y);
         var wallHit = Physics2D.Raycast(wallOrigin, Vector2.right * dir, wallCheckDistance, groundMask);
 
-        // Sol devant ?
         Vector2 ledgeOrigin = (Vector2)transform.position + new Vector2(ledgeCheckOffset.x * dir, ledgeCheckOffset.y);
         var groundHit = Physics2D.Raycast(ledgeOrigin, Vector2.down, ledgeCheckDistance, groundMask);
 
         bool willHitWall = wallHit.collider != null;
         bool noGroundAhead = groundHit.collider == null;
 
-        // Enemy devant ?
         bool enemyAhead = false;
+
         if (avoidOtherEnemies && enemyMask.value != 0)
         {
             Vector2 origin = (Vector2)transform.position + new Vector2(enemyCheckOffset.x * dir, enemyCheckOffset.y);
 
-            // cercle de détection devant
             float radius = 0.2f;
             Collider2D hit = Physics2D.OverlapCircle(origin, radius, enemyMask);
 
             if (hit != null)
             {
-                // ignorer soi-même (ou enfants)
                 if (!hit.transform.IsChildOf(transform) && !transform.IsChildOf(hit.transform))
                     enemyAhead = true;
             }
         }
 
-
-        // On flip aussi si un enemy est devant
         if (willHitWall || noGroundAhead || enemyAhead)
         {
             patrolDir *= -1;
-            waitTimer = patrolWait;   // petite pause pour éviter jitter
+            waitTimer = patrolWait;
             dir = patrolDir;
         }
 
         MoveX(dir, moveSpeed);
         FaceDir(dir);
     }
-
 
     // ---------------------------
     // CHASE
@@ -286,14 +338,12 @@ public class EnemyBrain2D : MonoBehaviour
     {
         float dx = target.position.x - transform.position.x;
 
-        // Shooter: logique de distance (il ne veut pas coller)
         if (preset != null && preset.type == EnemyPreset2D.EnemyType.Shooter)
         {
             ShooterReposition(dx);
             return;
         }
 
-        // Kamikaze: il continue à foncer, il ne s'arrête pas à stopDistance
         if (preset != null && preset.type == EnemyPreset2D.EnemyType.Kamikaze)
         {
             float dirK = Mathf.Sign(dx);
@@ -302,21 +352,29 @@ public class EnemyBrain2D : MonoBehaviour
                 dirK = GetFacingSign();
 
             MoveX(dirK, chaseSpeed);
-            if (faceTarget) FaceDir(dirK);
+
+            if (faceTarget)
+                FaceDir(dirK);
+
             return;
         }
 
-        // Melee classique
         if (Mathf.Abs(dx) <= stopDistance)
         {
             rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
-            if (faceTarget) FaceDir(Mathf.Sign(dx));
+
+            if (faceTarget)
+                FaceDir(Mathf.Sign(dx));
+
             return;
         }
 
         float dir = Mathf.Sign(dx);
+
         MoveX(dir, chaseSpeed);
-        if (faceTarget) FaceDir(dir);
+
+        if (faceTarget)
+            FaceDir(dir);
     }
 
     void ShooterReposition(float dx)
@@ -324,35 +382,47 @@ public class EnemyBrain2D : MonoBehaviour
         float abs = Mathf.Abs(dx);
         float dirToPlayer = Mathf.Sign(dx);
 
-        // trop proche: reculer
+        if (dirToPlayer == 0f)
+            dirToPlayer = GetFacingSign();
+
         if (abs < minDistance)
         {
             float dirAway = -dirToPlayer;
+
             MoveX(dirAway, chaseSpeed);
-            if (faceTarget) FaceDir(dirToPlayer);
+
+            if (faceTarget)
+                FaceDir(dirToPlayer);
+
             return;
         }
 
-        // un peu trop proche: reculer doucement
         if (abs < preferredDistance)
         {
             float dirAway = -dirToPlayer;
+
             MoveX(dirAway, moveSpeed);
-            if (faceTarget) FaceDir(dirToPlayer);
+
+            if (faceTarget)
+                FaceDir(dirToPlayer);
+
             return;
         }
 
-        // trop loin: s'approcher
         if (abs > shootRange)
         {
             MoveX(dirToPlayer, chaseSpeed);
-            if (faceTarget) FaceDir(dirToPlayer);
+
+            if (faceTarget)
+                FaceDir(dirToPlayer);
+
             return;
         }
 
-        // bonne distance: stop
         rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
-        if (faceTarget) FaceDir(dirToPlayer);
+
+        if (faceTarget)
+            FaceDir(dirToPlayer);
     }
 
     // ---------------------------
@@ -382,24 +452,57 @@ public class EnemyBrain2D : MonoBehaviour
     {
         rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
 
-        if (attackTimer > 0f) return;
+        if (attackTimer > 0f)
+            return;
+
         attackTimer = attackCooldown;
 
-        float facing = GetFacingSign();
-        Vector2 center = (Vector2)transform.position + new Vector2(attackBoxOffset.x * facing, attackBoxOffset.y);
+        // On lance seulement l'animation.
+        // Les dégâts seront appliqués par l'Animation Event.
+        PlayAttackAnimation();
+    }
 
-        Collider2D hit = Physics2D.OverlapBox(center, attackBoxSize, 0f, damageMask);
-        if (hit != null)
-        {
-            var dmg = hit.GetComponentInParent<IDamageable>();
-            if (dmg != null)
-                dmg.TakeDamage(damage);
-        }
+    // Appelé par un Animation Event au bon moment de l'animation d'attaque
+    public void AnimationDealDamage()
+    {
+        if (target == null)
+            return;
+
+        float facing = GetFacingSign();
+
+        Vector2 center = (Vector2)transform.position + new Vector2(
+            attackBoxOffset.x * facing,
+            attackBoxOffset.y
+        );
+
+        Collider2D hit = Physics2D.OverlapBox(
+            center,
+            attackBoxSize,
+            0f,
+            damageMask
+        );
+
+        if (hit == null)
+            return;
+
+        IDamageable dmg = hit.GetComponentInParent<IDamageable>();
+
+        if (dmg == null)
+            return;
+
+        int finalDamage = damage;
+
+        if (allyPowerDrain != null)
+            finalDamage = allyPowerDrain.GetBoostedDamage(damage);
+
+        dmg.TakeDamage(finalDamage);
     }
 
     void KamikazeAttackUpdate()
     {
         rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
+
+        PlayAttackAnimation();
 
         float facing = GetFacingSign();
         Vector2 center = (Vector2)transform.position + new Vector2(attackBoxOffset.x * facing, attackBoxOffset.y);
@@ -416,6 +519,7 @@ public class EnemyBrain2D : MonoBehaviour
             if (hit == null) continue;
 
             var dmg = hit.GetComponentInParent<IDamageable>();
+
             if (dmg != null)
             {
                 Debug.Log("Kamikaze a touché : " + hit.name);
@@ -431,7 +535,6 @@ public class EnemyBrain2D : MonoBehaviour
             return;
         }
 
-        // sécurité
         state = State.Chase;
     }
 
@@ -441,42 +544,59 @@ public class EnemyBrain2D : MonoBehaviour
         ShooterReposition(dx);
 
         if (attackTimer > 0f) return;
-        attackTimer = shootCooldown;
+
+        if (allyPowerDrain != null)
+            attackTimer = allyPowerDrain.GetReducedCooldown(shootCooldown);
+        else
+            attackTimer = shootCooldown;
+        PlayAttackAnimation();
 
         if (projectilePrefab == null) return;
+        if (target == null) return;
 
-        float facing = GetFacingSign(); // -1 gauche, +1 droite
+        float facing = GetFacingSign();
 
         Vector2 spawnPos = shootMuzzle != null
             ? (Vector2)shootMuzzle.position
             : (Vector2)transform.position + new Vector2(0.6f * facing, 0.2f);
 
+        Vector2 targetPos = target.position;
+
         GameObject go = Instantiate(projectilePrefab, spawnPos, Quaternion.identity);
 
-
-        Vector2 dir = facing < 0 ? Vector2.left : Vector2.right;
-
         var laser = go.GetComponent<LaserProjectile2D>();
+
         if (laser != null)
         {
-            laser.SetDirection(dir);
+            float distanceToPlayer = Vector2.Distance(spawnPos, targetPos);
+
+            int finalDamage = damage;
+
+            if (allyPowerDrain != null)
+                finalDamage = allyPowerDrain.GetBoostedDamage(damage);
+
+            laser.InitBeam(spawnPos, targetPos, distanceToPlayer);
+            laser.SetDamage(finalDamage);
+            return;
         }
-        else
+
+        var proj = go.GetComponent<Projectile2D>();
+
+        if (proj != null)
         {
-            var proj = go.GetComponent<Projectile2D>();
-            if (proj != null)
-            {
-                proj.Init(dir);
-            }
-            else
-            {
-                var prb = go.GetComponent<Rigidbody2D>();
-                if (prb != null)
-                    prb.linearVelocity = new Vector2(projectileSpeed * facing, 0f);
-            }
+            Vector2 dir = (targetPos - spawnPos).normalized;
+            proj.Init(dir);
+            return;
+        }
+
+        var prb = go.GetComponent<Rigidbody2D>();
+
+        if (prb != null)
+        {
+            Vector2 dir = (targetPos - spawnPos).normalized;
+            prb.linearVelocity = dir * projectileSpeed;
         }
     }
-
 
     // ---------------------------
     // LOS
@@ -492,7 +612,6 @@ public class EnemyBrain2D : MonoBehaviour
         Vector2 dir = (to - from).normalized;
         float dist = Vector2.Distance(from, to);
 
-        // RaycastAll + ignore player/self (ta version actuelle)
         RaycastHit2D[] hits = Physics2D.RaycastAll(from, dir, dist, obstacleMask);
 
         foreach (var hit in hits)
@@ -559,8 +678,8 @@ public class EnemyBrain2D : MonoBehaviour
 
         float facing = Application.isPlaying ? facingSign : 1f;
 
-        // melee hitbox preview
         Vector2 center = (Vector2)transform.position + new Vector2(attackBoxOffset.x * facing, attackBoxOffset.y);
+
         Gizmos.color = new Color(1f, 0.2f, 0.2f, 0.8f);
         Gizmos.DrawWireCube(center, attackBoxSize);
 
@@ -577,7 +696,6 @@ public class EnemyBrain2D : MonoBehaviour
             Gizmos.DrawLine(ledgeOrigin, ledgeOrigin + Vector3.down * ledgeCheckDistance);
         }
 
-        // enemy avoid preview
         if (avoidOtherEnemies)
         {
             Gizmos.color = Color.white;

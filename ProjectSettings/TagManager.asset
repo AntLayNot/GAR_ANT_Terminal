@@ -56,8 +56,14 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: DownLayerTiles
+    uniqueID: 296353593
+    locked: 0
   - name: Player
     uniqueID: 716056215
+    locked: 0
+  - name: Tiles
+    uniqueID: 1454225967
     locked: 0
   m_RenderingLayers:
   - Default

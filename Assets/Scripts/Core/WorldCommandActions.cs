@@ -138,19 +138,59 @@ public class WorldCommandActions : MonoBehaviour
 
         Vector3 pos = origin.transform.position;
 
-        // direction "devant" en sidescroller (droite/gauche)
+        // direction "devant" (droite/gauche)
         Vector3 dir = Vector3.right;
 
-        // priorité: SpriteRenderer.flipX si dispo (child compris), sinon scale.x
-        var sr = origin.GetComponentInChildren<SpriteRenderer>();
-        if (sr != null && sr.flipX) dir = Vector3.left;
-        else if (origin.transform.lossyScale.x < 0f) dir = Vector3.left;
+        // On récupère la direction réelle du joueur si possible
+        var playerMovement = origin.GetComponentInParent<PlayerPlatformerController2D>();
+
+        if (playerMovement != null)
+        {
+            dir = playerMovement.GetFacingSign() < 0f ? Vector3.left : Vector3.right;
+        }
+        else
+        {
+            // fallback pour les objets non-joueurs
+            if (origin.transform.lossyScale.x < 0f)
+                dir = Vector3.left;
+        }
 
         if (s.spawnInFront)
             pos += dir * Mathf.Max(0f, s.frontDistance);
 
         pos += (Vector3)s.offset;
 
+        // -------------------------------------------------
+        // CAS SPECIAL : projectile
+        // -------------------------------------------------
+        bool isProjectilePrefab =
+            s.prefab.GetComponent<Projectile2D>() != null ||
+            s.prefab.GetComponentInChildren<Projectile2D>() != null;
+
+        if (isProjectilePrefab)
+        {
+            PlayerCommandAnimator playerAnimator = origin.GetComponentInParent<PlayerCommandAnimator>();
+
+            if (playerAnimator == null)
+                playerAnimator = origin.GetComponentInChildren<PlayerCommandAnimator>();
+
+            if (playerAnimator != null)
+            {
+                Vector2 dir2 = dir.x < 0f ? Vector2.left : Vector2.right;
+
+                // On ne spawn PAS maintenant.
+                // On stocke la demande dans le player, puis l'animation fera le spawn.
+                playerAnimator.RequestProjectileSpawn(s.prefab, pos, dir2, id, s.lifetime);
+
+                return true;
+            }
+
+            Debug.LogWarning("[WorldCommandActions] Projectile détecté, mais aucun PlayerCommandAnimator trouvé depuis : " + origin.name);
+        }
+
+        // -------------------------------------------------
+        // CAS NORMAL : objet classique
+        // -------------------------------------------------
         GameObject go = Instantiate(s.prefab, pos, Quaternion.identity);
 
         //1) Garantir un TargetObject sur l'objet spawné
@@ -158,25 +198,16 @@ public class WorldCommandActions : MonoBehaviour
         if (t == null) t = go.AddComponent<TargetObject>();
 
         //2) Donne un nom ciblable
-        t.SetName(id); // ex: "wall", "projectile"
+        t.SetName(id);
 
-        //3) Mémoriser le dernier spawné (pour un selector "last" plus tard)
+        //3) Mémoriser le dernier spawné
         LastSpawned = t;
-
-        //4) Initialiser projectile si présent
-        var proj = go.GetComponent<Projectile2D>();
-        if (proj != null)
-        {
-            Vector2 dir2 = (dir.x < 0f) ? Vector2.left : Vector2.right;
-            proj.Init(dir2);
-        }
 
         if (s.lifetime > 0f)
             StartCoroutine(DestroyAfter(go, s.lifetime));
 
         return true;
     }
-
 
     IEnumerator DestroyAfter(GameObject go, float delay)
     {
