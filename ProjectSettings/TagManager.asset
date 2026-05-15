@@ -59,6 +59,9 @@ TagManager:
   - name: DownLayerTiles
     uniqueID: 296353593
     locked: 0
+  - name: Pilar
+    uniqueID: 1584377387
+    locked: 0
   - name: Player
     uniqueID: 716056215
     locked: 0
