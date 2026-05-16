@@ -12,11 +12,13 @@ public class Projectile2D : MonoBehaviour
     public LayerMask hitLayers;   // Ground, Enemy, Target...
     public bool destroyOnHit = true;
 
-    [Header("Damage (optional)")]
+    [Header("Damage")]
     public int damage = 1;
 
-    Rigidbody2D rb;
-    float timer;
+    private int bonusDamage;
+
+    private Rigidbody2D rb;
+    private float timer;
 
     void Awake()
     {
@@ -26,38 +28,58 @@ public class Projectile2D : MonoBehaviour
     }
 
     /// <summary>
-    /// Initialise la direction du projectile
+    /// Initialise la direction du projectile.
+    /// Appelé au moment où le projectile est vraiment lancé.
     /// </summary>
     public void Init(Vector2 direction)
     {
+        ApplyProgressionBonus();
+
         if (direction.sqrMagnitude < 0.001f)
             direction = Vector2.right;
 
         direction.Normalize();
         rb.linearVelocity = direction * speed;
 
-        // Orientation visuelle (facultatif)
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0f, 0f, angle);
+    }
+
+    private void ApplyProgressionBonus()
+    {
+        bonusDamage = 0;
+
+        PlayerCommandProgression2D progression = PlayerCommandProgression2D.Current;
+
+        if (progression == null)
+            progression = FindFirstObjectByType<PlayerCommandProgression2D>();
+
+        if (progression != null)
+            bonusDamage = progression.GetProjectileDamageBonus();
+    }
+
+    private int GetFinalDamage()
+    {
+        return Mathf.Max(0, damage + bonusDamage);
     }
 
     void Update()
     {
         timer += Time.deltaTime;
+
         if (lifetime > 0f && timer >= lifetime)
             Destroy(gameObject);
     }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        // Vérifie layer
         if (!IsInLayerMask(collision.gameObject.layer, hitLayers))
             return;
 
-        // Damage si possible
-        var damageable = collision.collider.GetComponentInParent<IDamageable>();
+        IDamageable damageable = collision.collider.GetComponentInParent<IDamageable>();
+
         if (damageable != null)
-            damageable.TakeDamage(damage);
+            damageable.TakeDamage(GetFinalDamage());
 
         if (destroyOnHit)
             Destroy(gameObject);
@@ -65,14 +87,20 @@ public class Projectile2D : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (!IsInLayerMask(other.gameObject.layer, hitLayers))
+            return;
+
         IDamageable damageable = other.GetComponent<IDamageable>();
+
         if (damageable == null)
             damageable = other.GetComponentInParent<IDamageable>();
 
         if (damageable != null)
         {
-            damageable.TakeDamage(damage);
-            Destroy(gameObject);
+            damageable.TakeDamage(GetFinalDamage());
+
+            if (destroyOnHit)
+                Destroy(gameObject);
         }
     }
 

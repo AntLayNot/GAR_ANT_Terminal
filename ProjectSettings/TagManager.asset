@@ -62,6 +62,12 @@ TagManager:
   - name: Pilar
     uniqueID: 1584377387
     locked: 0
+  - name: Enemies
+    uniqueID: 1145912015
+    locked: 0
+  - name: Bullets
+    uniqueID: 2464493537
+    locked: 0
   - name: Player
     uniqueID: 716056215
     locked: 0

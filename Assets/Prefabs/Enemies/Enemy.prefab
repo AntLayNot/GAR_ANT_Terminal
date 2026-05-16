@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3273664072344685282}
   - component: {fileID: 5608976270819941117}
   - component: {fileID: 126226454153752522}
+  - component: {fileID: -1563408257875072859}
   - component: {fileID: 7207049496840584602}
   - component: {fileID: 3713019740588088141}
   m_Layer: 6
@@ -78,8 +79,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1145912015
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
   m_Color: {r: 0.6132076, g: 0.020247431, b: 0.020247431, a: 1}
@@ -107,6 +108,10 @@ MonoBehaviour:
   preset: {fileID: 11400000, guid: 5f3d85ade134c87468577b12ba878194, type: 2}
   visualRoot: {fileID: 0}
   useVisualRootRotationInsteadOfFlip: 1
+  animator: {fileID: 0}
+  isMovingParam: IsMoving
+  attackTriggerParam: Attack
+  attackAnimLockTime: 0.25
   target: {fileID: 0}
   targetTag: Player
   moveSpeed: 2.5
@@ -173,6 +178,19 @@ MonoBehaviour:
   onDeath:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &-1563408257875072859
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3488202196935330308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3c546e2df4fe004ea150977f85aeed8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerProgression: {fileID: 0}
 --- !u!70 &7207049496840584602
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -115,12 +116,42 @@ public class WorldCommandActions : MonoBehaviour
 
     public void ToggleActive(TargetObject t)
     {
+        if (t == null)
+            return;
+
+        CommandDoorObjective2D doorObjective = t.GetComponent<CommandDoorObjective2D>();
+
+        if (doorObjective == null)
+            doorObjective = t.GetComponentInParent<CommandDoorObjective2D>();
+
+        if (doorObjective == null)
+            doorObjective = t.GetComponentInChildren<CommandDoorObjective2D>();
+
         t.gameObject.SetActive(!t.gameObject.activeSelf);
+
+        if (doorObjective != null)
+            doorObjective.RegisterDoorToggle();
     }
 
     public void DestroyTarget(TargetObject t)
     {
         Destroy(t.gameObject);
+    }
+
+    public void Menu()
+    {
+        PauseMenuController pauseMenu = PauseMenuController.Instance;
+
+        if (pauseMenu == null)
+            pauseMenu = FindFirstObjectByType<PauseMenuController>();
+
+        if (pauseMenu == null)
+        {
+            Debug.LogWarning("[WorldCommandActions] Aucun PauseMenuController trouvé dans la scène.");
+            return;
+        }
+
+        pauseMenu.ToggleMenu();
     }
 
     public bool SpawnById(string id, TargetObject origin)
@@ -133,15 +164,25 @@ public class WorldCommandActions : MonoBehaviour
 
         id = id.Trim();
 
+        PlayerCommandProgression2D progression = origin.GetComponentInParent<PlayerCommandProgression2D>();
+
+        if (progression == null)
+            progression = PlayerCommandProgression2D.Current;
+
+        if (progression != null && !progression.IsCommandUnlocked(id))
+        {
+            Debug.Log("[WorldCommandActions] Commande verrouillée : " + id);
+            return false;
+        }
+
         if (!spawnById.TryGetValue(id, out var s) || s.prefab == null)
             return false;
 
         Vector3 pos = origin.transform.position;
 
-        // direction "devant" (droite/gauche)
+        // direction "devant" droite/gauche
         Vector3 dir = Vector3.right;
 
-        // On récupère la direction réelle du joueur si possible
         var playerMovement = origin.GetComponentInParent<PlayerPlatformerController2D>();
 
         if (playerMovement != null)
@@ -150,7 +191,6 @@ public class WorldCommandActions : MonoBehaviour
         }
         else
         {
-            // fallback pour les objets non-joueurs
             if (origin.transform.lossyScale.x < 0f)
                 dir = Vector3.left;
         }
@@ -178,9 +218,35 @@ public class WorldCommandActions : MonoBehaviour
             {
                 Vector2 dir2 = dir.x < 0f ? Vector2.left : Vector2.right;
 
-                // On ne spawn PAS maintenant.
-                // On stocke la demande dans le player, puis l'animation fera le spawn.
-                playerAnimator.RequestProjectileSpawn(s.prefab, pos, dir2, id, s.lifetime);
+                int projectileCount = 1;
+
+                if (progression != null)
+                    projectileCount = progression.GetProjectileCount();
+
+                projectileCount = Mathf.Max(1, projectileCount);
+
+                Debug.Log("[WorldCommandActions] Spawn projectile count : " + projectileCount);
+
+                for (int i = 0; i < projectileCount; i++)
+                {
+                    Vector3 spawnPos = pos;
+
+                    if (projectileCount > 1)
+                    {
+                        float spacing = 0.25f;
+                        float yOffset = (i - (projectileCount - 1) * 0.5f) * spacing;
+
+                        spawnPos += Vector3.up * yOffset;
+                    }
+
+                    playerAnimator.RequestProjectileSpawn(
+                        s.prefab,
+                        spawnPos,
+                        dir2,
+                        id,
+                        s.lifetime
+                    );
+                }
 
                 return true;
             }
@@ -193,14 +259,12 @@ public class WorldCommandActions : MonoBehaviour
         // -------------------------------------------------
         GameObject go = Instantiate(s.prefab, pos, Quaternion.identity);
 
-        //1) Garantir un TargetObject sur l'objet spawné
         var t = go.GetComponent<TargetObject>();
-        if (t == null) t = go.AddComponent<TargetObject>();
+        if (t == null)
+            t = go.AddComponent<TargetObject>();
 
-        //2) Donne un nom ciblable
         t.SetName(id);
 
-        //3) Mémoriser le dernier spawné
         LastSpawned = t;
 
         if (s.lifetime > 0f)

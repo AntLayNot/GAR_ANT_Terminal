@@ -7,7 +7,7 @@ using UnityEngine.Events;
 
 public class CommandProcessor : MonoBehaviour
 {
-    public List<MaStruct> maList;
+    public List<MaStruct> commandList;
 
     [Header("Refs")]
     public PlayerTargeting2D targeting;          // Main Camera (avec PlayerTargeting2D)
@@ -44,7 +44,7 @@ public class CommandProcessor : MonoBehaviour
 
         // Actions
         actionsByKeyword = new Dictionary<string, UnityEvent<TargetObject>>(StringComparer.OrdinalIgnoreCase);
-        foreach (var a in maList)
+        foreach (var a in commandList)
         {
             if (string.IsNullOrWhiteSpace(a.keyWord) || a.action == null) continue;
             actionsByKeyword[a.keyWord.Trim()] = a.action;
@@ -59,7 +59,7 @@ public class CommandProcessor : MonoBehaviour
         if (actionsByKeyword == null) BuildCaches();
 
         return actionsByKeyword.Keys
-            .Concat(new[] { "help", "clear", "spawn", "bind", "unbind", "bindlist" })
+            .Concat(new[] { "help", "clear", "menu", "spawn", "bind", "unbind", "bindlist" })
             .Distinct(System.StringComparer.OrdinalIgnoreCase)
             .OrderBy(x => x)
             .ToList();
@@ -83,7 +83,7 @@ public class CommandProcessor : MonoBehaviour
 
 
     // ------------------------------------------------------------
-    //  Exécute une ligne et RENVOIE une réponse texte
+    //  Exécute une ligne et renvoie une réponse texte
     // ------------------------------------------------------------
     public string ExecuteLine(string line)
     {
@@ -116,12 +116,22 @@ public class CommandProcessor : MonoBehaviour
         if (string.Equals(actionString, "clear", StringComparison.OrdinalIgnoreCase))
             return "__CLEAR__";
 
+        // Commande globale : menu
+        if (string.Equals(actionString, "menu", StringComparison.OrdinalIgnoreCase))
+        {
+            if (worldActions == null)
+                return "ERREUR: WorldCommandActions non assigné.";
+
+            worldActions.Menu();
+            return "OK: menu";
+        }
+
         // Commande globale : bind
         // Usage: bind <slot> "<commande>"
         if (string.Equals(actionString, "bind", StringComparison.OrdinalIgnoreCase))
         {
             if (skillBindings == null)
-                return "ERREUR: SkillBindingManager non assigné (drag dans CommandProcessor.skillBindings).";
+                return "ERREUR: SkillBindingManager non assigné.";
 
             if (matches.Count < 3)
                 return "Usage: bind <slot> \"<commande>\"  (ex: bind 1 \"spawn wall self\")";
@@ -208,7 +218,7 @@ public class CommandProcessor : MonoBehaviour
 
         // Ici : action + target requis
         if (matches.Count < 2)
-            return "Format attendu: <action> <target>  (ex: toggle lamp) | tape 'help'";
+            return "Format attendu: <action> <target>  (ex: toggle lamp) | 'help'";
 
         targetString = GetToken(1);
 
@@ -276,7 +286,7 @@ public class CommandProcessor : MonoBehaviour
             return false;
         }
 
-        // self -> le TargetObject du joueur (origin)
+        // self, le TargetObject du joueur (origin)
         if (token.Equals("self", StringComparison.OrdinalIgnoreCase))
         {
             if (targeting == null || targeting.origin == null)
@@ -302,7 +312,7 @@ public class CommandProcessor : MonoBehaviour
         {
             if (targeting == null)
             {
-                error = "ERREUR: targeting non assigné (glisse Main Camera dans CommandProcessor.targeting).";
+                error = "ERREUR: targeting non assigné.";
                 return false;
             }
 
@@ -336,7 +346,7 @@ public class CommandProcessor : MonoBehaviour
         {
             if (targeting == null)
             {
-                error = "ERREUR: targeting non assigné (glisse Main Camera dans CommandProcessor.targeting).";
+                error = "ERREUR: targeting non assigné.";
                 return false;
             }
 
@@ -410,7 +420,7 @@ public class CommandProcessor : MonoBehaviour
 
         if (targeting == null)
         {
-            error = "ERREUR: targeting non assigné (glisse Main Camera dans CommandProcessor.targeting).";
+            error = "ERREUR: targeting non assigné.";
             return false;
         }
 
@@ -510,7 +520,7 @@ public class CommandProcessor : MonoBehaviour
 
         if (action == "spawn") return true;
 
-        if (action == "help" || action == "clear" || action == "bind" || action == "unbind" || action == "bindlist")
+        if (action == "help" || action == "clear" || action == "menu" || action == "bind" || action == "unbind" || action == "bindlist")
             return false;
 
         return true;
@@ -542,7 +552,7 @@ public class CommandProcessor : MonoBehaviour
     string CallSpawnAndReturn(string spawnId)
     {
         if (worldActions == null)
-            return "ERREUR: WorldCommandActions non assigné (drag l'objet WorldCommandActions dans CommandProcessor.worldActions).";
+            return "ERREUR: WorldCommandActions non assigné.";
 
         if (string.IsNullOrWhiteSpace(spawnId))
             return "spawn: id vide";
@@ -576,7 +586,7 @@ public class CommandProcessor : MonoBehaviour
         bool success = worldActions.SpawnById(spawnId, target);
         return success
             ? $"OK: spawn {spawnId} -> {target.Name}"
-            : $"Spawn inconnu: '{spawnId}' (ajoute-le dans WorldCommandActions.spawnables)";
+            : $"Spawn inconnu: '{spawnId}'";
     }
 
     // ------------------------------------------------------------
@@ -597,7 +607,7 @@ public class CommandProcessor : MonoBehaviour
             $"\n" +
             $"Ex: toggle selected | destroy nearest | ping view\n" +
             $"Ex: spawn wall player | spawn projectile selected | spawn turret nearest\n" +
-            $"Ex: toggle lamp | destroy \"big lamp\" | help | clear" +
+            $"Ex: toggle lamp | destroy \"big lamp\" | help | clear | menu" +
             $"\n" +
             $"Skills: bind | unbind | bindlist\n" +
             $"\n" +

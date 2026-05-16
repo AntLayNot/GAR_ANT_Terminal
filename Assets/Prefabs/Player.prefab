@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 1363934916099262668}
   - component: {fileID: 3409406840422885504}
   - component: {fileID: 4914149656837329350}
+  - component: {fileID: 2328471735086351898}
   - component: {fileID: 7145867653638558532}
   - component: {fileID: 1404604372547399732}
   - component: {fileID: 1869567332991051612}
@@ -117,7 +118,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 716056215
-  m_SortingLayer: 1
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 4229889965892577916, guid: 7982871e30ca3cf4aa012ba86beb95b5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -202,6 +203,28 @@ MonoBehaviour:
   onDeath:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2328471735086351898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6397819290475493528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3ed2dcb2a677e44cb662d608608f011, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyKills: 0
+  doorsToggled: 0
+  projectileCount: 1
+  maxProjectileCount: 4
+  projectileDamageBonus: 0
+  maxProjectileDamageBonus: 5
+  playerHealth: {fileID: 4914149656837329350}
+  maxHealthBonusGiven: 0
+  maxHealthBonusLimit: 50
+  rainUnlocked: 0
 --- !u!70 &7145867653638558532
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

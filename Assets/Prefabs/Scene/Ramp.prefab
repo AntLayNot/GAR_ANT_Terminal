@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7580164531214306749}
   - component: {fileID: 6949560225279432890}
   - component: {fileID: 2596093914896529969}
+  - component: {fileID: 370887804212572013}
   m_Layer: 0
   m_Name: Ramp
   m_TagString: Untagged
@@ -115,10 +116,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0b0b415030e9e44c901cc89fab25ef5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OutLineShader: {fileID: 0}
+  outLineShader: {fileID: 0}
   isGlow: 0
   outlineColor: {r: 1, g: 0.5, b: 0, a: 1}
   outlineScale: 1.05
+  includeChildren: 1
 --- !u!61 &2596093914896529969
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -165,3 +167,17 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &370887804212572013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5227111781752081589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7f6dba3815a23a46ac2ea5741acf3f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerProgression: {fileID: 0}
+  countOnlyOnce: 1

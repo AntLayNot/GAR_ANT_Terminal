@@ -149,6 +149,10 @@ public class TerminalController : MonoBehaviour
         if (!slowMoWhileTyping) return;
         if (isSlowMoActive) return;
 
+        // Si le menu pause est ouvert, le terminal ne doit pas reprendre la main sur le temps.
+        if (PauseMenuController.Instance != null && PauseMenuController.Instance.IsOpen)
+            return;
+
         isSlowMoActive = true;
         Time.timeScale = timeScaleWhileTyping;
         Time.fixedDeltaTime = fixedDeltaBase * Time.timeScale;
@@ -159,6 +163,15 @@ public class TerminalController : MonoBehaviour
         if (!isSlowMoActive) return;
 
         isSlowMoActive = false;
+
+        // Si le menu pause est ouvert, on ne remet surtout pas le temps à 1.
+        if (PauseMenuController.Instance != null && PauseMenuController.Instance.IsOpen)
+        {
+            Time.timeScale = 0f;
+            Time.fixedDeltaTime = 0f;
+            return;
+        }
+
         Time.timeScale = 1f;
         Time.fixedDeltaTime = fixedDeltaBase;
     }
@@ -194,7 +207,7 @@ public class TerminalController : MonoBehaviour
         input.text = "";
         input.caretPosition = 0;
         FocusInput();
-        StopTypingSlowMo(); // après envoi, on revient au temps normal
+        StopTypingSlowMo(); // après envoi, on quitte le slow motion sauf si le menu pause est ouvert
 
 
         // autoscroll

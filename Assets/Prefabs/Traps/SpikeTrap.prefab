@@ -103,8 +103,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 5
   damageCooldown: 0.5
-  targetTag: Player
-  applyKnockback: 1
+  damageLayers:
+    serializedVersion: 2
+    m_Bits: 1096
+  applyKnockbackOnPlayer: 1
 --- !u!60 &3712004531472349144
 PolygonCollider2D:
   m_ObjectHideFlags: 0

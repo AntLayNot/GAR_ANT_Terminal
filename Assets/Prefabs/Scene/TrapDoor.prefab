@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 978538183311929450}
   - component: {fileID: 1107451124138450007}
   - component: {fileID: 2477292879247969657}
+  - component: {fileID: 4368607882664805925}
   m_Layer: 0
   m_Name: TrapDoor
   m_TagString: Untagged
@@ -119,6 +120,7 @@ MonoBehaviour:
   isGlow: 0
   outlineColor: {r: 1, g: 0.5, b: 0, a: 1}
   outlineScale: 1.05
+  includeChildren: 1
 --- !u!61 &2477292879247969657
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -165,3 +167,17 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &4368607882664805925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3126886994685409850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7f6dba3815a23a46ac2ea5741acf3f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerProgression: {fileID: 0}
+  countOnlyOnce: 1

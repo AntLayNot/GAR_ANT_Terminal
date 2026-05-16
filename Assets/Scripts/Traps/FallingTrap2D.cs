@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class FallingTrap2D : MonoBehaviour
 {
-    [Header("Trigger")]
+    [Header("Target")]
     [SerializeField] private string targetTag = "Player";
 
     [Header("Physics")]
@@ -10,21 +10,23 @@ public class FallingTrap2D : MonoBehaviour
 
     [Header("Damage")]
     [SerializeField] private int touchDamage = 1;
-    [SerializeField] private float damageCooldown = 0.5f;
     [SerializeField] private bool applyKnockback = true;
 
     [Header("Ground")]
     [SerializeField] private LayerMask groundLayers;
     [SerializeField] private float groundCollisionArmingDelay = 0.1f;
-    [SerializeField] private float minimumFallSpeedToBreak = 0.05f;
 
     [Header("Player Hit Conditions")]
     [SerializeField] private float playerHitArmingDelay = 0.05f;
     [SerializeField] private float minimumFallSpeedToDamagePlayer = 0.2f;
 
-    private bool hasFallen = false;
-    private bool consumed = false;
-    private float lastDamageTime = -999f;
+    [Header("Destroy")]
+    [SerializeField] private bool destroyWhenHitGround = true;
+    [SerializeField] private bool destroyWhenHitPlayer = true;
+    [SerializeField] private GameObject destroyFX;
+
+    private bool hasFallen;
+    private bool consumed;
     private float fallStartTime = -999f;
 
     private void Awake()
@@ -33,58 +35,85 @@ public class FallingTrap2D : MonoBehaviour
             rb = GetComponent<Rigidbody2D>();
 
         if (rb != null)
+        {
             rb.bodyType = RigidbodyType2D.Kinematic;
+            rb.gravityScale = 1f;
+            rb.freezeRotation = true;
+        }
     }
 
     public void TriggerFall()
     {
-        if (hasFallen) return;
+        if (hasFallen || consumed)
+            return;
 
         hasFallen = true;
         fallStartTime = Time.time;
 
         if (rb != null)
+        {
             rb.bodyType = RigidbodyType2D.Dynamic;
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        TryDamage(other, true);
-    }
-
-    private void OnTriggerStay2D(Collider2D other)
-    {
-        TryDamage(other, false);
+            rb.linearVelocity = Vector2.zero;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        HandleGroundCollision(collision.collider);
-        TryDamage(collision.collider, true);
+        if (consumed)
+            return;
+
+        Collider2D other = collision.collider;
+
+        if (other.CompareTag(targetTag))
+        {
+            TryHitPlayer(other);
+            return;
+        }
+
+        if (IsGround(other))
+        {
+            TryBreakOnGround();
+        }
     }
 
-    private void OnCollisionStay2D(Collision2D collision)
+    private void TryHitPlayer(Collider2D other)
     {
-        HandleGroundCollision(collision.collider);
-        TryDamage(collision.collider, false);
+        if (!CanHitPlayer())
+            return;
+
+        IDamageable damageable = other.GetComponent<IDamageable>();
+
+        if (damageable == null)
+            damageable = other.GetComponentInParent<IDamageable>();
+
+        if (damageable != null)
+            damageable.TakeDamage(touchDamage);
+
+        if (applyKnockback)
+        {
+            PlayerKnockback2D knockback = other.GetComponent<PlayerKnockback2D>();
+
+            if (knockback == null)
+                knockback = other.GetComponentInParent<PlayerKnockback2D>();
+
+            if (knockback != null)
+                knockback.ApplyKnockback(transform.position);
+        }
+
+        if (destroyWhenHitPlayer)
+            ConsumeTrap();
     }
 
-    private void HandleGroundCollision(Collider2D other)
+    private void TryBreakOnGround()
     {
-        if (consumed) return;
-        if (!hasFallen) return;
-
-        if (((1 << other.gameObject.layer) & groundLayers) == 0)
+        if (!hasFallen)
             return;
 
         if (Time.time < fallStartTime + groundCollisionArmingDelay)
             return;
 
-        if (rb != null && rb.linearVelocity.y > -minimumFallSpeedToBreak)
-            return;
-
-        consumed = true;
-        Destroy(gameObject);
+        if (destroyWhenHitGround)
+            ConsumeTrap();
     }
 
     private bool CanHitPlayer()
@@ -101,44 +130,21 @@ public class FallingTrap2D : MonoBehaviour
         return true;
     }
 
-    private void TryDamage(Collider2D other, bool destroyOnSuccessfulPlayerHit)
+    private bool IsGround(Collider2D other)
+    {
+        return ((1 << other.gameObject.layer) & groundLayers) != 0;
+    }
+
+    private void ConsumeTrap()
     {
         if (consumed)
             return;
 
-        if (!other.CompareTag(targetTag))
-            return;
+        consumed = true;
 
-        if (!CanHitPlayer())
-            return;
+        if (destroyFX != null)
+            Instantiate(destroyFX, transform.position, Quaternion.identity);
 
-        if (Time.time < lastDamageTime + damageCooldown)
-            return;
-
-        IDamageable damageable = other.GetComponent<IDamageable>();
-        if (damageable == null)
-            damageable = other.GetComponentInParent<IDamageable>();
-
-        if (damageable == null)
-            return;
-
-        damageable.TakeDamage(touchDamage);
-        lastDamageTime = Time.time;
-
-        if (applyKnockback)
-        {
-            PlayerKnockback2D knockback = other.GetComponent<PlayerKnockback2D>();
-            if (knockback == null)
-                knockback = other.GetComponentInParent<PlayerKnockback2D>();
-
-            if (knockback != null)
-                knockback.ApplyKnockback(transform.position);
-        }
-
-        if (destroyOnSuccessfulPlayerHit)
-        {
-            consumed = true;
-            Destroy(gameObject);
-        }
+        Destroy(gameObject);
     }
 }

@@ -1,0 +1,102 @@
+using System.Collections;
+using UnityEngine;
+
+public class CommandProjectileRain2D : MonoBehaviour
+{
+    [Header("Projectile")]
+    [SerializeField] private GameObject projectilePrefab;
+    [SerializeField] private int projectileCount = 12;
+    [SerializeField] private float damage = 10f;
+
+    [Header("Zone de pluie")]
+    [SerializeField] private float width = 6f;
+    [SerializeField] private float spawnHeight = 5f;
+
+    [Header("Timing")]
+    [SerializeField] private float duration = 2f;
+    [SerializeField] private float projectileLifetime = 4f;
+
+    [Header("Mouvement")]
+    [SerializeField] private float fallSpeed = 8f;
+    [SerializeField] private bool randomHorizontalAngle = true;
+    [SerializeField] private float horizontalAngleStrength = 1.5f;
+
+    [Header("Fin")]
+    [SerializeField] private bool destroyAfterRain = true;
+
+    private void Start()
+    {
+        StartCoroutine(RainRoutine());
+    }
+
+    private IEnumerator RainRoutine()
+    {
+        if (projectilePrefab == null)
+        {
+            Debug.LogWarning("[CommandProjectileRain2D] Aucun projectilePrefab assigné.");
+            yield break;
+        }
+
+        float interval = duration / Mathf.Max(1, projectileCount);
+
+        for (int i = 0; i < projectileCount; i++)
+        {
+            SpawnProjectile();
+            yield return new WaitForSeconds(interval);
+        }
+
+        if (destroyAfterRain)
+            Destroy(gameObject);
+    }
+
+    private void SpawnProjectile()
+    {
+        float randomX = Random.Range(-width * 0.5f, width * 0.5f);
+
+        Vector3 spawnPosition = transform.position + new Vector3(
+            randomX,
+            spawnHeight,
+            0f
+        );
+
+        GameObject projectile = Instantiate(
+            projectilePrefab,
+            spawnPosition,
+            Quaternion.identity
+        );
+
+        RainProjectile2D rainProjectile = projectile.GetComponent<RainProjectile2D>();
+
+        if (rainProjectile != null)
+        {
+            Vector2 direction = Vector2.down;
+
+            if (randomHorizontalAngle)
+            {
+                direction.x = Random.Range(-horizontalAngleStrength, horizontalAngleStrength);
+                direction.Normalize();
+            }
+
+            rainProjectile.Init(direction, fallSpeed, damage, projectileLifetime);
+        }
+        else
+        {
+            Rigidbody2D rb = projectile.GetComponent<Rigidbody2D>();
+
+            if (rb != null)
+                rb.linearVelocity = Vector2.down * fallSpeed;
+
+            Destroy(projectile, projectileLifetime);
+        }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.cyan;
+
+        Vector3 center = transform.position + Vector3.up * spawnHeight;
+        Vector3 size = new Vector3(width, 0.2f, 0f);
+
+        Gizmos.DrawWireCube(center, size);
+    }
+}

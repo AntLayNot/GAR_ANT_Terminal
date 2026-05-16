@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3358372192864253530}
   - component: {fileID: 5349429041624600212}
   - component: {fileID: 392811421185537786}
+  - component: {fileID: -3973937900768845930}
   m_Layer: 0
   m_Name: Door
   m_TagString: Untagged
@@ -119,6 +120,7 @@ MonoBehaviour:
   isGlow: 0
   outlineColor: {r: 1, g: 0.5, b: 0, a: 1}
   outlineScale: 1.05
+  includeChildren: 1
 --- !u!61 &392811421185537786
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -165,3 +167,17 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &-3973937900768845930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2491330280475592151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7f6dba3815a23a46ac2ea5741acf3f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerProgression: {fileID: 0}
+  countOnlyOnce: 1
