@@ -104,7 +104,12 @@ MonoBehaviour:
   chargesToGive: 1
   destroyOnPickup: 1
   pickupEffect: {fileID: 0}
-  pickupSound: {fileID: 0}
+  pickupAudioSource: {fileID: 0}
+  pickupClip: {fileID: 8300000, guid: 1d56440dad85462488dcf1f1501e76ff, type: 3}
+  pickupVolume: 1
+  hideSpriteOnPickup: 1
+  spriteRenderer: {fileID: 2377226381283116310}
+  pickupCollider: {fileID: 7299399228854097674}
 --- !u!61 &7299399228854097674
 BoxCollider2D:
   m_ObjectHideFlags: 0

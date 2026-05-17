@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cdbdbb5164c5b1479a3eca103fc935d, type: 3}
+  m_Name: 2_PremiersPas2
+  m_EditorClassIdentifier: 
+  sequenceId: 002
+  lines:
+  - speakerName: AXI
+    speakerPortrait: {fileID: -6117479970154661979, guid: 7d9880afa6cad4744b163051e4ee10f3, type: 3}
+    text: Ici tu as plusieurs plateformes, elles te permettront de te deplacer rapidement
+      d'un point "A" a un point "B".
+    autoAdvanceDelay: 0
+  - speakerName: AXI
+    speakerPortrait: {fileID: -6117479970154661979, guid: 7d9880afa6cad4744b163051e4ee10f3, type: 3}
+    text: Essaie les pour voir.
+    autoAdvanceDelay: 0

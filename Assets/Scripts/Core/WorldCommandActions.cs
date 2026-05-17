@@ -65,7 +65,7 @@ public class WorldCommandActions : MonoBehaviour
 
         Debug.Log($"PING -> {t.Name}");
 
-        // 🔶 OUTLINE
+        // OUTLINE
         var outline = t.GetComponent<TargetOutline2D>();
         if (outline != null)
         {
@@ -73,7 +73,7 @@ public class WorldCommandActions : MonoBehaviour
             StartCoroutine(DisableOutline(outline, 2f));
         }
 
-        // 🔷 TEXTE
+        // TEXTE
         if (pingTextPrefab != null)
         {
             Vector3 offset = Vector3.up * 1.5f;
@@ -96,7 +96,7 @@ public class WorldCommandActions : MonoBehaviour
         {
             go.transform.position = target.transform.position + Vector3.up * 1.5f;
 
-            // Optionnel : toujours face caméra
+            // Toujours face caméra
             if (Camera.main != null)
                 go.transform.forward = Camera.main.transform.forward;
 

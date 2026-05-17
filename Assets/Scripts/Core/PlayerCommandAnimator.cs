@@ -147,7 +147,7 @@ public class PlayerCommandAnimator : MonoBehaviour
         SpawnPendingProjectile();
     }
 
-    // À appeler par ton Animation Event ou ton StateMachineBehaviour
+    // À appeler par StateMachineBehaviour (l'animation dans la StateMachine)
     public void SpawnPendingProjectile()
     {
         if (pendingProjectiles.Count <= 0)

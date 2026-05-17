@@ -10,25 +10,31 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5cdbdbb5164c5b1479a3eca103fc935d, type: 3}
-  m_Name: 2_PremiersDoutes
+  m_Name: 2_PremiersPas4
   m_EditorClassIdentifier: 
   sequenceId: 002
   lines:
-  - speakerName: You
-    speakerPortrait: {fileID: 21300000, guid: 5085baabfb59f784b93ff326abd0d16b, type: 3}
-    text: "Cet endroit... c'est diff\xE9rent...\nPourquoi tout est cass\xE9 ?"
+  - speakerName: AXI
+    speakerPortrait: {fileID: -6117479970154661979, guid: 7d9880afa6cad4744b163051e4ee10f3, type: 3}
+    text: Ha, voici ton premier ennemi !
     autoAdvanceDelay: 0
   - speakerName: AXI
     speakerPortrait: {fileID: -6117479970154661979, guid: 7d9880afa6cad4744b163051e4ee10f3, type: 3}
-    text: 'Zone corrompue.
-
-      Ne vous attardez pas.'
+    text: C'est un Buffer. Ils attaquent generalement au corps a corps.
     autoAdvanceDelay: 0
   - speakerName: You
     speakerPortrait: {fileID: 21300000, guid: 5085baabfb59f784b93ff326abd0d16b, type: 3}
-    text: "T'as vu \xE7a... ?\nCes trucs me regardent..."
+    text: Un Buffer ?
+    autoAdvanceDelay: 0
+  - speakerName: You
+    speakerPortrait: {fileID: 21300000, guid: 5085baabfb59f784b93ff326abd0d16b, type: 3}
+    text: (Pourquoi il ressemble a AXI ?)
     autoAdvanceDelay: 0
   - speakerName: AXI
     speakerPortrait: {fileID: -6117479970154661979, guid: 7d9880afa6cad4744b163051e4ee10f3, type: 3}
-    text: "Ce ne sont que des erreurs syst\xE8me. Continuez"
+    text: Sert toi des commandes que l'on a vu ensemble.
+    autoAdvanceDelay: 0
+  - speakerName: AXI
+    speakerPortrait: {fileID: -6117479970154661979, guid: 7d9880afa6cad4744b163051e4ee10f3, type: 3}
+    text: Tu peux aussi utiliser "spawn wall self" pour de proteger.
     autoAdvanceDelay: 0

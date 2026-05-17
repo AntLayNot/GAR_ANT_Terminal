@@ -13,7 +13,7 @@ public class SkillBindingManager : MonoBehaviour
         public string slot;          // "1".."4"
         [TextArea] public string command;
 
-        [Tooltip("Cooldown imposé par le slot (1..4). Ne pas éditer à la main.")]
+        [Tooltip("Cooldown imposé par le slot (1..4).")]
         public float cooldown;       // affiché/lu par l'UI
 
         [NonSerialized] public float nextReadyTimeUnscaled;
@@ -54,7 +54,7 @@ public class SkillBindingManager : MonoBehaviour
     {
         bySlot.Clear();
 
-        // 1) Nettoyage + normalisation slot
+        // Nettoyage + normalisation slot
         var cleaned = bindings
             .Where(b => b != null && !string.IsNullOrWhiteSpace(b.slot) && IsValidSlot(b.slot.Trim()))
             .Select(b =>
@@ -65,7 +65,7 @@ public class SkillBindingManager : MonoBehaviour
             })
             .ToList();
 
-        // 2) Supprime doublons : garde le dernier binding par slot
+        // Supprime doublons : garde le dernier binding par slot
         var unique = new List<Binding>();
         foreach (var b in cleaned)
         {

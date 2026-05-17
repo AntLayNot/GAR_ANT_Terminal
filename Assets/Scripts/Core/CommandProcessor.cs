@@ -51,9 +51,7 @@ public class CommandProcessor : MonoBehaviour
         }
     }
 
-    // ------------------------------------------------------------
     // Données utilisées par TerminalUI (autocomplete + help)
-    // ------------------------------------------------------------
     public IReadOnlyList<string> GetCommandKeywords()
     {
         if (actionsByKeyword == null) BuildCaches();
@@ -82,9 +80,7 @@ public class CommandProcessor : MonoBehaviour
 
 
 
-    // ------------------------------------------------------------
     //  Exécute une ligne et renvoie une réponse texte
-    // ------------------------------------------------------------
     public string ExecuteLine(string line)
     {
         if (string.IsNullOrWhiteSpace(line))
@@ -95,7 +91,7 @@ public class CommandProcessor : MonoBehaviour
 
         line = line.Trim();
 
-        // Match: mots OU "texte entre guillemets"
+        // Match: mots ou "texte entre guillemets"
         var matches = Regex.Matches(line, "\"([^\"]*)\"|(\\S+)");
         if (matches.Count == 0)
             return null;
@@ -185,7 +181,7 @@ public class CommandProcessor : MonoBehaviour
         if (string.Equals(actionString, "unbind", StringComparison.OrdinalIgnoreCase))
         {
             if (skillBindings == null)
-                return "ERREUR: SkillBindingManager non assigné (drag dans CommandProcessor.skillBindings).";
+                return "ERREUR: SkillBindingManager non assigné.";
 
             if (matches.Count < 2)
                 return "Usage: unbind <slot>  (ex: unbind 1)";
@@ -198,7 +194,7 @@ public class CommandProcessor : MonoBehaviour
         if (string.Equals(actionString, "bindlist", StringComparison.OrdinalIgnoreCase))
         {
             if (skillBindings == null)
-                return "ERREUR: SkillBindingManager non assigné (drag dans CommandProcessor.skillBindings).";
+                return "ERREUR: SkillBindingManager non assigné.";
 
             return skillBindings.ListBinds();
         }
@@ -227,9 +223,8 @@ public class CommandProcessor : MonoBehaviour
 
     public void SubmitLine(string line) => _ = ExecuteLine(line);
 
-    // ------------------------------------------------------------
+
     // RANGE CHECK
-    // ------------------------------------------------------------
     bool IsInRange(TargetObject target)
     {
         if (target == null) return false;
@@ -272,9 +267,7 @@ public class CommandProcessor : MonoBehaviour
 
 
 
-    // ------------------------------------------------------------
     // RESOLVE TARGET TOKEN (name / selected / nearest / view)
-    // ------------------------------------------------------------
     bool TryResolveSingleTarget(string token, out TargetObject target, out string error)
     {
         target = null;
@@ -327,7 +320,7 @@ public class CommandProcessor : MonoBehaviour
 
             if (target == null)
             {
-                error = "Aucune target sélectionnée (approche-toi d'un objet visible).";
+                error = "Aucune target sélectionnée (s'approcher d'un objet visible).";
                 return false;
             }
 
@@ -442,9 +435,8 @@ public class CommandProcessor : MonoBehaviour
         return true;
     }
 
-    // ------------------------------------------------------------
+
     // EXÉCUTION ACTIONS (UnityEvents)
-    // ------------------------------------------------------------
     string CallActionAndReturn()
     {
         if (string.IsNullOrWhiteSpace(actionString))
@@ -546,9 +538,7 @@ public class CommandProcessor : MonoBehaviour
     }
 
 
-    // ------------------------------------------------------------
     // SPAWN
-    // ------------------------------------------------------------
     string CallSpawnAndReturn(string spawnId)
     {
         if (worldActions == null)
@@ -589,9 +579,8 @@ public class CommandProcessor : MonoBehaviour
             : $"Spawn inconnu: '{spawnId}'";
     }
 
-    // ------------------------------------------------------------
+
     // HELP
-    // ------------------------------------------------------------
     string BuildHelpText()
     {
         var cmds = GetCommandKeywords();

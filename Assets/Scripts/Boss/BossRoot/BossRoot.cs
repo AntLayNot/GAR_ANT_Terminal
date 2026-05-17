@@ -6,6 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class BossRoot : MonoBehaviour
 {
+    // États du comportement principal du boss
     public enum State
     {
         Idle,
@@ -15,6 +16,7 @@ public class BossRoot : MonoBehaviour
         Dead
     }
 
+    // Phases de vie du boss (changent selon les PV restants)
     public enum BossPhase
     {
         Phase1,
@@ -22,6 +24,7 @@ public class BossRoot : MonoBehaviour
         Phase3
     }
 
+    // Patterns d'attaque possibles
     public enum BossPattern
     {
         None,
@@ -85,9 +88,18 @@ public class BossRoot : MonoBehaviour
     public float pulseRadius = 3f;
     public int pulseDamage = 1;
     public LayerMask damageMask;
+
+    [Tooltip("Prefab contenant BossPulseWave2D.")]
+    public GameObject pulseWavePrefab;
+
     public GameObject pulseEffectPrefab;
     public float pulseChargeTime = 0.4f;
     public float pulseRecoveryTime = 0.2f;
+
+    [Header("Pulse Wave Settings")]
+    [SerializeField] private float pulseStartRadius = 0.25f;
+    [SerializeField] private float pulseWaveDuration = 0.65f;
+    [SerializeField] private float pulseWaveSpawnYOffset = 0f;
 
     [Header("Dash")]
     public float dashSpeed = 12f;
@@ -102,6 +114,26 @@ public class BossRoot : MonoBehaviour
     public Color pulseFlashColor = new Color(0.65f, 0.95f, 1f, 1f);
     public Color hurtFlashColor = new Color(1f, 0.45f, 0.75f, 1f);
     public SpriteRenderer[] flashRenderers;
+
+    [Header("Audio")]
+    [SerializeField] private AudioSource bossAudioSource;
+
+    [SerializeField] private AudioClip introClip;
+    [SerializeField] private AudioClip tripleShotClip;
+    [SerializeField] private AudioClip rainStartClip;
+    [SerializeField] private AudioClip rainProjectileClip;
+    [SerializeField] private AudioClip summonClip;
+    [SerializeField] private AudioClip pulseChargeClip;
+    [SerializeField] private AudioClip pulseImpactClip;
+    [SerializeField] private AudioClip dashChargeClip;
+    [SerializeField] private AudioClip dashStartClip;
+    [SerializeField] private AudioClip hurtClip;
+    [SerializeField] private AudioClip deathClip;
+
+    [SerializeField, Range(0f, 1f)] private float introVolume = 1f;
+    [SerializeField, Range(0f, 1f)] private float attackVolume = 1f;
+    [SerializeField, Range(0f, 1f)] private float hurtVolume = 1f;
+    [SerializeField, Range(0f, 1f)] private float deathVolume = 1f;
 
     [Header("Death Sequence")]
     [SerializeField] private bool useDeathSequence = true;
@@ -137,6 +169,9 @@ public class BossRoot : MonoBehaviour
 
         if (health == null)
             health = GetComponent<BossRootHealth>();
+
+        if (bossAudioSource == null)
+            bossAudioSource = FindFirstObjectByType<AudioSource>();
     }
 
     void Start()
@@ -156,6 +191,7 @@ public class BossRoot : MonoBehaviour
 
     void Update()
     {
+        // Si mort, bloquer la physique horizontale et quitter le comportement normal
         if (isDead)
         {
             state = State.Dead;
@@ -180,6 +216,7 @@ public class BossRoot : MonoBehaviour
                 FaceDir(dx);
         }
 
+        // Machine d'état principale
         switch (state)
         {
             case State.Idle:
@@ -247,6 +284,7 @@ public class BossRoot : MonoBehaviour
         }
     }
 
+    // Met à jour la phase en fonction du ratio de santé (0..1)
     void UpdatePhase()
     {
         if (health == null) return;
@@ -261,6 +299,7 @@ public class BossRoot : MonoBehaviour
             currentPhase = BossPhase.Phase3;
     }
 
+    // Logique de repositionnement horizontal pour garder une distance souhaitée
     void RepositionUpdate()
     {
         float dx = target.position.x - transform.position.x;
@@ -272,6 +311,7 @@ public class BossRoot : MonoBehaviour
 
         if (abs < minDistance)
         {
+            // Trop proche = reculer
             float dirAway = -dirToTarget;
             MoveX(dirAway, repositionSpeed);
             if (faceTarget) FaceDir(dirToTarget);
@@ -280,15 +320,18 @@ public class BossRoot : MonoBehaviour
 
         if (abs > preferredDistance + repositionTolerance)
         {
+            // Trop loin = avancer
             MoveX(dirToTarget, repositionSpeed);
             if (faceTarget) FaceDir(dirToTarget);
             return;
         }
 
+        // À bonne distance = arrêt
         rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
         if (faceTarget) FaceDir(dirToTarget);
     }
 
+    // Vérifie si on est à une distance acceptable pour attaquer
     bool IsAtPreferredDistance()
     {
         if (target == null) return false;
@@ -305,11 +348,14 @@ public class BossRoot : MonoBehaviour
         currentRoutine = StartCoroutine(routine);
     }
 
+    // Intro joué la première fois que la cible est détectée
     IEnumerator IntroRoutine()
     {
         introPlayed = true;
         isPerformingPattern = true;
         rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
+
+        PlayBossSound(introClip, introVolume);
 
         yield return new WaitForSeconds(introDuration);
 
@@ -319,6 +365,7 @@ public class BossRoot : MonoBehaviour
         currentRoutine = null;
     }
 
+    // Orchestration d'un pattern d'attaque choisi
     IEnumerator AttackRoutine(BossPattern pattern)
     {
         isPerformingPattern = true;
@@ -354,6 +401,7 @@ public class BossRoot : MonoBehaviour
         currentRoutine = null;
     }
 
+    // Choisit aléatoirement un pattern selon la phase (évite répéter le dernier si possible)
     BossPattern ChoosePattern()
     {
         List<BossPattern> pool = new List<BossPattern>();
@@ -391,6 +439,7 @@ public class BossRoot : MonoBehaviour
         return pool[index];
     }
 
+    // Triple shot : plusieurs rafales
     private IEnumerator TripleShotRoutine()
     {
         if (target == null || projectilePrefab == null || firePoint == null)
@@ -398,6 +447,8 @@ public class BossRoot : MonoBehaviour
 
         for (int burst = 0; burst < tripleShotBursts; burst++)
         {
+            PlayBossSound(tripleShotClip, attackVolume);
+
             Vector2 aimDir = ((Vector2)target.position - (Vector2)firePoint.position).normalized;
 
             float spread = burst == 0 ? tripleShotSpreadA : tripleShotSpreadB;
@@ -411,10 +462,13 @@ public class BossRoot : MonoBehaviour
         }
     }
 
+    // Rain shot : spawn projectiles au-dessus de la cible qui tombent vers le sol
     IEnumerator RainShotRoutine()
     {
         if (target == null || projectilePrefab == null)
             yield break;
+
+        PlayBossSound(rainStartClip, attackVolume);
 
         int count = currentPhase == BossPhase.Phase3 ? rainShotCountPhase3 : rainShotCountPhase2;
 
@@ -425,6 +479,8 @@ public class BossRoot : MonoBehaviour
                 target.position.y + Random.Range(rainVerticalRange.x, rainVerticalRange.y),
                 0f
             );
+
+            PlayBossSound(rainProjectileClip, attackVolume);
 
             GameObject go = Instantiate(projectilePrefab, spawnPos, Quaternion.identity);
 
@@ -450,9 +506,12 @@ public class BossRoot : MonoBehaviour
         }
     }
 
+    // Summon : déclenche le spawner de minions
     IEnumerator SummonWaveRoutine()
     {
         rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
+
+        PlayBossSound(summonClip, attackVolume);
 
         if (minionSpawner != null)
             minionSpawner.SpawnWave(currentPhase);
@@ -460,9 +519,12 @@ public class BossRoot : MonoBehaviour
         yield return new WaitForSeconds(0.6f);
     }
 
+    // Pulse zone : charge, effet, spawn d'une onde qui inflige des dégâts
     IEnumerator PulseZoneRoutine()
     {
         rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
+
+        PlayBossSound(pulseChargeClip, attackVolume);
 
         if (pulseEffectPrefab != null)
             Instantiate(pulseEffectPrefab, transform.position, Quaternion.identity);
@@ -471,27 +533,56 @@ public class BossRoot : MonoBehaviour
 
         yield return new WaitForSeconds(pulseChargeTime);
 
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, pulseRadius, damageMask);
-        for (int i = 0; i < hits.Length; i++)
-        {
-            if (hits[i] == null) continue;
+        PlayBossSound(pulseImpactClip, attackVolume);
 
-            var dmg = hits[i].GetComponentInParent<IDamageable>();
-            if (dmg != null)
-                dmg.TakeDamage(pulseDamage);
-            else
-                hits[i].SendMessage("TakeDamage", pulseDamage, SendMessageOptions.DontRequireReceiver);
-        }
+        SpawnPulseWave();
 
-        yield return new WaitForSeconds(pulseRecoveryTime);
+        yield return new WaitForSeconds(pulseWaveDuration + pulseRecoveryTime);
     }
 
+    // Instancie l'objet d'onde et l'initialise
+    private void SpawnPulseWave()
+    {
+        if (pulseWavePrefab == null)
+        {
+            Debug.LogWarning("[BossRoot] Aucun pulseWavePrefab assigné.");
+            return;
+        }
+
+        Vector3 spawnPosition = transform.position + Vector3.up * pulseWaveSpawnYOffset;
+
+        GameObject waveObject = Instantiate(
+            pulseWavePrefab,
+            spawnPosition,
+            Quaternion.identity
+        );
+
+        BossPulseWave2D wave = waveObject.GetComponent<BossPulseWave2D>();
+
+        if (wave == null)
+            wave = waveObject.GetComponentInChildren<BossPulseWave2D>();
+
+        if (wave != null)
+        {
+            wave.Init(
+                pulseStartRadius,
+                pulseRadius,
+                pulseWaveDuration,
+                pulseDamage,
+                damageMask
+            );
+        }
+    }
+
+    // Dash strike : charge rapide vers la cible
     IEnumerator DashStrikeRoutine()
     {
         if (target == null)
             yield break;
 
         rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
+
+        PlayBossSound(dashChargeClip, attackVolume);
 
         yield return new WaitForSeconds(dashChargeTime);
 
@@ -501,6 +592,8 @@ public class BossRoot : MonoBehaviour
             dir = GetFacingSign();
 
         FaceDir(dir);
+
+        PlayBossSound(dashStartClip, attackVolume);
 
         if (dashTrail != null)
         {
@@ -515,6 +608,7 @@ public class BossRoot : MonoBehaviour
         {
             MoveX(dir, dashSpeed);
 
+            // Hitbox rectangulaire autour du boss pendant le dash
             Vector2 center = (Vector2)transform.position + new Vector2(dashHitboxOffset.x * dir, dashHitboxOffset.y);
             Collider2D[] hits = Physics2D.OverlapBoxAll(center, dashHitboxSize, 0f, damageMask);
 
@@ -547,6 +641,7 @@ public class BossRoot : MonoBehaviour
             dashTrail.emitting = false;
     }
 
+    // Création d'un projectile et initialisation de sa vélocité ou du script attaché
     void FireProjectile(Vector2 direction)
     {
         if (projectilePrefab == null || firePoint == null)
@@ -572,6 +667,7 @@ public class BossRoot : MonoBehaviour
             prb.linearVelocity = direction.normalized * projectileSpeed;
     }
 
+    // Appelé quand le boss meurt : arrête tout et lance la séquence de mort
     public void OnDeath()
     {
         if (isDead || deathSequenceStarted) return;
@@ -592,12 +688,15 @@ public class BossRoot : MonoBehaviour
 
         Debug.Log("ROOT / ∅ defeated.");
 
+        PlayBossSound(deathClip, deathVolume);
+
         if (useDeathSequence)
             StartCoroutine(DeathSequenceRoutine());
         else
             Destroy(gameObject);
     }
 
+    // Séquence de mort : zoom, effet, slowmotion puis destruction
     private IEnumerator DeathSequenceRoutine()
     {
         float oldTimeScale = Time.timeScale;
@@ -611,7 +710,7 @@ public class BossRoot : MonoBehaviour
             deathZoomCamera.Priority = deathZoomPriority;
         }
 
-        // Effet
+        // Effet visuel d'explosion / mort
         if (deathEffectPrefab != null)
             Instantiate(deathEffectPrefab, transform.position, Quaternion.identity);
 
@@ -619,10 +718,10 @@ public class BossRoot : MonoBehaviour
         Time.timeScale = deathSlowTimeScale;
         Time.fixedDeltaTime = oldFixedDeltaTime * deathSlowTimeScale;
 
-        // Attente en temps réel, pour ne pas être affectée par le slowmo
+        // Attente en temps réel pour ne pas être affectée par le slowmo
         yield return new WaitForSecondsRealtime(deathSlowDuration);
 
-        // Détruire le boss
+        // Détruire le boss après un délai
         Destroy(gameObject, deathDestroyDelay);
 
         // Attendre encore un peu avant de remettre le temps normal
@@ -635,12 +734,17 @@ public class BossRoot : MonoBehaviour
             deathZoomCamera.Priority = normalCameraPriority;
     }
 
+    // Réaction visuelle / sonore lors d'un dégât
     public void OnDamaged()
     {
         if (!isDead)
+        {
+            PlayBossSound(hurtClip, hurtVolume);
             StartCoroutine(FlashRoutine(hurtFlashColor, 0.12f));
+        }
     }
 
+    // Routine pour flash visuel temporaire des sprite renderers
     IEnumerator FlashRoutine(Color flashColor, float duration)
     {
         if (flashRenderers == null || flashRenderers.Length == 0)
@@ -668,11 +772,13 @@ public class BossRoot : MonoBehaviour
         }
     }
 
+    // Déplace le rigidbody horizontalement
     void MoveX(float dir, float speed)
     {
         rb.linearVelocity = new Vector2(dir * speed, rb.linearVelocity.y);
     }
 
+    // Met à jour l'orientation visuelle / rotation selon la direction donnée
     void FaceDir(float dir)
     {
         if (dir == 0f) return;
@@ -699,6 +805,17 @@ public class BossRoot : MonoBehaviour
     float GetFacingSign()
     {
         return facingSign;
+    }
+
+    private void PlayBossSound(AudioClip clip, float volume)
+    {
+        if (bossAudioSource == null)
+            return;
+
+        if (clip == null)
+            return;
+
+        bossAudioSource.PlayOneShot(clip, volume);
     }
 
     void OnDrawGizmosSelected()

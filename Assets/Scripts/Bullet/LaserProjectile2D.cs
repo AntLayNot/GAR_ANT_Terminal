@@ -143,8 +143,7 @@ public class LaserProjectile2D : MonoBehaviour
 
         if (spriteRenderer != null)
         {
-            // Très important :
-            // le sprite est enfant du laser, donc on peut le décaler sans déplacer le point de tir.
+            // Le sprite est enfant du laser, donc on peut le décaler sans déplacer le point de tir.
             spriteRenderer.transform.localPosition = new Vector3(beamLength * 0.5f, 0f, 0f);
             spriteRenderer.transform.localRotation = Quaternion.identity;
 

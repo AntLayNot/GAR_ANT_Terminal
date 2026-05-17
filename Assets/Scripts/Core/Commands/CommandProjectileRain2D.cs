@@ -21,8 +21,26 @@ public class CommandProjectileRain2D : MonoBehaviour
     [SerializeField] private bool randomHorizontalAngle = true;
     [SerializeField] private float horizontalAngleStrength = 1.5f;
 
+    [Header("Audio")]
+    [SerializeField] private AudioSource rainAudioSource;
+
+    [Tooltip("Son joué une seule fois au début de la pluie.")]
+    [SerializeField] private AudioClip rainStartClip;
+
+    [Tooltip("Son optionnel joué à chaque projectile spawn.")]
+    [SerializeField] private AudioClip projectileSpawnClip;
+
+    [SerializeField, Range(0f, 1f)] private float rainStartVolume = 1f;
+    [SerializeField, Range(0f, 1f)] private float projectileSpawnVolume = 0.5f;
+
     [Header("Fin")]
     [SerializeField] private bool destroyAfterRain = true;
+
+    private void Awake()
+    {
+        if (rainAudioSource == null)
+            rainAudioSource = GetComponent<AudioSource>();
+    }
 
     private void Start()
     {
@@ -37,6 +55,8 @@ public class CommandProjectileRain2D : MonoBehaviour
             yield break;
         }
 
+        PlaySound(rainStartClip, rainStartVolume);
+
         float interval = duration / Mathf.Max(1, projectileCount);
 
         for (int i = 0; i < projectileCount; i++)
@@ -46,7 +66,14 @@ public class CommandProjectileRain2D : MonoBehaviour
         }
 
         if (destroyAfterRain)
-            Destroy(gameObject);
+        {
+            float delay = 0f;
+
+            if (rainAudioSource != null && rainAudioSource.isPlaying && rainAudioSource.clip != null)
+                delay = rainAudioSource.clip.length;
+
+            Destroy(gameObject, delay);
+        }
     }
 
     private void SpawnProjectile()
@@ -58,6 +85,8 @@ public class CommandProjectileRain2D : MonoBehaviour
             spawnHeight,
             0f
         );
+
+        PlaySound(projectileSpawnClip, projectileSpawnVolume);
 
         GameObject projectile = Instantiate(
             projectilePrefab,
@@ -88,6 +117,19 @@ public class CommandProjectileRain2D : MonoBehaviour
 
             Destroy(projectile, projectileLifetime);
         }
+    }
+
+    private void PlaySound(AudioClip clip, float volume)
+    {
+        if (rainAudioSource == null)
+            return;
+
+        AudioClip clipToPlay = clip;
+
+        if (clipToPlay == null)
+            return;
+
+        rainAudioSource.PlayOneShot(clipToPlay, volume);
     }
 
     private void OnDrawGizmosSelected()

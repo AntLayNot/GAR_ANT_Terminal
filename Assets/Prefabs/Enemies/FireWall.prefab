@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5456206832943598520}
   - component: {fileID: 8523713352574151966}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -102,7 +102,7 @@ GameObject:
   - component: {fileID: 3764293391308282632}
   - component: {fileID: 1843143043281984693}
   - component: {fileID: 4813179965159363943}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FireWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -328,7 +328,7 @@ GameObject:
   m_Component:
   - component: {fileID: 27719703059964067}
   - component: {fileID: 5666089131651878861}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Border
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -415,7 +415,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2667166093383727321}
   - component: {fileID: 4480421555891170726}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BackGround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -501,7 +501,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 481721831244194859}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: HealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}

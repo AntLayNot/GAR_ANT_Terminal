@@ -54,4 +54,9 @@ MonoBehaviour:
   fallSpeed: 8
   randomHorizontalAngle: 1
   horizontalAngleStrength: 1.5
+  rainAudioSource: {fileID: 0}
+  rainStartClip: {fileID: 8300000, guid: 778ae6b46b9e9cd47966dc09694ddc50, type: 3}
+  projectileSpawnClip: {fileID: 0}
+  rainStartVolume: 0.751
+  projectileSpawnVolume: 0.5
   destroyAfterRain: 1

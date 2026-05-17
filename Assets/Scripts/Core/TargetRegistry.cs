@@ -3,13 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-/// <summary>
-/// Global registry of active TargetObject instances.
-/// Model 1 + A2: if multiple objects share the same Name, the most recently registered wins.
-/// </summary>
 public static class TargetRegistry
 {
-    // Keep insertion order for "last wins"
+    // Conserver l'ordre d'insertion pour que le "dernier gagne"
     private static readonly LinkedList<TargetObject> ordered = new();
     private static readonly Dictionary<TargetObject, LinkedListNode<TargetObject>> nodes = new();
 
@@ -17,7 +13,7 @@ public static class TargetRegistry
     {
         if (t == null) return;
 
-        // If already registered, move to end (becomes "last")
+        // Si déjà enregistré, le déplacer en fin (devient le "dernier")
         if (nodes.TryGetValue(t, out var node))
         {
             ordered.Remove(node);
@@ -56,7 +52,8 @@ public static class TargetRegistry
     }
 
     /// <summary>
-    /// Find by Name (case-insensitive). If multiple share the same name, returns the most recently registered.
+    /// Recherche par nom (insensible à la casse). Si plusieurs partagent le même nom,
+    /// retourne le plus récemment enregistré.
     /// </summary>
     public static bool TryFindByName(string name, out TargetObject found)
     {
@@ -65,7 +62,7 @@ public static class TargetRegistry
 
         name = name.Trim();
 
-        // Iterate from end => last registered first
+        // Itérer depuis la fin => le plus récemment enregistré en premier
         for (var node = ordered.Last; node != null; node = node.Previous)
         {
             var t = node.Value;
@@ -81,9 +78,6 @@ public static class TargetRegistry
         return false;
     }
 
-    /// <summary>
-    /// For renames: move this target to the end so it becomes the "last" for its new name.
-    /// </summary>
     public static void Touch(TargetObject t)
     {
         Register(t);

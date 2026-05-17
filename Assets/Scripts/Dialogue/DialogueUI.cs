@@ -29,10 +29,10 @@ public class DialogueUI : MonoBehaviour
             portraitImage.sprite = portrait;
             portraitImage.enabled = portrait != null;
 
-            // 🔥 Force le comportement
+            // Force le comportement
             portraitImage.preserveAspect = true;
 
-            // Optionnel : ajuste dynamiquement le ratio
+            // Ajuste dynamiquement le ratio
             var fitter = portraitImage.GetComponent<UnityEngine.UI.AspectRatioFitter>();
             if (fitter != null && portrait != null)
             {

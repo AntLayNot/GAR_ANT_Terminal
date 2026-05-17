@@ -9,7 +9,7 @@ public class SkillInput : MonoBehaviour
     public GameObject terminalRoot;
     public TMP_InputField terminalInput;
 
-    [Header("Slots -> Keys (4 skills)")]
+    [Header("Slots, Keys (4 skills)")]
     public KeyCode key1 = KeyCode.Alpha1;
     public KeyCode key2 = KeyCode.Alpha2;
     public KeyCode key3 = KeyCode.Alpha3;

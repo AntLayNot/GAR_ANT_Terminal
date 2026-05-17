@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class DialogueTrigger : MonoBehaviour
 {
@@ -15,11 +16,23 @@ public class DialogueTrigger : MonoBehaviour
     public bool triggerOnlyOnce = true;
     public string requiredTag = "Player";
 
+    [Header("Dialogue Slow Motion")]
+    public bool slowMotionDuringDialogue = true;
+
+    [Range(0.01f, 1f)]
+    public float dialogueTimeScale = 0.2f;
+
+    public float fixedDeltaBase = 0.02f;
+
+    [Tooltip("Si true, remet automatiquement le temps normal quand le dialogue se termine.")]
+    public bool restoreTimeAfterDialogue = true;
+
     [Header("Debug")]
     public bool debugLogs = true;
     public bool drawGizmos = true;
 
     private bool hasTriggered = false;
+    private Coroutine slowMotionRoutine;
 
     private void Start()
     {
@@ -41,18 +54,10 @@ public class DialogueTrigger : MonoBehaviour
             Debug.Log($"[DialogueTrigger] Collision détectée avec: {other.name} (tag: {other.tag})");
 
         if (triggerType != TriggerType.OnTriggerEnter2D)
-        {
-            if (debugLogs)
-                Debug.Log("[DialogueTrigger] Mauvais mode de trigger");
             return;
-        }
 
         if (!other.CompareTag(requiredTag))
-        {
-            if (debugLogs)
-                Debug.Log($"[DialogueTrigger] Tag incorrect (attendu: {requiredTag})");
             return;
-        }
 
         TriggerDialogue();
     }
@@ -63,11 +68,7 @@ public class DialogueTrigger : MonoBehaviour
             Debug.Log("[DialogueTrigger] Tentative de lancement du dialogue");
 
         if (hasTriggered && triggerOnlyOnce)
-        {
-            if (debugLogs)
-                Debug.Log("[DialogueTrigger] Déjà déclenché (bloqué)");
             return;
-        }
 
         if (sequence == null)
         {
@@ -94,9 +95,73 @@ public class DialogueTrigger : MonoBehaviour
             Debug.Log($"[DialogueTrigger] Lancement du dialogue: {sequence.name}");
 
         DialogueManager.Instance.PlayDialogue(sequence);
+
+        if (slowMotionDuringDialogue)
+            StartDialogueSlowMotion();
     }
 
-    // 🔍 Debug visuel dans la scène
+    private void StartDialogueSlowMotion()
+    {
+        Time.timeScale = dialogueTimeScale;
+        Time.fixedDeltaTime = fixedDeltaBase * dialogueTimeScale;
+
+        if (slowMotionRoutine != null)
+            StopCoroutine(slowMotionRoutine);
+
+        slowMotionRoutine = StartCoroutine(DialogueSlowMotionRoutine());
+    }
+
+    private IEnumerator DialogueSlowMotionRoutine()
+    {
+        while (DialogueManager.Instance != null && DialogueManager.Instance.IsDialoguePlaying)
+        {
+            yield return null;
+        }
+
+        if (restoreTimeAfterDialogue)
+        {
+            Time.timeScale = 1f;
+            Time.fixedDeltaTime = fixedDeltaBase;
+        }
+
+        slowMotionRoutine = null;
+    }
+
+    public void ResetTrigger()
+    {
+        hasTriggered = false;
+
+        if (slowMotionRoutine != null)
+        {
+            StopCoroutine(slowMotionRoutine);
+            slowMotionRoutine = null;
+        }
+
+        if (restoreTimeAfterDialogue)
+        {
+            Time.timeScale = 1f;
+            Time.fixedDeltaTime = fixedDeltaBase;
+        }
+
+        if (debugLogs)
+            Debug.Log("[DialogueTrigger] Trigger reset.");
+    }
+
+    private void OnDisable()
+    {
+        if (slowMotionRoutine != null)
+        {
+            StopCoroutine(slowMotionRoutine);
+            slowMotionRoutine = null;
+        }
+
+        if (restoreTimeAfterDialogue)
+        {
+            Time.timeScale = 1f;
+            Time.fixedDeltaTime = fixedDeltaBase;
+        }
+    }
+
     private void OnDrawGizmos()
     {
         if (!drawGizmos) return;
@@ -109,13 +174,9 @@ public class DialogueTrigger : MonoBehaviour
             Gizmos.matrix = transform.localToWorldMatrix;
 
             if (col is BoxCollider2D box)
-            {
                 Gizmos.DrawWireCube(box.offset, box.size);
-            }
             else if (col is CircleCollider2D circle)
-            {
                 Gizmos.DrawWireSphere(circle.offset, circle.radius);
-            }
         }
     }
 }

@@ -16,11 +16,11 @@ MonoBehaviour:
   lines:
   - speakerName: You
     speakerPortrait: {fileID: 21300000, guid: 5085baabfb59f784b93ff326abd0d16b, type: 3}
-    text: "... Ou suis-je... Haarg, ma t\xEAte !"
+    text: ... Ou suis-je... Haarg, ma tete !
     autoAdvanceDelay: 0
   - speakerName: AXI
     speakerPortrait: {fileID: -6117479970154661979, guid: 7d9880afa6cad4744b163051e4ee10f3, type: 3}
-    text: "OH, tu es r\xE9veill\xE9, ca va ?"
+    text: OH, tu es reveille, ca va ?
     autoAdvanceDelay: 0
   - speakerName: You
     speakerPortrait: {fileID: 21300000, guid: 5085baabfb59f784b93ff326abd0d16b, type: 3}
@@ -28,18 +28,18 @@ MonoBehaviour:
     autoAdvanceDelay: 0
   - speakerName: AXI
     speakerPortrait: {fileID: -6117479970154661979, guid: 7d9880afa6cad4744b163051e4ee10f3, type: 3}
-    text: "Oula, tu poses beaucoup de questions. Pour commencer, tu es dans une for\xEAt
-      je crois que \xE7a se voit assez bien non ? Ensuite moi je suis \"AXI\", robot
-      et accompagnateur, \xE0 ton service !"
+    text: Oula, tu poses beaucoup de questions. Pour commencer, tu es dans une plaine
+      je crois que ca se voit assez bien non ? Ensuite moi je suis "AXI", robot et
+      accompagnateur, a ton service !
     autoAdvanceDelay: 0
   - speakerName: You
     speakerPortrait: {fileID: 21300000, guid: 5085baabfb59f784b93ff326abd0d16b, type: 3}
-    text: "Oh, ok, donc tu vas m'aider si j'ai bien compris, c'est \xE7a ?"
+    text: Oh, ok, donc tu vas m'aider si j'ai bien compris, c'est ca ?
     autoAdvanceDelay: 0
   - speakerName: AXI
     speakerPortrait: {fileID: -6117479970154661979, guid: 7d9880afa6cad4744b163051e4ee10f3, type: 3}
     text: "C'est \xE7a, je vais te montrer les bases, tu as du remarquer que tu avais
-      un \xE9cran bizarre dans ta poche, c'est le terminal, il te permet de controller
-      le monde qui t'entoure. Ouvre le avec \"E\" et commence par \xE9crire \xE7a
-      : \" spawn projectile self \"."
+      un ecran bizarre dans ta poche, c'est le terminal, il te permet de controller
+      le monde qui t'entoure. Ouvre le avec \"E\" et commence par ecrire ca : \"
+      spawn projectile self \"."
     autoAdvanceDelay: 0

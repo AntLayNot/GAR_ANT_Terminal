@@ -15,6 +15,16 @@ public class NodeAllyPowerDrain2D : MonoBehaviour
     [Header("Bonus Limits")]
     [SerializeField] private float maxPowerMultiplier = 2f;
 
+    [Header("Attack Audio")]
+    [SerializeField] private AudioSource attackAudioSource;
+
+    [SerializeField] private AudioClip[] attackClips = new AudioClip[4];
+
+    [SerializeField, Range(0f, 1f)] private float attackVolume = 1f;
+
+    [Tooltip("Évite de rejouer deux fois exactement le même son à la suite.")]
+    [SerializeField] private bool avoidSameSoundTwice = true;
+
     [Header("Debug")]
     [SerializeField] private bool debugLogs = false;
     [SerializeField] private bool drawGizmos = true;
@@ -25,8 +35,16 @@ public class NodeAllyPowerDrain2D : MonoBehaviour
     private int currentAllyCount;
     private float currentPowerMultiplier = 1f;
 
+    private int lastAttackSoundIndex = -1;
+
     public int CurrentAllyCount => currentAllyCount;
     public float CurrentPowerMultiplier => currentPowerMultiplier;
+
+    private void Awake()
+    {
+        if (attackAudioSource == null)
+            attackAudioSource = FindFirstObjectByType<AudioSource>();
+    }
 
     private void Update()
     {
@@ -37,16 +55,15 @@ public class NodeAllyPowerDrain2D : MonoBehaviour
     {
         detectedAllies.Clear();
 
-        int hitCount = Physics2D.OverlapCircleNonAlloc(
+        Collider2D[] hits = Physics2D.OverlapCircleAll(
             transform.position,
             detectionRadius,
-            results,
             allyLayer
         );
 
-        for (int i = 0; i < hitCount; i++)
+        for (int i = 0; i < hits.Length; i++)
         {
-            Collider2D hit = results[i];
+            Collider2D hit = hits[i];
 
             if (hit == null)
                 continue;
@@ -91,6 +108,73 @@ public class NodeAllyPowerDrain2D : MonoBehaviour
     public float GetReducedCooldown(float baseCooldown)
     {
         return baseCooldown / currentPowerMultiplier;
+    }
+
+    public void PlayRandomAttackSound()
+    {
+        if (attackAudioSource == null)
+            return;
+
+        int validCount = GetValidAttackClipCount();
+
+        if (validCount <= 0)
+            return;
+
+        int randomIndex = GetRandomAttackClipIndex();
+
+        if (randomIndex < 0 || randomIndex >= attackClips.Length)
+            return;
+
+        AudioClip clip = attackClips[randomIndex];
+
+        if (clip == null)
+            return;
+
+        lastAttackSoundIndex = randomIndex;
+        attackAudioSource.PlayOneShot(clip, attackVolume);
+    }
+
+    private int GetValidAttackClipCount()
+    {
+        int count = 0;
+
+        for (int i = 0; i < attackClips.Length; i++)
+        {
+            if (attackClips[i] != null)
+                count++;
+        }
+
+        return count;
+    }
+
+    private int GetRandomAttackClipIndex()
+    {
+        List<int> validIndexes = new List<int>();
+
+        for (int i = 0; i < attackClips.Length; i++)
+        {
+            if (attackClips[i] == null)
+                continue;
+
+            if (avoidSameSoundTwice && attackClips.Length > 1 && i == lastAttackSoundIndex)
+                continue;
+
+            validIndexes.Add(i);
+        }
+
+        if (validIndexes.Count == 0)
+        {
+            for (int i = 0; i < attackClips.Length; i++)
+            {
+                if (attackClips[i] != null)
+                    validIndexes.Add(i);
+            }
+        }
+
+        if (validIndexes.Count == 0)
+            return -1;
+
+        return validIndexes[Random.Range(0, validIndexes.Count)];
     }
 
     private void OnDrawGizmosSelected()

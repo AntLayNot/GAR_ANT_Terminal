@@ -27,7 +27,6 @@ public class PlayerTargeting2D : MonoBehaviour
 
     void LateUpdate()
     {
-        // Important avec Cinemachine : la caméra finit souvent son mouvement en LateUpdate
         ResolveCamera();
 
         if (cam == null)

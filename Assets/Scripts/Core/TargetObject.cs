@@ -16,7 +16,6 @@ public class TargetObject : MonoBehaviour
         TargetRegistry.Unregister(this);
     }
 
-    // Important: on "touch" le registry pour que ce target devienne le dernier (A2: last wins).
     public void SetName(string newName)
     {
         targetName = newName;

@@ -107,6 +107,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1096
   applyKnockbackOnPlayer: 1
+  spikeAudioSource: {fileID: 0}
+  damageClip: {fileID: 8300000, guid: 5b953822207b95d48a2273f7e7475aa4, type: 3}
+  damageVolume: 0.5
 --- !u!60 &3712004531472349144
 PolygonCollider2D:
   m_ObjectHideFlags: 0

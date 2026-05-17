@@ -108,6 +108,9 @@ MonoBehaviour:
   startShootingOnStart: 1
   useFirePointRightDirection: 0
   fixedDirection: {x: -1, y: 0}
+  shootAudioSource: {fileID: 0}
+  shootClip: {fileID: 0}
+  shootVolume: 0.15
   drawRangeGizmo: 1
   gizmoLineLength: 2
 --- !u!60 &2969623432622048253
@@ -185,7 +188,7 @@ Transform:
   m_GameObject: {fileID: 8695177135357399693}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.5, y: 0, z: 0}
+  m_LocalPosition: {x: -0.855, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

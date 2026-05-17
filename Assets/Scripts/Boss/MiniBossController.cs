@@ -325,7 +325,7 @@ public class MiniBossController : MonoBehaviour, IDamageable
 
         if (!isVulnerable)
         {
-            Debug.Log("[MiniBoss] Boss protégé : détruisez les piliers.");
+            Debug.Log("[MiniBoss] Boss protégé : détruire les piliers.");
             return;
         }
 

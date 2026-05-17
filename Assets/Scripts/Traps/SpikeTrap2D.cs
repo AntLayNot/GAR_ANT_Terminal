@@ -12,7 +12,18 @@ public class SpikeTrap2D : MonoBehaviour
     [Header("Knockback")]
     [SerializeField] private bool applyKnockbackOnPlayer = true;
 
+    [Header("Audio")]
+    [SerializeField] private AudioSource spikeAudioSource;
+    [SerializeField] private AudioClip damageClip;
+    [SerializeField, Range(0f, 1f)] private float damageVolume = 1f;
+
     private float lastDamageTime = -999f;
+
+    private void Awake()
+    {
+        if (spikeAudioSource == null)
+            spikeAudioSource = FindFirstObjectByType<AudioSource>();
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -43,7 +54,24 @@ public class SpikeTrap2D : MonoBehaviour
         damageable.TakeDamage(damage);
         lastDamageTime = Time.time;
 
+        PlayDamageSound();
         TryApplyPlayerKnockback(other);
+    }
+
+    private void PlayDamageSound()
+    {
+        if (spikeAudioSource == null)
+            return;
+
+        AudioClip clipToPlay = damageClip;
+
+        if (clipToPlay == null)
+            clipToPlay = spikeAudioSource.clip;
+
+        if (clipToPlay == null)
+            return;
+
+        spikeAudioSource.PlayOneShot(clipToPlay, damageVolume);
     }
 
     private void TryApplyPlayerKnockback(Collider2D other)

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cdbdbb5164c5b1479a3eca103fc935d, type: 3}
+  m_Name: 2_PremiersPas5
+  m_EditorClassIdentifier: 
+  sequenceId: 002
+  lines:
+  - speakerName: AXI
+    speakerPortrait: {fileID: -6117479970154661979, guid: 7d9880afa6cad4744b163051e4ee10f3, type: 3}
+    text: Voici le point de restauration de vie ainsi que le checkpoint.
+    autoAdvanceDelay: 0
+  - speakerName: AXI
+    speakerPortrait: {fileID: -6117479970154661979, guid: 7d9880afa6cad4744b163051e4ee10f3, type: 3}
+    text: L'un te redonne un certain montant de vie a son contact tandis que l'autre
+      a besoin d'un disque dur pour etre active.
+    autoAdvanceDelay: 0

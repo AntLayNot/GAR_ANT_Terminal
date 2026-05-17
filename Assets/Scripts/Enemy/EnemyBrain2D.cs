@@ -24,6 +24,18 @@ public class EnemyBrain2D : MonoBehaviour
 
     private float attackAnimTimer;
 
+    [Header("Audio")]
+    [SerializeField] private AudioSource audioSource;
+
+    [Header("Attack Sounds")]
+    [SerializeField] private AudioClip[] meleeAttackSounds;
+    [SerializeField] private AudioClip[] shootAttackSounds;
+
+    [SerializeField] private float meleeAttackVolume = 1f;
+    [SerializeField] private float shootAttackVolume = 1f;
+
+    [SerializeField] private Vector2 pitchRange = new Vector2(0.95f, 1.05f);
+
     [Header("Target")]
     public Transform target;
     public string targetTag = "Player";
@@ -95,8 +107,12 @@ public class EnemyBrain2D : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponentInChildren<SpriteRenderer>();
 
+        if (audioSource == null)
+            audioSource = FindFirstObjectByType<AudioSource>();
+
         if (animator == null)
             animator = GetComponentInChildren<Animator>();
+
         allyPowerDrain = GetComponent<NodeAllyPowerDrain2D>();
     }
 
@@ -379,6 +395,7 @@ public class EnemyBrain2D : MonoBehaviour
 
     void ShooterReposition(float dx)
     {
+
         float abs = Mathf.Abs(dx);
         float dirToPlayer = Mathf.Sign(dx);
 
@@ -425,6 +442,46 @@ public class EnemyBrain2D : MonoBehaviour
             FaceDir(dirToPlayer);
     }
 
+    bool IsBlockedInDirection(float dir)
+    {
+        if (dir == 0f)
+            return false;
+
+        float sign = Mathf.Sign(dir);
+
+        Vector2 wallOrigin = (Vector2)transform.position + new Vector2(
+            wallCheckOffset.x * sign,
+            wallCheckOffset.y
+        );
+
+        RaycastHit2D wallHit = Physics2D.Raycast(
+            wallOrigin,
+            Vector2.right * sign,
+            wallCheckDistance,
+            groundMask
+        );
+
+        if (wallHit.collider != null)
+            return true;
+
+        Vector2 ledgeOrigin = (Vector2)transform.position + new Vector2(
+            ledgeCheckOffset.x * sign,
+            ledgeCheckOffset.y
+        );
+
+        RaycastHit2D groundHit = Physics2D.Raycast(
+            ledgeOrigin,
+            Vector2.down,
+            ledgeCheckDistance,
+            groundMask
+        );
+
+        if (groundHit.collider == null)
+            return true;
+
+        return false;
+    }
+
     // ---------------------------
     // ATTACK
     // ---------------------------
@@ -457,8 +514,9 @@ public class EnemyBrain2D : MonoBehaviour
 
         attackTimer = attackCooldown;
 
-        // On lance seulement l'animation.
-        // Les dégâts seront appliqués par l'Animation Event.
+        PlayRandomSound(meleeAttackSounds, meleeAttackVolume);
+
+        // On lance seulement l'animation. Les dégâts seront appliqués par l'Animation Event.
         PlayAttackAnimation();
     }
 
@@ -550,6 +608,7 @@ public class EnemyBrain2D : MonoBehaviour
         else
             attackTimer = shootCooldown;
         PlayAttackAnimation();
+        PlayRandomSound(shootAttackSounds, shootAttackVolume);
 
         if (projectilePrefab == null) return;
         if (target == null) return;
@@ -576,6 +635,12 @@ public class EnemyBrain2D : MonoBehaviour
                 finalDamage = allyPowerDrain.GetBoostedDamage(damage);
 
             laser.InitBeam(spawnPos, targetPos, distanceToPlayer);
+
+            NodeAllyPowerDrain2D nodePower = GetComponent<NodeAllyPowerDrain2D>();
+
+            if (nodePower != null)
+                nodePower.PlayRandomAttackSound();
+
             laser.SetDamage(finalDamage);
             return;
         }
@@ -598,9 +663,8 @@ public class EnemyBrain2D : MonoBehaviour
         }
     }
 
-    // ---------------------------
+
     // LOS
-    // ---------------------------
     bool HasLineOfSight()
     {
         if (requireLineOfSight && obstacleMask.value == 0)
@@ -630,9 +694,25 @@ public class EnemyBrain2D : MonoBehaviour
         return true;
     }
 
-    // ---------------------------
+
     // Helpers
-    // ---------------------------
+    void PlayRandomSound(AudioClip[] clips, float volume)
+    {
+        if (audioSource == null)
+            return;
+
+        if (clips == null || clips.Length == 0)
+            return;
+
+        AudioClip clip = clips[Random.Range(0, clips.Length)];
+
+        if (clip == null)
+            return;
+
+        audioSource.pitch = Random.Range(pitchRange.x, pitchRange.y);
+        audioSource.PlayOneShot(clip, volume);
+    }
+
     void MoveX(float dir, float speed)
     {
         rb.linearVelocity = new Vector2(dir * speed, rb.linearVelocity.y);
@@ -665,9 +745,8 @@ public class EnemyBrain2D : MonoBehaviour
         return facingSign;
     }
 
-    // ---------------------------
+
     // Gizmos
-    // ---------------------------
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;

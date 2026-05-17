@@ -25,6 +25,11 @@ public class FallingTrap2D : MonoBehaviour
     [SerializeField] private bool destroyWhenHitPlayer = true;
     [SerializeField] private GameObject destroyFX;
 
+    [Header("Audio")]
+    [SerializeField] private AudioSource trapAudioSource;
+    [SerializeField] private AudioClip destroyClip;
+    [SerializeField, Range(0f, 1f)] private float destroyVolume = 1f;
+
     private bool hasFallen;
     private bool consumed;
     private float fallStartTime = -999f;
@@ -33,6 +38,9 @@ public class FallingTrap2D : MonoBehaviour
     {
         if (rb == null)
             rb = GetComponent<Rigidbody2D>();
+
+        if (trapAudioSource == null)
+            trapAudioSource = FindFirstObjectByType<AudioSource>();
 
         if (rb != null)
         {
@@ -145,6 +153,44 @@ public class FallingTrap2D : MonoBehaviour
         if (destroyFX != null)
             Instantiate(destroyFX, transform.position, Quaternion.identity);
 
-        Destroy(gameObject);
+        float soundDuration = PlaySound(destroyClip, destroyVolume);
+
+        HideTrapVisualsAndColliders();
+
+        Destroy(gameObject, soundDuration);
+    }
+
+    private float PlaySound(AudioClip clip, float volume)
+    {
+        if (trapAudioSource == null)
+            return 0f;
+
+        AudioClip clipToPlay = clip;
+
+        if (clipToPlay == null)
+            clipToPlay = trapAudioSource.clip;
+
+        if (clipToPlay == null)
+            return 0f;
+
+        trapAudioSource.PlayOneShot(clipToPlay, volume);
+        return clipToPlay.length;
+    }
+
+    private void HideTrapVisualsAndColliders()
+    {
+        SpriteRenderer[] renderers = GetComponentsInChildren<SpriteRenderer>();
+        foreach (SpriteRenderer sr in renderers)
+            sr.enabled = false;
+
+        Collider2D[] colliders = GetComponentsInChildren<Collider2D>();
+        foreach (Collider2D col in colliders)
+            col.enabled = false;
+
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector2.zero;
+            rb.bodyType = RigidbodyType2D.Kinematic;
+        }
     }
 }

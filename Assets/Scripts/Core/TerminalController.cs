@@ -62,10 +62,10 @@ public class TerminalController : MonoBehaviour
 
     void Update()
     {
-        // Toggle terminal UNIQUEMENT si on n'est PAS en train d'écrire
+        // Toggle terminal UNIQUEMENT si on n'est pas en train d'écrire
         if (Input.GetKeyDown(toggleKey))
         {
-            // Si le terminal est ouvert ET que l'input est focus → on ignore
+            // Si le terminal est ouvert et que l'input est focus, on ignore
             if (terminalRoot != null &&
                 terminalRoot.activeSelf &&
                 input != null &&
@@ -81,7 +81,7 @@ public class TerminalController : MonoBehaviour
         }
 
 
-        // Si terminal fermé -> on ne fait rien + temps normal
+        // Si terminal fermé, on ne fait rien + temps normal
         if (terminalRoot != null && !terminalRoot.activeSelf)
         {
             StopTypingSlowMo();
@@ -103,7 +103,7 @@ public class TerminalController : MonoBehaviour
         if (Input.anyKeyDown && !Input.GetKeyDown(KeyCode.Tab))
             ResetAutocomplete();
 
-        // Entrée -> submit
+        // Entrée = submit
         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
         {
             SubmitFromInput();
@@ -111,7 +111,7 @@ public class TerminalController : MonoBehaviour
             return;
         }
 
-        // Tab -> autocomplete (cycle)
+        // Tab = autocomplete (cycle)
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             Autocomplete();
@@ -237,7 +237,7 @@ public class TerminalController : MonoBehaviour
         string raw = input.text ?? "";
         bool endsWithSpace = raw.Length > 0 && char.IsWhiteSpace(raw[^1]);
 
-        // Parse propre : mots OU "texte entre guillemets"
+        // Parse propre : mots ou "texte entre guillemets"
         var matches = System.Text.RegularExpressions.Regex.Matches(raw, "\"([^\"]*)\"|(\\S+)");
         var parts = new List<string>();
 
@@ -414,7 +414,7 @@ public class TerminalController : MonoBehaviour
         suggestions.Clear();
         suggestionIndex = -1;
         lastPrefix = "";
-        lastTokenIndex = -1; // IMPORTANT : force rebuild
+        lastTokenIndex = -1; // Force rebuild
     }
 
     void HistoryUp()

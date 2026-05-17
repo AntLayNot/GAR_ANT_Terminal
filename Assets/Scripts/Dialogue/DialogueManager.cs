@@ -135,7 +135,7 @@ public class DialogueManager : MonoBehaviour
 
             currentText += fullText[i];
             dialogueUI.SetLine(line.speakerName, currentText, line.speakerPortrait);
-            yield return new WaitForSeconds(typingSpeed);
+            yield return new WaitForSecondsRealtime(typingSpeed);
         }
 
         dialogueUI.SetLine(line.speakerName, fullText, line.speakerPortrait);
@@ -159,7 +159,7 @@ public class DialogueManager : MonoBehaviour
 
     private IEnumerator AutoAdvance(float delay)
     {
-        yield return new WaitForSeconds(delay);
+        yield return new WaitForSecondsRealtime(delay);
         ShowNextLine();
     }
 }
