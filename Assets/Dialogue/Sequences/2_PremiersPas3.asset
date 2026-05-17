@@ -15,28 +15,28 @@ MonoBehaviour:
   sequenceId: 002
   lines:
   - speakerName: You
-    speakerPortrait: {fileID: 21300000, guid: 5085baabfb59f784b93ff326abd0d16b, type: 3}
+    speakerPortrait: {fileID: 1751119502174200988, guid: 54ef6c48b4d05a3438e4973229e72209, type: 3}
     text: Qu'est ce que c'est que ce disque ?
     autoAdvanceDelay: 0
   - speakerName: AXI
-    speakerPortrait: {fileID: -6117479970154661979, guid: 7d9880afa6cad4744b163051e4ee10f3, type: 3}
+    speakerPortrait: {fileID: 5978067422134562236, guid: 77184ec5a110d204882ecceb1e555656, type: 3}
     text: Tu fais bien de poser la question, ces disques sont des morceaux de sauvegardes
       de la cle administrateur...
     autoAdvanceDelay: 0
   - speakerName: You
-    speakerPortrait: {fileID: 21300000, guid: 5085baabfb59f784b93ff326abd0d16b, type: 3}
+    speakerPortrait: {fileID: 1751119502174200988, guid: 54ef6c48b4d05a3438e4973229e72209, type: 3}
     text: De la cle administrateur ?
     autoAdvanceDelay: 0
   - speakerName: AXI
-    speakerPortrait: {fileID: -6117479970154661979, guid: 7d9880afa6cad4744b163051e4ee10f3, type: 3}
+    speakerPortrait: {fileID: 5978067422134562236, guid: 77184ec5a110d204882ecceb1e555656, type: 3}
     text: Oublie ce que j'ai dis, dis toi juste que tu en a besoin pour les checkpoints.
     autoAdvanceDelay: 0
   - speakerName: You
-    speakerPortrait: {fileID: 21300000, guid: 5085baabfb59f784b93ff326abd0d16b, type: 3}
+    speakerPortrait: {fileID: 1751119502174200988, guid: 54ef6c48b4d05a3438e4973229e72209, type: 3}
     text: (Pourquoi a-t-il parle d'une cle administrateur ?)
     autoAdvanceDelay: 0
   - speakerName: You
-    speakerPortrait: {fileID: 21300000, guid: 5085baabfb59f784b93ff326abd0d16b, type: 3}
+    speakerPortrait: {fileID: 1751119502174200988, guid: 54ef6c48b4d05a3438e4973229e72209, type: 3}
     text: (Ca aurait un lien avec les feuilles des arbres et les nuages qui semble
       bug  ?)
     autoAdvanceDelay: 0

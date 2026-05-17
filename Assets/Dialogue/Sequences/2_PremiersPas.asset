@@ -15,7 +15,7 @@ MonoBehaviour:
   sequenceId: 002
   lines:
   - speakerName: AXI
-    speakerPortrait: {fileID: -6117479970154661979, guid: 7d9880afa6cad4744b163051e4ee10f3, type: 3}
+    speakerPortrait: {fileID: 5978067422134562236, guid: 77184ec5a110d204882ecceb1e555656, type: 3}
     text: 'Parfait, tu sais invoquer des projectiles maintenant !
 
       La prochaine
@@ -23,12 +23,12 @@ MonoBehaviour:
       view" dans ton terminal.'
     autoAdvanceDelay: 0
   - speakerName: You
-    speakerPortrait: {fileID: 21300000, guid: 5085baabfb59f784b93ff326abd0d16b, type: 3}
+    speakerPortrait: {fileID: 1751119502174200988, guid: 54ef6c48b4d05a3438e4973229e72209, type: 3}
     text: D'accord, mais avant ca, pourquoi les feuilles des arbres sont des 0 et
       des 1 ?
     autoAdvanceDelay: 0
   - speakerName: AXI
-    speakerPortrait: {fileID: -6117479970154661979, guid: 7d9880afa6cad4744b163051e4ee10f3, type: 3}
+    speakerPortrait: {fileID: 5978067422134562236, guid: 77184ec5a110d204882ecceb1e555656, type: 3}
     text: Oh ca, ce n'est pas important ne t'y attarde pas.
     autoAdvanceDelay: 0
   - speakerName: AXI
@@ -36,12 +36,12 @@ MonoBehaviour:
     text: "Ce ne sont que des erreurs syst\xE8me. Continuez"
     autoAdvanceDelay: 0
   - speakerName: AXI
-    speakerPortrait: {fileID: -6117479970154661979, guid: 7d9880afa6cad4744b163051e4ee10f3, type: 3}
+    speakerPortrait: {fileID: 5978067422134562236, guid: 77184ec5a110d204882ecceb1e555656, type: 3}
     text: Une fois que tu aura taper la commande "ping view" tu veras le nom de l'objet
       tu pourras ensuite faire "toggle nearest"
     autoAdvanceDelay: 0
   - speakerName: AXI
-    speakerPortrait: {fileID: -6117479970154661979, guid: 7d9880afa6cad4744b163051e4ee10f3, type: 3}
+    speakerPortrait: {fileID: 5978067422134562236, guid: 77184ec5a110d204882ecceb1e555656, type: 3}
     text: Je vais te montrer une bonne partie des commandes mais si tu veux en apprendre
       plus et experimenter, tape "help".
     autoAdvanceDelay: 0

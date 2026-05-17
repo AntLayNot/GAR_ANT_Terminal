@@ -15,11 +15,11 @@ MonoBehaviour:
   sequenceId: 002
   lines:
   - speakerName: AXI
-    speakerPortrait: {fileID: -6117479970154661979, guid: 7d9880afa6cad4744b163051e4ee10f3, type: 3}
+    speakerPortrait: {fileID: 5978067422134562236, guid: 77184ec5a110d204882ecceb1e555656, type: 3}
     text: Voici le point de restauration de vie ainsi que le checkpoint.
     autoAdvanceDelay: 0
   - speakerName: AXI
-    speakerPortrait: {fileID: -6117479970154661979, guid: 7d9880afa6cad4744b163051e4ee10f3, type: 3}
+    speakerPortrait: {fileID: 5978067422134562236, guid: 77184ec5a110d204882ecceb1e555656, type: 3}
     text: L'un te redonne un certain montant de vie a son contact tandis que l'autre
       a besoin d'un disque dur pour etre active.
     autoAdvanceDelay: 0
