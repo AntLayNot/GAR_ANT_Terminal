@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5927791987284724522}
   - component: {fileID: -7418820685948823694}
   - component: {fileID: -6773636368485275844}
+  - component: {fileID: 1404645602242852272}
   m_Layer: 7
   m_Name: Projectile
   m_TagString: Untagged
@@ -172,3 +173,21 @@ MonoBehaviour:
     m_Bits: 3649
   destroyOnHit: 1
   damage: 5
+--- !u!114 &1404645602242852272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3515107753380077507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da12320de1aafc04b8dd5e291c365f28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  spawnProjectileTrigger: SpawnProjectile
+  useAnimationEvent: 1
+  useFailsafeSpawn: 1
+  failsafeDelay: 0.35
+  debugLog: 1

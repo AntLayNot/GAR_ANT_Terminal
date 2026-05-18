@@ -16,32 +16,29 @@ MonoBehaviour:
   lines:
   - speakerName: AXI
     speakerPortrait: {fileID: 5978067422134562236, guid: 77184ec5a110d204882ecceb1e555656, type: 3}
-    text: 'Parfait, tu sais invoquer des projectiles maintenant !
-
-      La prochaine
-      etape est d''integarir avec ce monde, approche toi de la porte et tape "ping
-      view" dans ton terminal.'
+    text: "Great, you know how to cast projectiles now!\r\nThe next step is to interact
+      with this world. Walk up to the door and type \u201Cping view\u201D in your
+      terminal."
     autoAdvanceDelay: 0
   - speakerName: You
     speakerPortrait: {fileID: 1751119502174200988, guid: 54ef6c48b4d05a3438e4973229e72209, type: 3}
-    text: D'accord, mais avant ca, pourquoi les feuilles des arbres sont des 0 et
-      des 1 ?
+    text: Okay, but before that, why are the leaves on the trees 0 and 1 ?
     autoAdvanceDelay: 0
   - speakerName: AXI
     speakerPortrait: {fileID: 5978067422134562236, guid: 77184ec5a110d204882ecceb1e555656, type: 3}
-    text: Oh ca, ce n'est pas important ne t'y attarde pas.
-    autoAdvanceDelay: 0
-  - speakerName: AXI
-    speakerPortrait: {fileID: -6117479970154661979, guid: 7d9880afa6cad4744b163051e4ee10f3, type: 3}
-    text: "Ce ne sont que des erreurs syst\xE8me. Continuez"
+    text: Oh, that's not important, don't worry about it.
     autoAdvanceDelay: 0
   - speakerName: AXI
     speakerPortrait: {fileID: 5978067422134562236, guid: 77184ec5a110d204882ecceb1e555656, type: 3}
-    text: Une fois que tu aura taper la commande "ping view" tu veras le nom de l'objet
-      tu pourras ensuite faire "toggle nearest"
+    text: These are just system errors. Please continue.
     autoAdvanceDelay: 0
   - speakerName: AXI
     speakerPortrait: {fileID: 5978067422134562236, guid: 77184ec5a110d204882ecceb1e555656, type: 3}
-    text: Je vais te montrer une bonne partie des commandes mais si tu veux en apprendre
-      plus et experimenter, tape "help".
+    text: "Once you've typed the command \u201Cping view,\u201D you'll see the object's
+      name, and then you can use \u201Ctoggle nearest\u201D"
+    autoAdvanceDelay: 0
+  - speakerName: AXI
+    speakerPortrait: {fileID: 5978067422134562236, guid: 77184ec5a110d204882ecceb1e555656, type: 3}
+    text: "I'll show you most of the commands, but if you want to learn more, try
+      them out, type \u201Chelp\u201D."
     autoAdvanceDelay: 0

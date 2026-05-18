@@ -16,10 +16,10 @@ MonoBehaviour:
   lines:
   - speakerName: AXI
     speakerPortrait: {fileID: 5978067422134562236, guid: 77184ec5a110d204882ecceb1e555656, type: 3}
-    text: Ici tu as plusieurs plateformes, elles te permettront de te deplacer rapidement
-      d'un point "A" a un point "B".
+    text: Here you have several platforms that will allow you to quickly get from
+      point A to point B.
     autoAdvanceDelay: 0
   - speakerName: AXI
     speakerPortrait: {fileID: 5978067422134562236, guid: 77184ec5a110d204882ecceb1e555656, type: 3}
-    text: Essaie les pour voir.
+    text: Give them a try.
     autoAdvanceDelay: 0

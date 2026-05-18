@@ -276,9 +276,8 @@ public class TerminalController : MonoBehaviour
         bool isTargetPool = false;
         bool addTrailingSpace = false;
 
-        // -------------------------------------------------
+
         // CAS SPÉCIAL : bind <slot> <commande...>
-        // -------------------------------------------------
         if (rootCmd == "bind")
         {
             // bind |
@@ -330,9 +329,8 @@ public class TerminalController : MonoBehaviour
                 }
             }
         }
-        // -------------------------------------------------
+
         // CAS NORMAL
-        // -------------------------------------------------
         else if (rootCmd == "spawn")
         {
             if (tokenIndex == 0)

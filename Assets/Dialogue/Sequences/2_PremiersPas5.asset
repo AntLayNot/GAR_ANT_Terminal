@@ -16,10 +16,10 @@ MonoBehaviour:
   lines:
   - speakerName: AXI
     speakerPortrait: {fileID: 5978067422134562236, guid: 77184ec5a110d204882ecceb1e555656, type: 3}
-    text: Voici le point de restauration de vie ainsi que le checkpoint.
+    text: Here is the health restoration point and the checkpoint.
     autoAdvanceDelay: 0
   - speakerName: AXI
     speakerPortrait: {fileID: 5978067422134562236, guid: 77184ec5a110d204882ecceb1e555656, type: 3}
-    text: L'un te redonne un certain montant de vie a son contact tandis que l'autre
-      a besoin d'un disque dur pour etre active.
+    text: One restores a certain amount of health when you touch it, while the other
+      requires a hard disk to be activated.
     autoAdvanceDelay: 0

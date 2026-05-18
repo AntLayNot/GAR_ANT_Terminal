@@ -225,7 +225,7 @@ MonoBehaviour:
   shootAttackSounds:
   - {fileID: 8300000, guid: 8fa5334a0232f67408676bc97dc80116, type: 3}
   meleeAttackVolume: 1
-  shootAttackVolume: 1
+  shootAttackVolume: 0.2
   pitchRange: {x: 0.95, y: 1.05}
   target: {fileID: 0}
   targetTag: Player

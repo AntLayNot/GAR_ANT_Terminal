@@ -55,10 +55,6 @@ public class WorldCommandActions : MonoBehaviour
             .ToList();
     }
 
-
-    // -----------------------------
-    // Actions existantes
-    // -----------------------------
     public void Ping(TargetObject t)
     {
         if (t == null) return;
@@ -171,7 +167,7 @@ public class WorldCommandActions : MonoBehaviour
 
         if (progression != null && !progression.IsCommandUnlocked(id))
         {
-            Debug.Log("[WorldCommandActions] Commande verrouillée : " + id);
+            Debug.Log("[WorldCommandActions] Command locked : " + id);
             return false;
         }
 
@@ -183,7 +179,18 @@ public class WorldCommandActions : MonoBehaviour
         // direction "devant" droite/gauche
         Vector3 dir = Vector3.right;
 
-        var playerMovement = origin.GetComponentInParent<PlayerPlatformerController2D>();
+        PlayerPlatformerController2D playerMovement = origin.GetComponentInParent<PlayerPlatformerController2D>();
+
+        if (playerMovement == null)
+        {
+            GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+
+            if (playerObject != null)
+                playerMovement = playerObject.GetComponentInParent<PlayerPlatformerController2D>();
+
+            if (playerMovement == null && playerObject != null)
+                playerMovement = playerObject.GetComponentInChildren<PlayerPlatformerController2D>();
+        }
 
         if (playerMovement != null)
         {
@@ -200,63 +207,62 @@ public class WorldCommandActions : MonoBehaviour
 
         pos += (Vector3)s.offset;
 
-        // -------------------------------------------------
         // CAS SPECIAL : projectile
-        // -------------------------------------------------
         bool isProjectilePrefab =
             s.prefab.GetComponent<Projectile2D>() != null ||
             s.prefab.GetComponentInChildren<Projectile2D>() != null;
 
         if (isProjectilePrefab)
         {
-            PlayerCommandAnimator playerAnimator = origin.GetComponentInParent<PlayerCommandAnimator>();
+            PlayerCommandAnimator playerAnimator = FindPlayerCommandAnimator(origin);
 
             if (playerAnimator == null)
-                playerAnimator = origin.GetComponentInChildren<PlayerCommandAnimator>();
-
-            if (playerAnimator != null)
             {
-                Vector2 dir2 = dir.x < 0f ? Vector2.left : Vector2.right;
+                Debug.LogWarning(
+                    "[WorldCommandActions] Projectile détecté, mais aucun PlayerCommandAnimator trouvé depuis : "
+                    + origin.name
+                    + " ni depuis le Player."
+                );
 
-                int projectileCount = 1;
-
-                if (progression != null)
-                    projectileCount = progression.GetProjectileCount();
-
-                projectileCount = Mathf.Max(1, projectileCount);
-
-                Debug.Log("[WorldCommandActions] Spawn projectile count : " + projectileCount);
-
-                for (int i = 0; i < projectileCount; i++)
-                {
-                    Vector3 spawnPos = pos;
-
-                    if (projectileCount > 1)
-                    {
-                        float spacing = 0.25f;
-                        float yOffset = (i - (projectileCount - 1) * 0.5f) * spacing;
-
-                        spawnPos += Vector3.up * yOffset;
-                    }
-
-                    playerAnimator.RequestProjectileSpawn(
-                        s.prefab,
-                        spawnPos,
-                        dir2,
-                        id,
-                        s.lifetime
-                    );
-                }
-
-                return true;
+                return false;
             }
 
-            Debug.LogWarning("[WorldCommandActions] Projectile détecté, mais aucun PlayerCommandAnimator trouvé depuis : " + origin.name);
+            Vector2 dir2 = dir.x < 0f ? Vector2.left : Vector2.right;
+
+            int projectileCount = 1;
+
+            if (progression != null)
+                projectileCount = progression.GetProjectileCount();
+
+            projectileCount = Mathf.Max(1, projectileCount);
+
+            Debug.Log("[WorldCommandActions] Spawn projectile count : " + projectileCount);
+
+            for (int i = 0; i < projectileCount; i++)
+            {
+                Vector3 spawnPos = pos;
+
+                if (projectileCount > 1)
+                {
+                    float spacing = 0.25f;
+                    float yOffset = (i - (projectileCount - 1) * 0.5f) * spacing;
+
+                    spawnPos += Vector3.up * yOffset;
+                }
+
+                playerAnimator.RequestProjectileSpawn(
+                    s.prefab,
+                    spawnPos,
+                    dir2,
+                    id,
+                    s.lifetime
+                );
+            }
+
+            return true;
         }
 
-        // -------------------------------------------------
         // CAS NORMAL : objet classique
-        // -------------------------------------------------
         GameObject go = Instantiate(s.prefab, pos, Quaternion.identity);
 
         var t = go.GetComponent<TargetObject>();
@@ -271,6 +277,37 @@ public class WorldCommandActions : MonoBehaviour
             StartCoroutine(DestroyAfter(go, s.lifetime));
 
         return true;
+    }
+
+    private PlayerCommandAnimator FindPlayerCommandAnimator(TargetObject origin)
+    {
+        PlayerCommandAnimator playerAnimator = null;
+
+        if (origin != null)
+        {
+            playerAnimator = origin.GetComponentInParent<PlayerCommandAnimator>();
+
+            if (playerAnimator == null)
+                playerAnimator = origin.GetComponentInChildren<PlayerCommandAnimator>();
+        }
+
+        if (playerAnimator != null)
+            return playerAnimator;
+
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+
+        if (playerObject == null)
+            return null;
+
+        playerAnimator = playerObject.GetComponent<PlayerCommandAnimator>();
+
+        if (playerAnimator == null)
+            playerAnimator = playerObject.GetComponentInParent<PlayerCommandAnimator>();
+
+        if (playerAnimator == null)
+            playerAnimator = playerObject.GetComponentInChildren<PlayerCommandAnimator>();
+
+        return playerAnimator;
     }
 
     IEnumerator DestroyAfter(GameObject go, float delay)

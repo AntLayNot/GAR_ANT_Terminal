@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class DialogueTrigger : MonoBehaviour
 {
@@ -15,6 +16,10 @@ public class DialogueTrigger : MonoBehaviour
     public DialogueSequence sequence;
     public bool triggerOnlyOnce = true;
     public string requiredTag = "Player";
+
+    [Header("Dialogue Events")]
+    public UnityEvent onDialogueStarted;
+    public UnityEvent onDialogueEnded;
 
     [Header("Dialogue Slow Motion")]
     public bool slowMotionDuringDialogue = true;
@@ -32,7 +37,7 @@ public class DialogueTrigger : MonoBehaviour
     public bool drawGizmos = true;
 
     private bool hasTriggered = false;
-    private Coroutine slowMotionRoutine;
+    private Coroutine dialogueRoutine;
 
     private void Start()
     {
@@ -94,25 +99,21 @@ public class DialogueTrigger : MonoBehaviour
         if (debugLogs)
             Debug.Log($"[DialogueTrigger] Lancement du dialogue: {sequence.name}");
 
+        if (dialogueRoutine != null)
+            StopCoroutine(dialogueRoutine);
+
+        dialogueRoutine = StartCoroutine(DialogueRoutine());
+    }
+
+    private IEnumerator DialogueRoutine()
+    {
+        onDialogueStarted?.Invoke();
+
         DialogueManager.Instance.PlayDialogue(sequence);
 
         if (slowMotionDuringDialogue)
             StartDialogueSlowMotion();
-    }
 
-    private void StartDialogueSlowMotion()
-    {
-        Time.timeScale = dialogueTimeScale;
-        Time.fixedDeltaTime = fixedDeltaBase * dialogueTimeScale;
-
-        if (slowMotionRoutine != null)
-            StopCoroutine(slowMotionRoutine);
-
-        slowMotionRoutine = StartCoroutine(DialogueSlowMotionRoutine());
-    }
-
-    private IEnumerator DialogueSlowMotionRoutine()
-    {
         while (DialogueManager.Instance != null && DialogueManager.Instance.IsDialoguePlaying)
         {
             yield return null;
@@ -124,17 +125,25 @@ public class DialogueTrigger : MonoBehaviour
             Time.fixedDeltaTime = fixedDeltaBase;
         }
 
-        slowMotionRoutine = null;
+        onDialogueEnded?.Invoke();
+
+        dialogueRoutine = null;
+    }
+
+    private void StartDialogueSlowMotion()
+    {
+        Time.timeScale = dialogueTimeScale;
+        Time.fixedDeltaTime = fixedDeltaBase * dialogueTimeScale;
     }
 
     public void ResetTrigger()
     {
         hasTriggered = false;
 
-        if (slowMotionRoutine != null)
+        if (dialogueRoutine != null)
         {
-            StopCoroutine(slowMotionRoutine);
-            slowMotionRoutine = null;
+            StopCoroutine(dialogueRoutine);
+            dialogueRoutine = null;
         }
 
         if (restoreTimeAfterDialogue)
@@ -149,10 +158,10 @@ public class DialogueTrigger : MonoBehaviour
 
     private void OnDisable()
     {
-        if (slowMotionRoutine != null)
+        if (dialogueRoutine != null)
         {
-            StopCoroutine(slowMotionRoutine);
-            slowMotionRoutine = null;
+            StopCoroutine(dialogueRoutine);
+            dialogueRoutine = null;
         }
 
         if (restoreTimeAfterDialogue)

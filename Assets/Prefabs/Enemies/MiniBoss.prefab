@@ -107,6 +107,10 @@ MonoBehaviour:
   fightStartsAutomatically: 0
   isFightActive: 0
   isDead: 0
+  autoFindPlayerOnSpawn: 1
+  startFightOnSpawn: 1
+  playerTag: Player
+  maxHealth: 20
   player: {fileID: 0}
   pillars:
   - {fileID: 0}
@@ -118,6 +122,16 @@ MonoBehaviour:
   rb: {fileID: 7848011319890092829}
   spriteRenderer: {fileID: 4752211422114396181}
   bossCollider: {fileID: 3072959718212888699}
+  visualRoot: {fileID: 0}
+  useVisualRootRotationInsteadOfFlip: 1
+  facePlayer: 1
+  faceDashDirection: 1
+  faceRetreatDirection: 0
+  bossProtectedIndicator: {fileID: 0}
+  bossVulnerableIndicator: {fileID: 0}
+  protectedColor: {r: 1, g: 1, b: 1, a: 1}
+  vulnerableColor: {r: 1, g: 0.4292453, b: 0.4292453, a: 1}
+  colorBossWhenVulnerable: 1
   projectilePrefab: {fileID: 2412753993192276877, guid: 716cc5de11f74304a9ae125fe8d7902a, type: 3}
   firePoint: {fileID: 7380521963247417113}
   projectileCooldown: 1.4

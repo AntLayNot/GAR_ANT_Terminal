@@ -16,27 +16,27 @@ MonoBehaviour:
   lines:
   - speakerName: You
     speakerPortrait: {fileID: 1751119502174200988, guid: 54ef6c48b4d05a3438e4973229e72209, type: 3}
-    text: Qu'est ce que c'est que ce disque ?
+    text: What is this disk ?
     autoAdvanceDelay: 0
   - speakerName: AXI
     speakerPortrait: {fileID: 5978067422134562236, guid: 77184ec5a110d204882ecceb1e555656, type: 3}
-    text: Tu fais bien de poser la question, ces disques sont des morceaux de sauvegardes
-      de la cle administrateur...
+    text: You're right to ask, these disks contain backup copies of the administrator
+      key...
     autoAdvanceDelay: 0
   - speakerName: You
     speakerPortrait: {fileID: 1751119502174200988, guid: 54ef6c48b4d05a3438e4973229e72209, type: 3}
-    text: De la cle administrateur ?
+    text: The administrator key ?
     autoAdvanceDelay: 0
   - speakerName: AXI
     speakerPortrait: {fileID: 5978067422134562236, guid: 77184ec5a110d204882ecceb1e555656, type: 3}
-    text: Oublie ce que j'ai dis, dis toi juste que tu en a besoin pour les checkpoints.
+    text: Forget what I said, just remember that you need it for the checkpoints.
     autoAdvanceDelay: 0
   - speakerName: You
     speakerPortrait: {fileID: 1751119502174200988, guid: 54ef6c48b4d05a3438e4973229e72209, type: 3}
-    text: (Pourquoi a-t-il parle d'une cle administrateur ?)
+    text: (Why did he mention an administrator key?)
     autoAdvanceDelay: 0
   - speakerName: You
     speakerPortrait: {fileID: 1751119502174200988, guid: 54ef6c48b4d05a3438e4973229e72209, type: 3}
-    text: (Ca aurait un lien avec les feuilles des arbres et les nuages qui semble
-      bug  ?)
+    text: (Could this have something to do with the leaves on the trees and the clouds
+      that seem glitchy ?)
     autoAdvanceDelay: 0

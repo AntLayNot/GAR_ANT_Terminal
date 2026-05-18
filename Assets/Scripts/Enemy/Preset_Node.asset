@@ -22,7 +22,7 @@ MonoBehaviour:
   requireLineOfSight: 1
   attackRange: 1.2
   attackCooldown: 0.9
-  damage: 1
+  damage: 10
   attackBoxSize: {x: 1.2, y: 1}
   attackBoxOffset: {x: 0.7, y: 0}
   projectilePrefab: {fileID: 5490501823123734849, guid: f4e85635b07588e47beaa41d9ece200a, type: 3}

@@ -16,6 +16,5 @@ MonoBehaviour:
   lines:
   - speakerName: AXI
     speakerPortrait: {fileID: 5978067422134562236, guid: 77184ec5a110d204882ecceb1e555656, type: 3}
-    text: 'Avant de te lancer dans le grand bain, essais d''utiliser la commande
-      bind en tapant : "bind".'
+    text: "Before you dive right in, try using the bind command by typing: \u201Cbind\u201D."
     autoAdvanceDelay: 0

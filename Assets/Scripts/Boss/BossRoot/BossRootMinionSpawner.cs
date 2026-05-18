@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BossRootMinionSpawner : MonoBehaviour
@@ -26,6 +27,11 @@ public class BossRootMinionSpawner : MonoBehaviour
     [Header("Options")]
     [SerializeField] private bool avoidUsingSamePointTwiceInRow = true;
 
+    [Header("Cleanup")]
+    [SerializeField] private bool destroySpawnedMinionsOnBossDeath = true;
+
+    private readonly List<GameObject> spawnedMinions = new List<GameObject>();
+
     private int lastSpawnPointIndex = -1;
 
     public void SpawnWave(BossRoot.BossPhase phase)
@@ -33,6 +39,8 @@ public class BossRootMinionSpawner : MonoBehaviour
         MinionEntry[] entries = GetEntries(phase);
         if (entries == null || entries.Length == 0) return;
         if (spawnPoints == null || spawnPoints.Length == 0) return;
+
+        CleanNullMinions();
 
         foreach (var entry in entries)
         {
@@ -49,8 +57,42 @@ public class BossRootMinionSpawner : MonoBehaviour
                 );
 
                 Vector3 spawnPos = point.position + (Vector3)offset;
-                Instantiate(entry.prefab, spawnPos, Quaternion.identity);
+
+                GameObject minion = Instantiate(entry.prefab, spawnPos, Quaternion.identity);
+
+                RegisterSpawnedMinion(minion);
             }
+        }
+    }
+
+    private void RegisterSpawnedMinion(GameObject minion)
+    {
+        if (minion == null)
+            return;
+
+        spawnedMinions.Add(minion);
+    }
+
+    public void DestroyAllSpawnedMinions()
+    {
+        if (!destroySpawnedMinionsOnBossDeath)
+            return;
+
+        for (int i = spawnedMinions.Count - 1; i >= 0; i--)
+        {
+            if (spawnedMinions[i] != null)
+                Destroy(spawnedMinions[i]);
+        }
+
+        spawnedMinions.Clear();
+    }
+
+    private void CleanNullMinions()
+    {
+        for (int i = spawnedMinions.Count - 1; i >= 0; i--)
+        {
+            if (spawnedMinions[i] == null)
+                spawnedMinions.RemoveAt(i);
         }
     }
 

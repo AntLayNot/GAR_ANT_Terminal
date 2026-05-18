@@ -10,13 +10,18 @@ public class Health2D : MonoBehaviour, IDamageable
     [Header("Options")]
     [SerializeField] private bool destroyOnDeath = false;
 
+    [Header("Damage Rules")]
+    [SerializeField] private bool canTakeDamage = true;
+
     [Header("Events")]
     public UnityEvent<int, int> onHPChanged; // current, max
     public UnityEvent onDeath;
+    public UnityEvent onDamageBlocked;
 
     private bool isDead = false;
 
     public bool IsDead => isDead;
+    public bool CanTakeDamage => canTakeDamage;
 
     void Awake()
     {
@@ -28,6 +33,12 @@ public class Health2D : MonoBehaviour, IDamageable
     {
         if (amount <= 0) return;
         if (isDead) return;
+
+        if (!canTakeDamage)
+        {
+            onDamageBlocked?.Invoke();
+            return;
+        }
 
         currentHP = Mathf.Max(0, currentHP - amount);
         onHPChanged?.Invoke(currentHP, maxHP);
@@ -61,6 +72,11 @@ public class Health2D : MonoBehaviour, IDamageable
 
         if (isDead)
             onDeath?.Invoke();
+    }
+
+    public void SetCanTakeDamage(bool value)
+    {
+        canTakeDamage = value;
     }
 
     public void Revive(int healthAmount)

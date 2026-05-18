@@ -15,31 +15,32 @@ MonoBehaviour:
   sequenceId: 001
   lines:
   - speakerName: You
-    speakerPortrait: {fileID: 21300000, guid: 5085baabfb59f784b93ff326abd0d16b, type: 3}
-    text: ... Ou suis-je... Haarg, ma tete !
+    speakerPortrait: {fileID: 1751119502174200988, guid: 54ef6c48b4d05a3438e4973229e72209, type: 3}
+    text: ... Where am I... Ugh, my head !
     autoAdvanceDelay: 0
   - speakerName: AXI
-    speakerPortrait: {fileID: -6117479970154661979, guid: 7d9880afa6cad4744b163051e4ee10f3, type: 3}
-    text: OH, tu es reveille, ca va ?
+    speakerPortrait: {fileID: 5978067422134562236, guid: 77184ec5a110d204882ecceb1e555656, type: 3}
+    text: Oh, you're awake. Are you okay ?
     autoAdvanceDelay: 0
   - speakerName: You
-    speakerPortrait: {fileID: 21300000, guid: 5085baabfb59f784b93ff326abd0d16b, type: 3}
-    text: Je ne sais pas. Ou suis-je ? Et t'es qui toi ?
+    speakerPortrait: {fileID: 1751119502174200988, guid: 54ef6c48b4d05a3438e4973229e72209, type: 3}
+    text: I don't know. Where am I? And who are you ?
     autoAdvanceDelay: 0
   - speakerName: AXI
-    speakerPortrait: {fileID: -6117479970154661979, guid: 7d9880afa6cad4744b163051e4ee10f3, type: 3}
-    text: Oula, tu poses beaucoup de questions. Pour commencer, tu es dans une plaine
-      je crois que ca se voit assez bien non ? Ensuite moi je suis "AXI", robot et
-      accompagnateur, a ton service !
+    speakerPortrait: {fileID: 1751119502174200988, guid: 54ef6c48b4d05a3438e4973229e72209, type: 3}
+    text: "Wow, you're asking a lot of questions. First of all, you're on a plain,
+      I think that's pretty obvious, isn't it ? Anyway, I'm \u201CAXI,\u201D a robot
+      and your guide at your service!"
     autoAdvanceDelay: 0
   - speakerName: You
-    speakerPortrait: {fileID: 21300000, guid: 5085baabfb59f784b93ff326abd0d16b, type: 3}
-    text: Oh, ok, donc tu vas m'aider si j'ai bien compris, c'est ca ?
+    speakerPortrait: {fileID: 1751119502174200988, guid: 54ef6c48b4d05a3438e4973229e72209, type: 3}
+    text: Oh, okay, so you're going to help me, if I understand correctly, is that
+      right ?
     autoAdvanceDelay: 0
   - speakerName: AXI
-    speakerPortrait: {fileID: -6117479970154661979, guid: 7d9880afa6cad4744b163051e4ee10f3, type: 3}
-    text: "C'est \xE7a, je vais te montrer les bases, tu as du remarquer que tu avais
-      un ecran bizarre dans ta poche, c'est le terminal, il te permet de controller
-      le monde qui t'entoure. Ouvre le avec \"E\" et commence par ecrire ca : \"
-      spawn projectile self \"."
+    speakerPortrait: {fileID: 5978067422134562236, guid: 77184ec5a110d204882ecceb1e555656, type: 3}
+    text: "Right, I'll show you the basics. You must have noticed that you have a
+      strange screen in your pocket, that's the terminal. It lets you control the
+      world around you. Open it with \u201CE\u201D and start by typing this: \u201Cspawn
+      projectile self\u201D."
     autoAdvanceDelay: 0

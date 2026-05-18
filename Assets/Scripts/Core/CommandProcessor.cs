@@ -275,7 +275,7 @@ public class CommandProcessor : MonoBehaviour
 
         if (string.IsNullOrWhiteSpace(token))
         {
-            error = "Aucune target fournie.";
+            error = "No target provided.";
             return false;
         }
 
@@ -284,7 +284,6 @@ public class CommandProcessor : MonoBehaviour
         {
             if (targeting == null || targeting.origin == null)
             {
-                error = "ERREUR: origin non assigné dans PlayerTargeting2D.";
                 return false;
             }
 
@@ -292,7 +291,7 @@ public class CommandProcessor : MonoBehaviour
             target = targeting.origin.GetComponentInChildren<TargetObject>();
             if (target == null)
             {
-                error = "ERREUR: aucun TargetObject trouvé sur le joueur (origin).";
+                error = "ERROR: No TargetObject found on the player (origin).";
                 return false;
             }
 
@@ -305,7 +304,7 @@ public class CommandProcessor : MonoBehaviour
         {
             if (targeting == null)
             {
-                error = "ERREUR: targeting non assigné.";
+                error = "ERROR: Targeting not assigned.";
                 return false;
             }
 
@@ -313,14 +312,14 @@ public class CommandProcessor : MonoBehaviour
 
             if (IsSelf(target))
             {
-                error = "Refusé: 'nearest/selected' ne peut pas cibler self.";
+                error = "Rejected: ‘nearest/selected’ cannot target self.";
                 target = null;
                 return false;
             }
 
             if (target == null)
             {
-                error = "Aucune target sélectionnée (s'approcher d'un objet visible).";
+                error = "No target selected (move closer to a visible object).";
                 return false;
             }
 
@@ -339,14 +338,14 @@ public class CommandProcessor : MonoBehaviour
         {
             if (targeting == null)
             {
-                error = "ERREUR: targeting non assigné.";
+                error = "ERROR: Targeting not assigned.";
                 return false;
             }
 
             var list = targeting.VisibleTargets;
             if (list == null || list.Count == 0)
             {
-                error = "Aucune target visible/à portée pour 'nearest'.";
+                error = "No visible/within-range targets for ‘nearest’.";
                 return false;
             }
 
@@ -373,7 +372,7 @@ public class CommandProcessor : MonoBehaviour
 
             if (bestT == null)
             {
-                error = "Aucune target valide pour 'nearest'.";
+                error = "No valid target for 'nearest'.";
                 return false;
             }
 
@@ -384,21 +383,21 @@ public class CommandProcessor : MonoBehaviour
         // view = pas un single target
         if (token.Equals("view", StringComparison.OrdinalIgnoreCase))
         {
-            error = "view ne peut pas être résolu en cible unique.";
+            error = "'view' cannot be resolved as a single target";
             return false;
         }
 
         // name
         if (!TargetRegistry.TryFindByName(token.Trim(), out target) || target == null)
         {
-            error = $"Target inconnue: '{token}'.";
+            error = $"Target unknown: '{token}'.";
             return false;
         }
 
 
         if (!IsInRange(target))
         {
-            error = $"Hors portée: '{target.Name}'";
+            error = $"Out of range: '{target.Name}'";
             target = null;
             return false;
         }
@@ -413,14 +412,14 @@ public class CommandProcessor : MonoBehaviour
 
         if (targeting == null)
         {
-            error = "ERREUR: targeting non assigné.";
+            error = "ERROR: Targeting not assigned.";
             return false;
         }
 
         var list = targeting.VisibleTargets;
         if (list == null || list.Count == 0)
         {
-            error = "Aucune target visible/à portée dans la caméra.";
+            error = "No visible/within-range target in the camera.";
             return false;
         }
 
@@ -428,7 +427,7 @@ public class CommandProcessor : MonoBehaviour
         targets = list.Where(t => t != null && IsInRange(t)).Distinct().ToList();
         if (targets.Count == 0)
         {
-            error = "Aucune target à portée dans 'view'.";
+            error = "No targets within range in ‘view’.";
             return false;
         }
 
@@ -440,13 +439,13 @@ public class CommandProcessor : MonoBehaviour
     string CallActionAndReturn()
     {
         if (string.IsNullOrWhiteSpace(actionString))
-            return "Aucune action fournie.";
+            return "No action taken.";
 
         if (!actionsByKeyword.TryGetValue(actionString.Trim(), out var evt) || evt == null)
-            return $"Action inconnue: '{actionString}'. Tape 'help'.";
+            return $"Unknown action: ‘{actionString}’. Type ‘help’.";
 
         if (string.IsNullOrWhiteSpace(targetString))
-            return "Aucune target fournie.";
+            return "No target provided.";
 
         // view (multi)
         if (targetString.Equals("view", StringComparison.OrdinalIgnoreCase))
@@ -478,8 +477,8 @@ public class CommandProcessor : MonoBehaviour
             }
 
             return $"OK: {actionString} view ({ok}/{viewTargets.Count})"
-                 + (skippedSelf > 0 ? $" | self ignoré: {skippedSelf}" : "")
-                 + (skippedRange > 0 ? $" | hors portée ignorés: {skippedRange}" : "");
+                 + (skippedSelf > 0 ? $" | self skipped: {skippedSelf}" : "")
+                 + (skippedRange > 0 ? $" | out of scope skipped: {skippedRange}" : "");
 
         }
 
@@ -488,7 +487,7 @@ public class CommandProcessor : MonoBehaviour
             return error;
 
         if (IsSelf(target))
-            return "Refusé: tu ne peux pas cibler 'self' avec cette commande.";
+            return "Rejected: You cannot target ‘self’ with this command.";
 
 
         try
@@ -498,7 +497,7 @@ public class CommandProcessor : MonoBehaviour
         }
         catch (Exception e)
         {
-            return $"ERREUR: {e.GetType().Name} - {e.Message}";
+            return $"ERROR: {e.GetType().Name} - {e.Message}";
         }
     }
 
@@ -542,13 +541,13 @@ public class CommandProcessor : MonoBehaviour
     string CallSpawnAndReturn(string spawnId)
     {
         if (worldActions == null)
-            return "ERREUR: WorldCommandActions non assigné.";
+            return "ERROR: WorldCommandActions is not assigned.";
 
         if (string.IsNullOrWhiteSpace(spawnId))
-            return "spawn: id vide";
+            return "spawn: empty ID";
 
         if (string.IsNullOrWhiteSpace(targetString))
-            return "spawn: target vide";
+            return "spawn: target NULL";
 
         // view : spawn sur toutes les targets visibles/à portée
         if (targetString.Equals("view", StringComparison.OrdinalIgnoreCase))
@@ -576,7 +575,7 @@ public class CommandProcessor : MonoBehaviour
         bool success = worldActions.SpawnById(spawnId, target);
         return success
             ? $"OK: spawn {spawnId} -> {target.Name}"
-            : $"Spawn inconnu: '{spawnId}'";
+            : $"Spawn unknown: '{spawnId}'";
     }
 
 

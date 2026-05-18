@@ -5,111 +5,162 @@ public class BossWorldHealthBar : MonoBehaviour
     [Header("Target")]
     [SerializeField] private BossRootHealth bossHealth;
 
-    [Header("Bar")]
-    [SerializeField] private Transform fillTransform;
-    [SerializeField] private SpriteRenderer fillRenderer;
+    [Header("Références")]
+    [Tooltip("Objet parent de toute la barre de vie")]
+    [SerializeField] private Transform barRoot;
 
-    [Header("Settings")]
+    [Tooltip("Sprite qui représente la vie")]
+    [SerializeField] private Transform fillSprite;
+
+    [Tooltip("Optionnel : sprite de fond")]
+    [SerializeField] private SpriteRenderer backgroundSprite;
+
+    [Tooltip("Optionnel : sprite de contour / frame")]
+    [SerializeField] private SpriteRenderer frameSprite;
+
+    [Header("Position")]
+    [SerializeField] private Transform targetToFollow;
+    [SerializeField] private Vector3 offset = new Vector3(0f, 2f, 0f);
+    [SerializeField] private bool followTarget = false;
+
+    [Header("Comportement")]
     [SerializeField] private bool hideWhenBossMissing = true;
-    [SerializeField] private bool hideWhenFullLife = false;
-    [SerializeField] private bool hideWhenDead = false;
-    [SerializeField] private float smoothSpeed = 6f;
+    [SerializeField] private bool hideWhenFull = false;
+    [SerializeField] private bool hideOnDeath = true;
 
-    [Header("Colors")]
-    [SerializeField] private Color fullHealthColor = new Color(0.8f, 0.15f, 0.25f, 1f);
-    [SerializeField] private Color midHealthColor = new Color(0.95f, 0.65f, 0.2f, 1f);
-    [SerializeField] private Color lowHealthColor = new Color(0.6f, 0.9f, 1f, 1f);
+    [Header("Animation")]
+    [SerializeField] private bool smoothBar = true;
+    [SerializeField] private float smoothSpeed = 8f;
 
-    private float currentDisplay = 1f;
+    private float targetFill = 1f;
+    private float currentFill = 1f;
+
+    private Vector3 initialFillScale;
 
     private void Awake()
     {
-        if (fillTransform == null)
-            Debug.LogWarning("[BossWorldHealthBar] Fill Transform non assigné.", this);
+        if (bossHealth == null)
+            bossHealth = GetComponent<BossRootHealth>();
+
+        if (targetToFollow == null)
+            targetToFollow = transform;
+
+        if (fillSprite != null)
+        {
+            initialFillScale = fillSprite.localScale;
+        }
+        else
+        {
+            Debug.LogWarning("[BossWorldHealthBar] Fill Sprite non assigné.", this);
+        }
     }
 
     private void Start()
     {
-        if (bossHealth != null)
-            currentDisplay = bossHealth.CurrentHealthNormalized;
-
-        ApplyBar(currentDisplay, true);
-        UpdateVisibility(currentDisplay);
+        RefreshBar();
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         if (bossHealth == null)
         {
-            if (hideWhenBossMissing)
-                gameObject.SetActive(false);
+            if (hideWhenBossMissing && barRoot != null)
+                barRoot.gameObject.SetActive(false);
 
             return;
         }
 
-        float target = bossHealth.CurrentHealthNormalized;
-        currentDisplay = Mathf.Lerp(currentDisplay, target, Time.deltaTime * smoothSpeed);
-
-        if (Mathf.Abs(currentDisplay - target) < 0.001f)
-            currentDisplay = target;
-
-        ApplyBar(currentDisplay, false);
-        UpdateVisibility(target);
-    }
-
-    private void ApplyBar(float normalized, bool instant)
-    {
-        normalized = Mathf.Clamp01(normalized);
-
-        if (fillTransform != null)
+        if (followTarget && barRoot != null && targetToFollow != null)
         {
-            Vector3 scale = fillTransform.localScale;
-            scale.x = normalized;
-            fillTransform.localScale = scale;
+            barRoot.position = targetToFollow.position + offset;
         }
 
-        if (fillRenderer != null)
+        UpdateHealthBar(
+            bossHealth.CurrentHealth,
+            bossHealth.MaxHealth
+        );
+
+        if (smoothBar)
         {
-            if (normalized > 0.5f)
-            {
-                float t = Mathf.InverseLerp(0.5f, 1f, normalized);
-                fillRenderer.color = Color.Lerp(midHealthColor, fullHealthColor, t);
-            }
-            else
-            {
-                float t = Mathf.InverseLerp(0f, 0.5f, normalized);
-                fillRenderer.color = Color.Lerp(lowHealthColor, midHealthColor, t);
-            }
+            currentFill = Mathf.Lerp(
+                currentFill,
+                targetFill,
+                Time.deltaTime * smoothSpeed
+            );
+
+            ApplyFill(currentFill);
         }
     }
 
-    private void UpdateVisibility(float normalized)
+    private void RefreshBar()
     {
-        if (hideWhenDead && normalized <= 0f)
-        {
-            gameObject.SetActive(false);
+        if (bossHealth == null)
             return;
+
+        UpdateHealthBar(
+            bossHealth.CurrentHealth,
+            bossHealth.MaxHealth
+        );
+
+        currentFill = targetFill;
+        ApplyFill(currentFill);
+    }
+
+    private void UpdateHealthBar(int currentHP, int maxHP)
+    {
+        if (maxHP <= 0)
+            return;
+
+        targetFill = Mathf.Clamp01((float)currentHP / maxHP);
+
+        if (!smoothBar)
+        {
+            currentFill = targetFill;
+            ApplyFill(currentFill);
         }
 
-        if (hideWhenFullLife && normalized >= 0.999f)
-        {
-            gameObject.SetActive(false);
-            return;
-        }
+        UpdateVisibility(currentHP, maxHP);
+    }
 
-        if (!gameObject.activeSelf)
-            gameObject.SetActive(true);
+    private void ApplyFill(float fillAmount)
+    {
+        if (fillSprite == null)
+            return;
+
+        float clampedFill = Mathf.Clamp01(fillAmount);
+
+        Vector3 newScale = initialFillScale;
+        newScale.x = initialFillScale.x * clampedFill;
+
+        fillSprite.localScale = newScale;
+    }
+
+    private void UpdateVisibility(int currentHP, int maxHP)
+    {
+        if (barRoot == null)
+            return;
+
+        bool shouldShow = true;
+
+        if (bossHealth == null && hideWhenBossMissing)
+            shouldShow = false;
+
+        if (hideWhenFull && currentHP >= maxHP)
+            shouldShow = false;
+
+        if (hideOnDeath && currentHP <= 0)
+            shouldShow = false;
+
+        barRoot.gameObject.SetActive(shouldShow);
     }
 
     public void SetBoss(BossRootHealth newBossHealth)
     {
         bossHealth = newBossHealth;
 
-        if (bossHealth != null)
-        {
-            currentDisplay = bossHealth.CurrentHealthNormalized;
-            ApplyBar(currentDisplay, true);
-            UpdateVisibility(currentDisplay);
-        }
+        if (bossHealth != null && targetToFollow == null)
+            targetToFollow = bossHealth.transform;
+
+        RefreshBar();
     }
 }

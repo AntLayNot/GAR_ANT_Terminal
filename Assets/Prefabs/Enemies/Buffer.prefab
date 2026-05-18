@@ -136,7 +136,7 @@ MonoBehaviour:
   meleeAttackSounds:
   - {fileID: 8300000, guid: 777be8d11c3b45749924b4fda613f68f, type: 3}
   shootAttackSounds: []
-  meleeAttackVolume: 1
+  meleeAttackVolume: 0.15
   shootAttackVolume: 1
   pitchRange: {x: 0.95, y: 1.05}
   target: {fileID: 0}

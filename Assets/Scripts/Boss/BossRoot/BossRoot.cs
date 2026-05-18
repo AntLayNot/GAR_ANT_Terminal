@@ -681,6 +681,9 @@ public class BossRoot : MonoBehaviour
 
         StopAllCoroutines();
 
+        if (minionSpawner != null)
+            minionSpawner.DestroyAllSpawnedMinions();
+
         rb.linearVelocity = Vector2.zero;
 
         if (dashTrail != null)

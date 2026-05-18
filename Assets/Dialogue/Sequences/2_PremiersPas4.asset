@@ -16,25 +16,25 @@ MonoBehaviour:
   lines:
   - speakerName: AXI
     speakerPortrait: {fileID: 5978067422134562236, guid: 77184ec5a110d204882ecceb1e555656, type: 3}
-    text: Ha, voici ton premier ennemi !
+    text: Ha, here's your first enemy !
     autoAdvanceDelay: 0
   - speakerName: AXI
     speakerPortrait: {fileID: 5978067422134562236, guid: 77184ec5a110d204882ecceb1e555656, type: 3}
-    text: C'est un Buffer. Ils attaquent generalement au corps a corps.
+    text: It's a Buffer. They usually attack in close combat.
     autoAdvanceDelay: 0
   - speakerName: You
     speakerPortrait: {fileID: 1751119502174200988, guid: 54ef6c48b4d05a3438e4973229e72209, type: 3}
-    text: Un Buffer ?
+    text: A buffer?
     autoAdvanceDelay: 0
   - speakerName: You
     speakerPortrait: {fileID: 1751119502174200988, guid: 54ef6c48b4d05a3438e4973229e72209, type: 3}
-    text: (Pourquoi il ressemble a AXI ?)
+    text: (Why does it look like AXI?)
     autoAdvanceDelay: 0
   - speakerName: AXI
     speakerPortrait: {fileID: 5978067422134562236, guid: 77184ec5a110d204882ecceb1e555656, type: 3}
-    text: Sert toi des commandes que l'on a vu ensemble.
+    text: Use the commands we went over together.
     autoAdvanceDelay: 0
   - speakerName: AXI
     speakerPortrait: {fileID: 5978067422134562236, guid: 77184ec5a110d204882ecceb1e555656, type: 3}
-    text: Tu peux aussi utiliser "spawn wall self" pour de proteger.
+    text: "You can also use \u201Cspawn wall self\u201D to protect yourself."
     autoAdvanceDelay: 0

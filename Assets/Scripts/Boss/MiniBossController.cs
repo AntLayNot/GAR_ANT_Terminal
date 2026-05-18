@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MiniBossController : MonoBehaviour, IDamageable
+[RequireComponent(typeof(Health2D))]
+public class MiniBossController : MonoBehaviour
 {
     [Header("Fight State")]
     [SerializeField] private bool fightStartsAutomatically = false;
@@ -14,15 +15,22 @@ public class MiniBossController : MonoBehaviour, IDamageable
     [SerializeField] private bool startFightOnSpawn = true;
     [SerializeField] private string playerTag = "Player";
 
-    [Header("Boss Health")]
-    [SerializeField] private int maxHealth = 20;
-
     [Header("References")]
     [SerializeField] private Transform player;
     [SerializeField] private List<BossPillar> pillars = new List<BossPillar>();
     [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private Health2D health;
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Collider2D bossCollider;
+
+    [Header("Facing / Visual")]
+    [SerializeField] private Transform visualRoot;
+    [SerializeField] private bool useVisualRootRotationInsteadOfFlip = true;
+    [SerializeField] private bool facePlayer = true;
+    [SerializeField] private bool faceDashDirection = true;
+    [SerializeField] private bool faceRetreatDirection = false;
+
+    private float facingSign = 1f;
 
     [Header("Boss Indicators")]
     [SerializeField] private GameObject bossProtectedIndicator;
@@ -68,11 +76,36 @@ public class MiniBossController : MonoBehaviour, IDamageable
     [SerializeField] private Color phase3Color = Color.magenta;
     [SerializeField] private GameObject deathEffect;
 
+    [Header("Audio")]
+    [SerializeField] private AudioSource audioSource;
+
+    [Header("Audio Clips")]
+    [SerializeField] private AudioClip[] fightStartSounds;
+    [SerializeField] private AudioClip[] shootSounds;
+    [SerializeField] private AudioClip[] dashChargeSounds;
+    [SerializeField] private AudioClip[] dashStartSounds;
+    [SerializeField] private AudioClip[] protectedHitSounds;
+    [SerializeField] private AudioClip[] vulnerableSounds;
+    [SerializeField] private AudioClip[] contactHitSounds;
+    [SerializeField] private AudioClip[] deathSounds;
+
+    [Header("Audio Volumes")]
+    [SerializeField, Range(0f, 1f)] private float fightStartVolume = 1f;
+    [SerializeField, Range(0f, 1f)] private float shootVolume = 1f;
+    [SerializeField, Range(0f, 1f)] private float dashChargeVolume = 1f;
+    [SerializeField, Range(0f, 1f)] private float dashStartVolume = 1f;
+    [SerializeField, Range(0f, 1f)] private float protectedHitVolume = 1f;
+    [SerializeField, Range(0f, 1f)] private float vulnerableVolume = 1f;
+    [SerializeField, Range(0f, 1f)] private float contactHitVolume = 1f;
+    [SerializeField, Range(0f, 1f)] private float deathVolume = 1f;
+
+    [Header("Audio Settings")]
+    [SerializeField] private Vector2 pitchRange = new Vector2(0.95f, 1.05f);
+
     [Header("Optional Arena Rewards")]
     [SerializeField] private GameObject objectToEnableOnDeath;
     [SerializeField] private GameObject objectToDisableOnDeath;
 
-    private int currentHealth;
     private int destroyedPillars = 0;
     private int currentPhase = 1;
 
@@ -83,7 +116,6 @@ public class MiniBossController : MonoBehaviour, IDamageable
 
     private BossPillar currentTargetPillar;
 
-    private Color baseColor;
     private Coroutine fightCoroutine;
 
     private readonly Dictionary<GameObject, float> touchCooldowns = new Dictionary<GameObject, float>();
@@ -96,10 +128,26 @@ public class MiniBossController : MonoBehaviour, IDamageable
 
     private void Awake()
     {
-        currentHealth = maxHealth;
+        if (rb == null)
+            rb = GetComponent<Rigidbody2D>();
 
-        if (spriteRenderer != null)
-            baseColor = spriteRenderer.color;
+        if (health == null)
+            health = GetComponent<Health2D>();
+
+        if (spriteRenderer == null)
+            spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+
+        if (bossCollider == null)
+            bossCollider = GetComponent<Collider2D>();
+
+        if (audioSource == null)
+            audioSource = GetComponent<AudioSource>();
+
+        if (health != null)
+        {
+            health.onDeath.AddListener(Die);
+            health.onDamageBlocked.AddListener(OnDamageBlocked);
+        }
 
         for (int i = 0; i < pillars.Count; i++)
         {
@@ -109,6 +157,17 @@ public class MiniBossController : MonoBehaviour, IDamageable
 
         AutoFindPlayer();
         RefreshVulnerabilityState();
+
+        FaceDir(1f);
+    }
+
+    private void OnDestroy()
+    {
+        if (health != null)
+        {
+            health.onDeath.RemoveListener(Die);
+            health.onDamageBlocked.RemoveListener(OnDamageBlocked);
+        }
     }
 
     private void Start()
@@ -117,6 +176,15 @@ public class MiniBossController : MonoBehaviour, IDamageable
 
         if (fightStartsAutomatically || startFightOnSpawn)
             StartFight();
+    }
+
+    private void Update()
+    {
+        if (!isFightActive || isDead)
+            return;
+
+        if (facePlayer && !isDashing && !isRetreating && player != null)
+            FaceTarget();
     }
 
     private void AutoFindPlayer()
@@ -153,6 +221,10 @@ public class MiniBossController : MonoBehaviour, IDamageable
         }
 
         isFightActive = true;
+
+        PlayRandomSound(fightStartSounds, fightStartVolume);
+
+        FaceTarget();
 
         InitializePillarTargets();
         RefreshVulnerabilityState();
@@ -218,6 +290,8 @@ public class MiniBossController : MonoBehaviour, IDamageable
                 yield return null;
                 continue;
             }
+
+            FaceTarget();
 
             float distanceToPlayer = Vector2.Distance(transform.position, player.position);
 
@@ -307,7 +381,12 @@ public class MiniBossController : MonoBehaviour, IDamageable
 
     private void RefreshVulnerabilityState()
     {
+        bool wasVulnerable = isVulnerable;
+
         isVulnerable = destroyedPillars >= pillars.Count;
+
+        if (health != null)
+            health.SetCanTakeDamage(isVulnerable);
 
         if (bossProtectedIndicator != null)
             bossProtectedIndicator.SetActive(!isVulnerable);
@@ -315,26 +394,16 @@ public class MiniBossController : MonoBehaviour, IDamageable
         if (bossVulnerableIndicator != null)
             bossVulnerableIndicator.SetActive(isVulnerable);
 
+        if (!wasVulnerable && isVulnerable)
+            PlayRandomSound(vulnerableSounds, vulnerableVolume);
+
         RefreshBossColor();
     }
 
-    public void TakeDamage(int amount)
+    private void OnDamageBlocked()
     {
-        if (amount <= 0) return;
-        if (isDead) return;
-
-        if (!isVulnerable)
-        {
-            Debug.Log("[MiniBoss] Boss protégé : détruire les piliers.");
-            return;
-        }
-
-        currentHealth = Mathf.Max(0, currentHealth - amount);
-
-        Debug.Log("[MiniBoss] Boss touché : " + currentHealth + " / " + maxHealth);
-
-        if (currentHealth <= 0)
-            Die();
+        PlayRandomSound(protectedHitSounds, protectedHitVolume);
+        Debug.Log("[MiniBoss] Boss protégé : détruire les piliers.");
     }
 
     private IEnumerator ShootRoutine()
@@ -351,10 +420,19 @@ public class MiniBossController : MonoBehaviour, IDamageable
             yield break;
         }
 
+        FaceTarget();
+
         int shotCount = GetShotCountForCurrentPhase();
 
         for (int i = 0; i < shotCount; i++)
         {
+            if (player == null)
+                break;
+
+            FaceTarget();
+
+            PlayRandomSound(shootSounds, shootVolume);
+
             Vector2 dir = (player.position - firePoint.position).normalized;
 
             GameObject projectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
@@ -393,6 +471,13 @@ public class MiniBossController : MonoBehaviour, IDamageable
 
         Vector2 dashDirection = (player.position - transform.position).normalized;
 
+        if (faceDashDirection)
+            FaceDir(dashDirection.x);
+        else if (facePlayer)
+            FaceTarget();
+
+        PlayRandomSound(dashChargeSounds, dashChargeVolume);
+
         isTelegraphing = true;
         RefreshBossColor();
 
@@ -400,6 +485,8 @@ public class MiniBossController : MonoBehaviour, IDamageable
 
         isTelegraphing = false;
         RefreshBossColor();
+
+        PlayRandomSound(dashStartSounds, dashStartVolume);
 
         float timer = 0f;
         isDashing = true;
@@ -413,6 +500,9 @@ public class MiniBossController : MonoBehaviour, IDamageable
 
         isDashing = false;
         rb.linearVelocity = Vector2.zero;
+
+        if (facePlayer)
+            FaceTarget();
 
         UpdatePhase();
 
@@ -468,16 +558,18 @@ public class MiniBossController : MonoBehaviour, IDamageable
 
         if (damageable == null) return false;
 
-        GameObject target = other.gameObject;
+        GameObject targetObject = other.gameObject;
 
-        if (touchCooldowns.TryGetValue(target, out float lastHitTime))
+        if (touchCooldowns.TryGetValue(targetObject, out float lastHitTime))
         {
             if (Time.time < lastHitTime + touchDamageCooldown)
                 return false;
         }
 
         damageable.TakeDamage(touchDamage);
-        touchCooldowns[target] = Time.time;
+        touchCooldowns[targetObject] = Time.time;
+
+        PlayRandomSound(contactHitSounds, contactHitVolume);
 
         PlayerKnockback2D knockback = other.GetComponent<PlayerKnockback2D>();
         if (knockback == null)
@@ -527,6 +619,11 @@ public class MiniBossController : MonoBehaviour, IDamageable
 
         Vector2 retreatDirection = ((Vector2)transform.position - (Vector2)player.position).normalized;
 
+        if (faceRetreatDirection)
+            FaceDir(retreatDirection.x);
+        else if (facePlayer)
+            FaceTarget();
+
         float retreatDistance = retreatSpeed * retreatDuration;
         float traveled = 0f;
 
@@ -540,6 +637,9 @@ public class MiniBossController : MonoBehaviour, IDamageable
 
         rb.linearVelocity = Vector2.zero;
         isRetreating = false;
+
+        if (facePlayer)
+            FaceTarget();
     }
 
     private void TryStartRetreat()
@@ -551,6 +651,85 @@ public class MiniBossController : MonoBehaviour, IDamageable
 
         StopCurrentMovement();
         StartCoroutine(RetreatAfterHitRoutine());
+    }
+
+    private void FaceTarget()
+    {
+        if (player == null)
+            return;
+
+        float dx = player.position.x - transform.position.x;
+        FaceDir(dx);
+    }
+
+    private void FaceDir(float dir)
+    {
+        if (dir == 0f)
+            return;
+
+        facingSign = dir < 0f ? -1f : 1f;
+
+        if (useVisualRootRotationInsteadOfFlip)
+        {
+            if (visualRoot != null)
+            {
+                visualRoot.localRotation = facingSign < 0f
+                    ? Quaternion.Euler(0f, 180f, 0f)
+                    : Quaternion.Euler(0f, 0f, 0f);
+            }
+        }
+        else
+        {
+            if (spriteRenderer != null)
+                spriteRenderer.flipX = facingSign < 0f;
+        }
+    }
+
+    public float GetFacingSign()
+    {
+        return facingSign;
+    }
+
+    private void PlayRandomSound(AudioClip[] clips, float volume)
+    {
+        if (audioSource == null)
+            return;
+
+        if (clips == null || clips.Length == 0)
+            return;
+
+        AudioClip clip = clips[Random.Range(0, clips.Length)];
+
+        if (clip == null)
+            return;
+
+        audioSource.pitch = Random.Range(pitchRange.x, pitchRange.y);
+        audioSource.PlayOneShot(clip, volume);
+    }
+
+    private void PlayDetachedDeathSound()
+    {
+        if (deathSounds == null || deathSounds.Length == 0)
+            return;
+
+        AudioClip clip = deathSounds[Random.Range(0, deathSounds.Length)];
+
+        if (clip == null)
+            return;
+
+        GameObject audioObject = new GameObject("MiniBoss_DeathSound");
+        audioObject.transform.position = transform.position;
+
+        AudioSource source = audioObject.AddComponent<AudioSource>();
+        source.clip = clip;
+        source.volume = deathVolume;
+        source.pitch = Random.Range(pitchRange.x, pitchRange.y);
+        source.spatialBlend = audioSource != null ? audioSource.spatialBlend : 0f;
+        source.outputAudioMixerGroup = audioSource != null ? audioSource.outputAudioMixerGroup : null;
+
+        source.Play();
+
+        Destroy(audioObject, clip.length + 0.2f);
     }
 
     private void Die()
@@ -569,6 +748,8 @@ public class MiniBossController : MonoBehaviour, IDamageable
         if (bossCollider != null)
             bossCollider.enabled = false;
 
+        PlayDetachedDeathSound();
+
         if (deathEffect != null)
             Instantiate(deathEffect, transform.position, Quaternion.identity);
 
@@ -577,8 +758,6 @@ public class MiniBossController : MonoBehaviour, IDamageable
 
         if (objectToDisableOnDeath != null)
             objectToDisableOnDeath.SetActive(false);
-
-        Debug.Log("[MiniBoss] Mini-boss vaincu.");
 
         gameObject.SetActive(false);
     }

@@ -303,7 +303,7 @@ MonoBehaviour:
   audioSource: {fileID: 0}
   spawnSounds:
   - {fileID: 8300000, guid: 1b24e09a3adb3aa42b01f2717a45bf83, type: 3}
-  spawnSoundVolume: 1
+  spawnSoundVolume: 0.3
   pitchRange: {x: 0.95, y: 1.05}
   drawGizmos: 1
   activationRadiusColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}

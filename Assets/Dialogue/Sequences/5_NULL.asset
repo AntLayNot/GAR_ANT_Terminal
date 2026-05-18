@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cdbdbb5164c5b1479a3eca103fc935d, type: 3}
+  m_Name: 5_NULL
+  m_EditorClassIdentifier: 
+  sequenceId: 004
+  lines:
+  - speakerName: NULL
+    speakerPortrait: {fileID: 320954253821206052, guid: a2e00406c4a4f5c44a2768eb8a4e4a9f, type: 3}
+    text: You won't escape deletion.
+    autoAdvanceDelay: 0
+  - speakerName: You
+    speakerPortrait: {fileID: 1751119502174200988, guid: 54ef6c48b4d05a3438e4973229e72209, type: 3}
+    text: Who's there ?
+    autoAdvanceDelay: 0
+  - speakerName: NULL
+    speakerPortrait: {fileID: 320954253821206052, guid: a2e00406c4a4f5c44a2768eb8a4e4a9f, type: 3}
+    text: "I am ROOT / \xD8's right-hand man."
+    autoAdvanceDelay: 0
+  - speakerName: You
+    speakerPortrait: {fileID: 1751119502174200988, guid: 54ef6c48b4d05a3438e4973229e72209, type: 3}
+    text: "ROOT / \xD8 ? Who is ROOT / \xD8 ?"
+    autoAdvanceDelay: 0
+  - speakerName: NULL
+    speakerPortrait: {fileID: 320954253821206052, guid: a2e00406c4a4f5c44a2768eb8a4e4a9f, type: 3}
+    text: The virus that will take control of your computer.
+    autoAdvanceDelay: 0
+  - speakerName: You
+    speakerPortrait: {fileID: 1751119502174200988, guid: 54ef6c48b4d05a3438e4973229e72209, type: 3}
+    text: We'll see.
+    autoAdvanceDelay: 0
