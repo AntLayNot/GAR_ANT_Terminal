@@ -108,7 +108,7 @@ public class EnemyBrain2D : MonoBehaviour
         sr = GetComponentInChildren<SpriteRenderer>();
 
         if (audioSource == null)
-            audioSource = FindFirstObjectByType<AudioSource>();
+            audioSource = GetComponent<AudioSource>();
 
         if (animator == null)
             animator = GetComponentInChildren<Animator>();

@@ -22,7 +22,7 @@ public class SpikeTrap2D : MonoBehaviour
     private void Awake()
     {
         if (spikeAudioSource == null)
-            spikeAudioSource = FindFirstObjectByType<AudioSource>();
+            spikeAudioSource = GetComponent<AudioSource>();
     }
 
     private void OnTriggerEnter2D(Collider2D other)

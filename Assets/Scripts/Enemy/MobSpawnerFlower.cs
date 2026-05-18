@@ -44,7 +44,7 @@ public class SpawnerFlower2D : MonoBehaviour
     private void Awake()
     {
         if (audioSource == null)
-            audioSource = FindFirstObjectByType<AudioSource>();
+            audioSource = GetComponent<AudioSource>();
     }
 
     private void Start()

@@ -171,7 +171,7 @@ public class BossRoot : MonoBehaviour
             health = GetComponent<BossRootHealth>();
 
         if (bossAudioSource == null)
-            bossAudioSource = FindFirstObjectByType<AudioSource>();
+            bossAudioSource = GetComponent<AudioSource>();
     }
 
     void Start()

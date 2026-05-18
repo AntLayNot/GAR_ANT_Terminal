@@ -437,12 +437,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   preset: {fileID: 11400000, guid: 79e6584d5003f6a449a69a6f3fb68a69, type: 2}
-  visualRoot: {fileID: 0}
+  visualRoot: {fileID: 2958591818788126793}
   useVisualRootRotationInsteadOfFlip: 1
-  animator: {fileID: 0}
+  animator: {fileID: 5992450394227730794}
   isMovingParam: IsMoving
   attackTriggerParam: Attack
   attackAnimLockTime: 0.25
+  audioSource: {fileID: 0}
+  meleeAttackSounds: []
+  shootAttackSounds: []
+  meleeAttackVolume: 1
+  shootAttackVolume: 1
+  pitchRange: {x: 0.95, y: 1.05}
   target: {fileID: 0}
   targetTag: Player
   moveSpeed: 2.5
@@ -453,21 +459,21 @@ MonoBehaviour:
   loseRange: 10
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1
   requireLineOfSight: 0
   sightOriginOffset: {x: 0, y: 0.6}
   sightTargetOffset: {x: 0, y: 0.6}
   avoidOtherEnemies: 1
   enemyMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   enemyCheckDistance: 0.35
   enemyCheckOffset: {x: 0.4, y: 0}
   patrol: 1
   useRaycastPatrol: 1
   groundMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1
   patrolWait: 0.25
   wallCheckDistance: 0.35
   wallCheckOffset: {x: 0.4, y: 0}
@@ -480,7 +486,7 @@ MonoBehaviour:
   attackBoxOffset: {x: 0.7, y: 0}
   damageMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   projectilePrefab: {fileID: 0}
   shootCooldown: 0.8
   projectileSpeed: 12

@@ -40,7 +40,7 @@ public class FallingTrap2D : MonoBehaviour
             rb = GetComponent<Rigidbody2D>();
 
         if (trapAudioSource == null)
-            trapAudioSource = FindFirstObjectByType<AudioSource>();
+            trapAudioSource = GetComponent<AudioSource>();
 
         if (rb != null)
         {

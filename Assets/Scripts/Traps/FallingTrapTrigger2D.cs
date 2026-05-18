@@ -16,7 +16,7 @@ public class FallingTrapTrigger2D : MonoBehaviour
     private void Awake()
     {
         if (triggerAudioSource == null)
-            triggerAudioSource = FindFirstObjectByType<AudioSource>();
+            triggerAudioSource = GetComponent<AudioSource>();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
